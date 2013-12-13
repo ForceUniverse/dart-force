@@ -2,7 +2,7 @@ part of dart_force_server_lib;
 
 class Sendable implements Sender {
 
- final Logger log = new Logger('VaderMessageServer');
+ final Logger log = new Logger('Sendable');
   
   Map<String, WebSocket> webSockets;
   
@@ -15,7 +15,7 @@ class Sendable implements Sender {
       };
     
     webSockets.forEach((String key, WebSocket ws) {
-      print("breadcasting ... to $key");
+      log.info("breadcasting ... to $key");
       ws.add(JSON.encode(sendingPackage));
     });
   }
