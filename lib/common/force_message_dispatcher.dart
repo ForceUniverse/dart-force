@@ -13,11 +13,8 @@ class ForceMessageDispatcher {
   
   void onMessageDispatch(ForceMessageEvent vme) {
     var key = vme.request;
-    print("vme request $key");
     MessageReceiver messageReceiver = mapping[key];
     if (messageReceiver!=null) {
-      print("messageReceiver is not null");
-      
       messageReceiver(vme, sender);
     }
   }
