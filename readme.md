@@ -8,7 +8,12 @@ With this framework communication between client and server becomes easy, withou
 
 ##### Client side #####
 
+Import the client side library for dart force.
+
+	import 'package:force/force_browser.dart';
+
 First create a client.
+	 
 	 ForceClient forceClient = new ForceClient();
 	 forceClient.connect();
 	 
@@ -35,9 +40,13 @@ You can also send messages to the server.
 
 ##### Server Side #####
 
+Import Serverside code for dart force.
+
+	import 'package:force/force_serverside.dart';
+
 Instantiate a forceserver.
 
-	ForceServer fs = new ForceServer( port: 9223 );
+	ForceServer fs = new ForceServer( port: 9223, startPage: 'start.html' );
 
 Listen on messages of type text and react upon that.
 
