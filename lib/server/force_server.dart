@@ -9,8 +9,9 @@ class ForceServer extends ForceBaseMessageSendReceiver
   BasicServer basicServer;
   ForceMessageDispatcher messageDispatcher;
   
-  ForceServer({wsPath: "ws", port: 8080, buildPath: '../build' }) {
+  ForceServer({wsPath: "/ws", port: 8080, buildPath: '../build', startPage: "index.html" }) {
     basicServer = new BasicServer(wsPath, port: port, buildPath: buildPath);
+    basicServer.startPage = startPage;
     webSockets = new Map<String, WebSocket>();
     messageDispatcher = new ForceMessageDispatcher(this);
   }

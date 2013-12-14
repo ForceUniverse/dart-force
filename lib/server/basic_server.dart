@@ -5,7 +5,8 @@ class BasicServer {
   final Logger log = new Logger('BasicServer');
   
   Router router;
-  var startPage = 'index.html';
+  String startPage = 'index.html';
+  
   var wsPath;
   var port;
   var buildDir;
