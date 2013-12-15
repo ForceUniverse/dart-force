@@ -5,6 +5,7 @@ class Sendable implements Sender {
  final Logger log = new Logger('Sendable');
   
   Map<String, WebSocket> webSockets;
+  Map<String, dynamic> profiles;
   
   void send(request, data) {
     printAmountOfConnections();
@@ -28,6 +29,20 @@ class Sendable implements Sender {
           'data': data
     };
     ws.add(JSON.encode(sendingPackage));
+  }
+  
+  void sendWithProfile(key, value, request, data) {
+    List<String> ids = new List<String>();
+    profiles.forEach((String id, profile_data) {
+      if (profile_data[key] == value) {
+        ids.add(id);
+      }
+    });
+    if (ids.isNotEmpty) {
+      for (String id in ids) {
+        sendTo(id, request, data);
+      }
+    }
   }
   
   void printAmountOfConnections() {

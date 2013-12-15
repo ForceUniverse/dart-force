@@ -13,7 +13,15 @@ class ForceServer extends ForceBaseMessageSendReceiver
     basicServer = new BasicServer(wsPath, port: port, buildPath: buildPath);
     basicServer.startPage = startPage;
     webSockets = new Map<String, WebSocket>();
+    profiles = new Map<String, dynamic>();
     messageDispatcher = new ForceMessageDispatcher(this);
+    
+    //listen on info from the client
+    this.before((e, sendable) {
+      if (e.profile != null) {
+        profiles[e.wsId] = e.profile;
+      }
+    });
   }
   
   Future start() {
@@ -56,9 +64,13 @@ class ForceServer extends ForceBaseMessageSendReceiver
     
     checkConnections();
   }
-    
-  void on(String request, MessageReceiver vaderMessageController) {
-    messageDispatcher.register(request, vaderMessageController);
+  
+  void before(MessageReceiver messageController) {
+    messageDispatcher.before(messageController); 
+  }
+  
+  void on(String request, MessageReceiver messageController) {
+    messageDispatcher.register(request, messageController);
   }
   
   void checkConnections() {
