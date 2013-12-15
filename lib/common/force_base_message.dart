@@ -11,9 +11,10 @@ abstract class ForceBaseMessageSendReceiver {
   ForceMessageEvent onInnerMessage(message, {wsId: "-"}) {
     var json = JSON.decode(message);
     dynamic data = json["data"];
+    dynamic profile = json["profile"];
     dynamic request = json["request"];
     
-    ForceMessageEvent vme = new ForceMessageEvent(request, data, wsId: wsId);
+    ForceMessageEvent vme = new ForceMessageEvent(request, data, profile, wsId: wsId);
     
     _controller.add(vme);
     return vme;
