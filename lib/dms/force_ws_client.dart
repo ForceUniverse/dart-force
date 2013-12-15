@@ -12,6 +12,8 @@ class ForceClient extends ForceBaseMessageSendReceiver implements Sender {
   
   String wsPath;
   
+  var _profileInfo = {};
+  
   ForceClient({wsPath: "/ws"}) {
     _connectController = new StreamController<ForceConnectEvent>();
     _messageDispatcher = new ForceMessageDispatcher(this);
@@ -56,9 +58,15 @@ class ForceClient extends ForceBaseMessageSendReceiver implements Sender {
     _messageDispatcher.register(request, vaderMessageController);
   }
   
+  void initProfileInfo(profileInfo) {
+    _profileInfo = profileInfo;
+    send('profileInfo', {});
+  }
+  
   void send(request, data) {
     var sendingPackage =  {
         'request': request,
+        'profile': _profileInfo,
         'data': data
     };
     this._send(sendingPackage);
@@ -67,6 +75,7 @@ class ForceClient extends ForceBaseMessageSendReceiver implements Sender {
   void sendTo(id, request, data) {
      var sendingPackage =  {
           'request': request,
+          'profile': _profileInfo,
           'id': id,
           'data': data
      };
