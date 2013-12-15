@@ -63,6 +63,21 @@ You can also serve files from the server part.
 	      fs.serveFile("../web/client.dart", request);
 	    });
 	});
+	
+#### Other features ####
+
+##### Profile info #####
+
+Adding profile data on a connection, this will make it easy to send a message to a certain profile group or sending messages to an individual, without knowing his websocket id.
+
+On the client you can set Profile data.
+
+	 var profileInfo = { 'name' : chatName};
+     forceClient.initProfileInfo(profileInfo);
+
+On the server you can send something to a profile or a profile group by the following method in sendable.
+
+	sendable.sendWithProfile('name', name, 'private', message);
 
 #### TODO ####
 
