@@ -9,5 +9,8 @@ import 'force_common.dart';
 part 'dms/force_ws_client.dart';
 part 'dms/force_connect_event.dart';
 
+// mixins
+part 'dms/force_ws_sendable.dart';
+
 
 

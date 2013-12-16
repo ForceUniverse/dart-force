@@ -5,6 +5,7 @@ import 'dart:convert';
 
 part 'common/force_base_message.dart';
 part 'common/force_message_event.dart';
+part 'common/force_message_type.dart';
 
 part 'common/force_basic_sender.dart';
 part 'common/force_message_dispatcher.dart';
