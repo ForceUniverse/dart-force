@@ -1,6 +1,6 @@
 part of dart_force_client_lib;
 
-class ForceClient extends ForceBaseMessageSendReceiver implements Sender {
+class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   static const Duration RECONNECT_DELAY = const Duration(milliseconds: 500);
   
   bool _connectPending = false;
@@ -56,38 +56,6 @@ class ForceClient extends ForceBaseMessageSendReceiver implements Sender {
   
   void on(String request, MessageReceiver vaderMessageController) {
     _messageDispatcher.register(request, vaderMessageController);
-  }
-  
-  void initProfileInfo(profileInfo) {
-    _profileInfo = profileInfo;
-    send('profileInfo', {});
-  }
-  
-  void send(request, data) {
-    var sendingPackage =  {
-        'request': request,
-        'profile': _profileInfo,
-        'data': data
-    };
-    this._send(sendingPackage);
-  }
-  
-  void sendTo(id, request, data) {
-     var sendingPackage =  {
-          'request': request,
-          'profile': _profileInfo,
-          'id': id,
-          'data': data
-     };
-     this._send(sendingPackage);
-  }
-  
-  void _send(sendingPackage) {
-    if (webSocket != null && webSocket.readyState == WebSocket.OPEN) {
-      webSocket.send(JSON.encode(sendingPackage));
-    } else {
-      print('WebSocket not connected, message $sendingPackage not sent');
-    }
   }
    
   Stream<ForceConnectEvent> get onConnecting => _connectController.stream;
