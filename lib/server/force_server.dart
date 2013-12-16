@@ -9,16 +9,25 @@ class ForceServer extends ForceBaseMessageSendReceiver
   BasicServer basicServer;
   ForceMessageDispatcher messageDispatcher;
   
+  StreamController<ForceProfileEvent> _profileController;
+  
   ForceServer({wsPath: "/ws", port: 8080, buildPath: '../build', startPage: "index.html" }) {
     basicServer = new BasicServer(wsPath, port: port, buildPath: buildPath);
     basicServer.startPage = startPage;
     webSockets = new Map<String, WebSocket>();
-    profiles = new Map<String, dynamic>();
+    
     messageDispatcher = new ForceMessageDispatcher(this);
+    
+    //Profiles
+    profiles = new Map<String, dynamic>();
+    _profileController = new StreamController<ForceProfileEvent>();
     
     //listen on info from the client
     this.before((e, sendable) {
       if (e.profile != null) {
+        if (!profiles.containsKey(e.wsId)) {
+            _profileController.add(new ForceProfileEvent(ForceProfileType.New, e.wsId, e.profile));
+        }
         profiles[e.wsId] = e.profile;
       }
     });
@@ -58,10 +67,13 @@ class ForceServer extends ForceBaseMessageSendReceiver
     log.info("register id $id");
     
     this.webSockets[id] = webSocket;
-    webSocket.listen((data) {
+    this.webSockets[id].listen((data) {
       messageDispatcher.onMessageDispatch(onInnerMessage(data, wsId: id));
     });
-    
+    this.webSockets[id].done.then((e) {
+      print("ws done");
+      checkConnections();
+    });
     checkConnections();
   }
   
@@ -89,7 +101,13 @@ class ForceServer extends ForceBaseMessageSendReceiver
     
     for (String wsId in removeWs) {
       this.webSockets.remove(wsId);
+      if (this.profiles.containsKey(wsId)) {
+        _profileController.add(new ForceProfileEvent(ForceProfileType.Removed, wsId, this.profiles[wsId]));
+        
+        this.profiles.remove(wsId);
+      }
     } 
   }
   
+  Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
 }
