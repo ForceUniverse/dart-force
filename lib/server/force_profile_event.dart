@@ -7,6 +7,8 @@ class ForceProfileEvent {
   dynamic profileInfo;
   
   ForceProfileEvent(this.type, this.wsId, this.profileInfo); 
+  
+  toString() => "[$wsId] $type $profileInfo";
 }
 
 class ForceProfileType {
@@ -16,4 +18,6 @@ class ForceProfileType {
 
   static const New = const ForceProfileType('New');
   static const Removed = const ForceProfileType('Removed');
+  
+  toString() => "$_type";
 }
