@@ -79,6 +79,10 @@ On the server you can send something to a profile or a profile group by the foll
 
 	sendable.sendToProfile('name', name, 'private', message);
 	
+You can also listen to profileChanges by using the following method on the forceServer.
+
+	fs.onProfileChanged().listen((e) => print("$e"));
+	
 Now you can send directly from the client to another client, the server notice the message type and forward it directly to the corresponding client. 
 No coding on server required todo this!
 
@@ -99,3 +103,7 @@ Just add the following code in your client side code.
 If you'd like to contribute back to the core, you can [fork this repository](https://help.github.com/articles/fork-a-repo) and send us a pull request, when it is ready.
 
 If you are new to Git or GitHub, please read [this guide](https://help.github.com/) first.
+
+#### Twitter ####
+
+Follow us on twitter https://twitter.com/usethedartforce
