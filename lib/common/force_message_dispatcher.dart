@@ -20,11 +20,11 @@ class ForceMessageDispatcher {
   void onMessageDispatch(ForceMessageEvent vme) {
     var key = vme.request;
     
+    for (MessageReceiver messageReceiver in beforeMapping) {
+      _executeMessageReceiver(vme, messageReceiver);
+    }
     if (vme.messageType.type == ForceMessageType.NORMAL) {
-      MessageReceiver messageReceiver = mapping[key];
-      if (messageReceiver!=null) {
-        messageReceiver(vme, sender);
-      }
+      _executeMessageReceiver(vme, mapping[key]);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
       if (vme.messageType.type == ForceMessageType.ID) {
@@ -33,6 +33,12 @@ class ForceMessageDispatcher {
       if (vme.messageType.type == ForceMessageType.PROFILE) {
         sender.sendToProfile(vme.messageType.key, vme.messageType.value, vme.request, vme.json);
       }
+    }
+  }
+  
+  void _executeMessageReceiver(ForceMessageEvent vme, MessageReceiver messageReceiver) {
+    if (messageReceiver!=null) {
+      messageReceiver(vme, sender);
     }
   }
 }
