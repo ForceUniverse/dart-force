@@ -31,7 +31,7 @@ class Sendable implements Sender {
     ws.add(JSON.encode(sendingPackage));
   }
   
-  void sendWithProfile(key, value, request, data) {
+  void sendToProfile(key, value, request, data) {
     List<String> ids = new List<String>();
     profiles.forEach((String id, profile_data) {
       if (profile_data[key] == value) {
