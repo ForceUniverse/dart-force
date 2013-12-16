@@ -77,7 +77,14 @@ On the client you can set the current browser user his profile data as follow.
 
 On the server you can send something to a profile or a profile group by the following method in sendable.
 
-	sendable.sendWithProfile('name', name, 'private', message);
+	sendable.sendToProfile('name', name, 'private', message);
+	
+Now you can send directly from the client to another client, the server notice the message type and forward it directly to the corresponding client. 
+No coding on server required todo this!
+
+Just add the following code in your client side code.
+
+	forceClient.sendToProfile(key, value, request, data);
 
 #### TODO ####
 
