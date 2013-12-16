@@ -13,8 +13,10 @@ abstract class ForceBaseMessageSendReceiver {
     dynamic data = json["data"];
     dynamic profile = json["profile"];
     dynamic request = json["request"];
+    dynamic type = json["type"];
     
-    ForceMessageEvent vme = new ForceMessageEvent(request, data, profile, wsId: wsId);
+    ForceMessageType fmt = new ForceMessageType.fromJson(type);
+    ForceMessageEvent vme = new ForceMessageEvent(request, fmt, data, profile, wsId: wsId);
     
     _controller.add(vme);
     return vme;

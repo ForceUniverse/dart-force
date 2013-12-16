@@ -5,5 +5,7 @@ abstract class Sender {
   void send(request, data);
   
   void sendTo(id, request, data);
+  
+  void sendToProfile(key, value, request, data);
 
 }

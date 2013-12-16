@@ -8,7 +8,9 @@ class ForceMessageEvent {
   dynamic profile;
   dynamic json;
   
-  ForceMessageEvent(this.request, this.json, this.profile, { wsId: "-"}) {
+  ForceMessageType messageType;
+  
+  ForceMessageEvent(this.request, this.messageType, this.json, this.profile, { wsId: "-"}) {
     this.wsId = wsId;
   }
 }
