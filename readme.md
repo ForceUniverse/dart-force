@@ -70,7 +70,7 @@ You can also serve files from the server part.
 
 Adding profile data on a connection, this will make it easy to send a message to a certain profile group or sending messages to an individual, without knowing his websocket id.
 
-On the client you can set Profile data.
+On the client you can set the current browser user his profile data as follow.
 
 	 var profileInfo = { 'name' : chatName};
      forceClient.initProfileInfo(profileInfo);
@@ -84,3 +84,11 @@ On the server you can send something to a profile or a profile group by the foll
 - fallback support for legacy browser with no capability of websockets
 - adding authentication support and security support
 - writing tests
+
+### Notes to Contributors ###
+
+#### Fork Dart Force ####
+
+If you'd like to contribute back to the core, you can [fork this repository](https://help.github.com/articles/fork-a-repo) and send us a pull request, when it is ready.
+
+If you are new to Git or GitHub, please read [this guide](https://help.github.com/) first.
