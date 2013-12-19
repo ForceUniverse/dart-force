@@ -4,6 +4,8 @@ A realtime web framework for dart.
 
 With this framework communication between client and server becomes easy, without any boilerplate code.
 
+![LOGO!](https://raw.github.com/jorishermans/dart-force/master/resources/dart_force_logo.jpg)
+
 #### Walkthrough ####
 
 ##### Client side #####
