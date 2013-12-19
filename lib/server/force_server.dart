@@ -68,7 +68,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
     
     this.webSockets[id] = webSocket;
     this.webSockets[id].listen((data) {
-      messageDispatcher.onMessageDispatch(onInnerMessage(data, wsId: id));
+      handleMessages(id, data);
     });
     this.webSockets[id].done.then((e) {
       print("ws done");
@@ -76,6 +76,10 @@ class ForceServer extends ForceBaseMessageSendReceiver
     });
     checkConnections();
   }
+  
+  void handleMessages(String id, data) {
+    messageDispatcher.onMessageDispatch(onInnerMessage(data, wsId: id));
+  } 
   
   void before(MessageReceiver messageController) {
     messageDispatcher.before(messageController); 
