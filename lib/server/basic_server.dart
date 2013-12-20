@@ -11,9 +11,13 @@ class BasicServer {
   var port;
   var buildDir;
   var virDir;
+  var bind_address = InternetAddress.ANY_IP_V6;
   
-  BasicServer(this.wsPath, {port: 8080, buildPath: '../build' }) {
+  BasicServer(this.wsPath, {port: 8080, bind_address: null, buildPath: '../build' }) {
     this.port = port;
+    if (bind_address!=null) {
+      this.bind_address = bind_address;
+    }
     buildDir = Platform.script.resolve(buildPath).toFilePath();
     if (!new Directory(buildDir).existsSync()) {
       log.severe("The 'build/' directory was not found. Please run 'pub build'.");
@@ -23,7 +27,7 @@ class BasicServer {
   
   Future start(WebSocketHandler handleWs) {
     Completer completer = new Completer.sync();
-    HttpServer.bind(InternetAddress.ANY_IP_V6, port).then((server) { 
+    HttpServer.bind(bind_address, port).then((server) { 
         _onStart(server, handleWs);
         completer.complete(const []);
       });
