@@ -68,7 +68,7 @@ You can also serve files from the server part.
 	
 #### Other features ####
 
-##### Profile info #####
+##### Profile info & client to client communication #####
 
 Adding profile data on a connection, this will make it easy to send a message to a certain profile group or sending messages to an individual, without knowing his websocket id.
 
