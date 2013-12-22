@@ -28,7 +28,9 @@ class Sendable implements Sender {
           'request': request,
           'data': data
     };
-    ws.add(JSON.encode(sendingPackage));
+    if (ws != null) {
+      ws.add(JSON.encode(sendingPackage));
+    }
   }
   
   void sendToProfile(key, value, request, data) {
