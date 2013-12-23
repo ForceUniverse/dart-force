@@ -1,6 +1,6 @@
-### Dart Force Framework ###
-
 [![Build Status](https://drone.io/github.com/jorishermans/dart-force/status.png)](https://drone.io/github.com/jorishermans/dart-force/latest)
+
+### Dart Force Framework ###
 
 ![LOGO!](https://raw.github.com/jorishermans/dart-force/master/resources/dart_force_logo.jpg)
 
