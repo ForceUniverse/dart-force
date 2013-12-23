@@ -82,6 +82,12 @@ class ForceServer extends ForceBaseMessageSendReceiver
     messageDispatcher.register(request, messageController);
   }
   
+  void close(String id) {
+    if (webSockets.containsKey(id)) {
+      this.webSockets[id].close();
+    }
+  }
+  
   void checkConnections() {
     List<String> removeWs = new List<String>();
     this.webSockets.forEach((String key, WebSocket ws) {
