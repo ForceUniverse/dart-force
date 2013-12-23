@@ -42,6 +42,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   void onConnected() {
     print("connected!");
     _connectController.add(new ForceConnectEvent("connected"));
+    print("wicked new ForceEvent no ? ? !");
     webSocket.onMessage.listen((e) {
       _messageDispatcher.onMessageDispatch(onInnerMessage(e.data));
     });
