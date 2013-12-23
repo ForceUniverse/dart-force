@@ -86,6 +86,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
     if (webSockets.containsKey(id)) {
       this.webSockets[id].close();
     }
+    checkConnections();
   }
   
   void checkConnections() {
