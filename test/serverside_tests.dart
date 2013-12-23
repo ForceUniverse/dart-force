@@ -65,5 +65,46 @@ void main() {
 
     fs.handleMessages("id:bla", JSON.encode(sendingPackage));
   });
+  
+  test('force new property profile changing test', () {
+    ForceServer fs = new ForceServer();
+    var channelName = "chnnl";
+    var sendingPackage =  {'request': request,
+                           'type': { 'name' : 'normal'},
+                           'profile': {'name' : profileName},
+                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+
+    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    
+    fs.onProfileChanged.listen(expectAsync1((e) {
+      if (e.type == ForceProfileType.NewProperty) {
+        expect(e.property.key, 'channel');
+        expect(e.property.value, channelName);
+      }
+    }, count: 2));
+    
+    sendingPackage['profile'] = {'name' : profileName, 'channel' : channelName};
+    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+  });
    
+  test('force changed property profile changing test', () {
+    ForceServer fs = new ForceServer();
+    var channelName = "chnnl";
+    var sendingPackage =  {'request': request,
+                           'type': { 'name' : 'normal'},
+                           'profile': {'name' : profileName},
+                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+
+    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    
+    fs.onProfileChanged.listen(expectAsync1((e) {
+      if (e.type == ForceProfileType.ChangedProperty) {
+        expect(e.property.key, 'name');
+        expect(e.property.value, channelName);
+      }
+    }, count: 2));
+    
+    sendingPackage['profile'] = {'name' : channelName};
+    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+  });
 }
