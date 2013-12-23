@@ -21,7 +21,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   }
   
   void connect() {
-    print("try to connect with the server again ...");
+    print("try to connect with the server ...");
     _connectPending = false;
     _connectController = new StreamController<ForceConnectEvent>();
     webSocket = new WebSocket('ws://${Uri.base.host}:${Uri.base.port}$wsPath');
@@ -52,7 +52,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     _connectController.add(new ForceConnectEvent("disconnected"));
     if (_connectPending) return;
     _connectPending = true;
-    new Timer(RECONNECT_DELAY, connect);
+    new Timer(RECONNECT_DELAY, () => this.connect());
   }
   
   void on(String request, MessageReceiver vaderMessageController) {
