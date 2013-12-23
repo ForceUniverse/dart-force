@@ -21,6 +21,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   }
   
   void connect() {
+    print("try to connect with the server again ...");
     _connectPending = false;
     _connectController = new StreamController<ForceConnectEvent>();
     webSocket = new WebSocket('ws://${Uri.base.host}:${Uri.base.port}$wsPath');
