@@ -3,11 +3,11 @@ import 'package:force/force_serverside.dart';
 import 'dart:convert';
 
 void main() {
-  ForceServer fs = new ForceServer();
   var request = "req:";
   var profileName = 'chatName';
   
   test('force basic messageDispatcher test', () {  
+    ForceServer fs = new ForceServer();
     var sendingPackage =  {'request': request,
                            'type': { 'name' : 'normal'},
                            'profile': {'name' : profileName},
@@ -24,6 +24,7 @@ void main() {
   });
   
   test('force id messageDispatcher test', () {
+    ForceServer fs = new ForceServer();
     var sendingPackage =  {'request': request,
                            'type': { 'name' : 'id', 'id' : 'aefed'},
                            'profile': {'name' : profileName},
@@ -37,6 +38,7 @@ void main() {
   });
   
   test('force profile messageDispatcher test', () {
+    ForceServer fs = new ForceServer();
     var sendingPackage =  {'request': request,
                            'type': { 'name' : 'profile', 'key' : 'key', 'value' : 'value'},
                            'profile': {'name' : profileName},
@@ -47,4 +49,21 @@ void main() {
 
     fs.handleMessages("id:bla", JSON.encode(sendingPackage));
   });
+  
+  test('force profile changing test', () {
+    ForceServer fs = new ForceServer();
+    var sendingPackage =  {'request': request,
+                           'type': { 'name' : 'normal'},
+                           'profile': {'name' : profileName},
+                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+
+    fs.onProfileChanged.listen(expectAsync1((e) {
+      String name = e.profileInfo['name'];
+      
+      expect(name, profileName);
+    }));
+
+    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+  });
+   
 }
