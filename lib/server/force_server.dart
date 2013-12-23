@@ -18,19 +18,12 @@ class ForceServer extends ForceBaseMessageSendReceiver
     
     messageDispatcher = new ForceMessageDispatcher(this);
     
-    //Profiles
+    // Profiles
     profiles = new Map<String, dynamic>();
     _profileController = new StreamController<ForceProfileEvent>();
     
-    //listen on info from the client
-    this.before((e, sendable) {
-      if (e.profile != null) {
-        if (!profiles.containsKey(e.wsId)) {
-            _profileController.add(new ForceProfileEvent(ForceProfileType.New, e.wsId, e.profile));
-        }
-        profiles[e.wsId] = e.profile;
-      }
-    });
+    // listen on info from the client
+    this.before(_checkProfiles);
   }
   
   Future start() {
@@ -111,6 +104,28 @@ class ForceServer extends ForceBaseMessageSendReceiver
         this.profiles.remove(wsId);
       }
     } 
+  }
+  
+  void _checkProfiles(e, sendable) {
+      if (e.profile != null) {
+        if (!profiles.containsKey(e.wsId)) {
+            _profileController.add(new ForceProfileEvent(ForceProfileType.New, e.wsId, e.profile));
+        } else {
+          // look at the difference with current profile
+          Map oldProfile = profiles[e.wsId];
+          Map newProfile = e.profile;
+          newProfile.forEach((key, value) {
+            if (oldProfile.containsKey(key)) {
+              if (oldProfile[key]!=value) {
+                _profileController.add(new ForceProfileEvent(ForceProfileType.ChangedProperty, e.wsId, e.profile, property: new ForceProperty(key, value)));
+              }
+            } else {
+              _profileController.add(new ForceProfileEvent(ForceProfileType.NewProperty, e.wsId, e.profile,  property: new ForceProperty(key, value)));
+            }
+          });
+        }
+        profiles[e.wsId] = e.profile;
+      }
   }
   
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
