@@ -13,10 +13,10 @@ class BasicServer {
   var virDir;
   var bind_address = InternetAddress.ANY_IP_V6;
   
-  BasicServer(this.wsPath, {port: 8080, bind_address: null, buildPath: '../build' }) {
+  BasicServer(this.wsPath, {port: 8080, host: null, buildPath: '../build' }) {
     this.port = port;
-    if (bind_address!=null) {
-      this.bind_address = bind_address;
+    if (host!=null) {
+      this.bind_address = host;
     }
     buildDir = Platform.script.resolve(buildPath).toFilePath();
     if (!new Directory(buildDir).existsSync()) {
