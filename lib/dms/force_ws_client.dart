@@ -23,23 +23,23 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   void connect() {
     print("try to connect with the server ...");
     _connectPending = false;
-    _connectController = new StreamController<ForceConnectEvent>();
+    //_connectController = new StreamController<ForceConnectEvent>();
     webSocket = new WebSocket('ws://${Uri.base.host}:${Uri.base.port}$wsPath');
     webSocket.onOpen.first.then((_) {
-      onConnected();
+      _onConnected();
       webSocket.onClose.first.then((_) {
         print("Connection disconnected to ${webSocket.url}");
-        onDisconnected();
+        _onDisconnected();
       });
     });
     webSocket.onError.first.then((_) {
       print("Failed to connect to ${webSocket.url}. "
             "Please run bin/server.dart and try again.");
-      onDisconnected();
+      _onDisconnected();
     });
   }
   
-  void onConnected() {
+  void _onConnected() {
     print("connected!");
     _connectController.add(new ForceConnectEvent("connected"));
     print("wicked new ForceEvent no ? ? !");
@@ -48,12 +48,12 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     });
   }
   
-  void onDisconnected() {
+  void _onDisconnected() {
     print("disconnected!");
     _connectController.add(new ForceConnectEvent("disconnected"));
     if (_connectPending) return;
     _connectPending = true;
-    new Timer(RECONNECT_DELAY, () => this.connect());
+    new Timer(RECONNECT_DELAY, connect);
   }
   
   void on(String request, MessageReceiver vaderMessageController) {
