@@ -5,6 +5,7 @@ class WebSocketWrapper extends AbstractSocket {
   
     bool _connectPending = false;
     WebSocket webSocket;
+    
     String _url;
     
     WebSocketWrapper(this._url) {
@@ -16,7 +17,7 @@ class WebSocketWrapper extends AbstractSocket {
       _connectPending = false;
       //_connectController = new StreamController<ForceConnectEvent>();
       print("try to connect to this url -> $_url");
-      webSocket = new WebSocket(_url);
+      webSocket = new WebSocket('ws://$_url');
       webSocket.onOpen.first.then((_) {
         _onConnected();
         webSocket.onClose.first.then((_) {

@@ -5,6 +5,8 @@ abstract class AbstractSocket {
   StreamController<ForceConnectEvent> _connectController;
   StreamController<MessageEvent> _messageController;
   
+  void connect();
+  
   void send(data);
   
   bool isOpen();
