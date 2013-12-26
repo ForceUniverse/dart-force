@@ -15,6 +15,7 @@ class WebSocketWrapper extends AbstractSocket {
     void connect() {
       _connectPending = false;
       //_connectController = new StreamController<ForceConnectEvent>();
+      print("try to connect to this url -> $_url");
       webSocket = new WebSocket(_url);
       webSocket.onOpen.first.then((_) {
         _onConnected();
