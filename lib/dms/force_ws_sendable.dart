@@ -2,7 +2,7 @@ part of dart_force_client_lib;
 
 class ClientSendable implements Sender {
   
-  WebSocket webSocket;
+  WebSocketWrapper webSocketWrapper;
  
   var _profileInfo;
   
@@ -42,8 +42,8 @@ class ClientSendable implements Sender {
   }
   
   void _send(sendingPackage) {
-    if (webSocket != null && webSocket.readyState == WebSocket.OPEN) {
-      webSocket.send(JSON.encode(sendingPackage));
+    if (webSocketWrapper != null && webSocketWrapper.isOpen()) {
+      webSocketWrapper.send(JSON.encode(sendingPackage));
     } else {
       print('WebSocket not connected, message $sendingPackage not sent');
     }
