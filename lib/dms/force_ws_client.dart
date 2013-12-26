@@ -1,7 +1,7 @@
 part of dart_force_client_lib;
 
 class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
-  WebSocketWrapper webSocketWrapper;
+  AbstractSocket webSocketWrapper;
   
   ForceMessageDispatcher _messageDispatcher;
   
@@ -13,7 +13,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     _messageDispatcher = new ForceMessageDispatcher(this);
     this.wsPath = wsPath;
     
-    this.webSocketWrapper = new WebSocketWrapper('ws://${Uri.base.host}:${Uri.base.port}$wsPath');
+    this.webSocketWrapper = ForceWebSocket.createSocket('${Uri.base.host}:${Uri.base.port}$wsPath');
   }
   
   void connect() {
