@@ -7,6 +7,8 @@ abstract class AbstractSocket {
   
   void send(data);
   
+  bool isOpen();
+  
   Stream<MessageEvent> get onMessage => _messageController.stream;
   Stream<ForceConnectEvent> get onConnecting => _connectController.stream;
 }

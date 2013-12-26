@@ -51,4 +51,8 @@ class WebSocketWrapper extends AbstractSocket {
     void send(data) {
       webSocket.send(data);
     }
+    
+    bool isOpen() {
+      return webSocket.readyState == WebSocket.OPEN;
+    }
 }
