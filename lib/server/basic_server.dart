@@ -70,6 +70,7 @@ class BasicServer {
   }
   
   void long_polling() {
+    print('long polling ... $wsPath/polling');
     router.serve('$wsPath/polling', method: "get").listen((e) {
       print("doing long polling on server!");
     });
