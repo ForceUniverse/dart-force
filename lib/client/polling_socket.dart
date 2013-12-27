@@ -32,14 +32,13 @@ class PollingSocket extends AbstractSocket {
   }
   
   void send(data) {
-    var encodedData = _encodeMap(data);
-
+    // var encodedData = _encodeMap(data);
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', 'http://$_url/polling');
     httpRequest.setRequestHeader('Content-type', 
     'application/x-www-form-urlencoded');
     httpRequest.onLoadEnd.listen((e) => loadEnd(httpRequest));
-    httpRequest.send(encodedData);
+    httpRequest.send(data);
   }
   
   void loadEnd(HttpRequest request) {
