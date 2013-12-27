@@ -8,6 +8,8 @@ class PollingSocket extends AbstractSocket {
   PollingSocket(this._url) {
     _connectController = new StreamController<ForceConnectEvent>();
     _messageController = new StreamController<MessageEvent>();
+    
+    print('polling socket is created');
   }
   
   void connect() {
