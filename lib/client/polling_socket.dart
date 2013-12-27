@@ -15,7 +15,8 @@ class PollingSocket extends AbstractSocket {
   }
   
   void polling() {
-    HttpRequest.getString('http://$_url').then(processString);
+    print('polling to ... http://$_url/polling');
+    HttpRequest.getString('http://$_url/polling').then(processString);
   }
   
   void processString(String value) {
@@ -32,7 +33,7 @@ class PollingSocket extends AbstractSocket {
     var encodedData = _encodeMap(data);
 
     var httpRequest = new HttpRequest();
-    httpRequest.open('POST', 'http://$_url');
+    httpRequest.open('POST', 'http://$_url/polling');
     httpRequest.setRequestHeader('Content-type', 
     'application/x-www-form-urlencoded');
     httpRequest.onLoadEnd.listen((e) => loadEnd(httpRequest));
