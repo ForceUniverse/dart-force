@@ -71,12 +71,16 @@ class BasicServer {
   
   void long_polling() {
     print('long polling ... $wsPath/polling');
-    router.serve('$wsPath/polling', method: "get").listen((e) {
+    router.serve('$wsPath/polling', method: "GET").listen((e) {
       print("doing long polling on server!");
     });
     
-    router.serve('$wsPath/polling', method: "post").listen((e) {
+    router.serve('$wsPath/polling', method: "POST").listen((e) {
       print("send data from longpolling!");
+    });
+    
+    router.serve('$wsPath/polling').listen((e) {
+      print("just polling request from longpolling!");
     });
   }
 }
