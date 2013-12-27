@@ -41,7 +41,7 @@ class BasicServer {
 
       // The client will connect using a WebSocket. Upgrade requests to '/ws' and
       // forward them to 'handleWebSocket'.
-      router.serve('/ws')
+      router.serve(this.wsPath)
         .transform(new WebSocketTransformer())
           .listen(handleWs);
       
@@ -70,11 +70,11 @@ class BasicServer {
   }
   
   void long_polling() {
-    router.serve('/ws', method: "get").listen((e) {
+    router.serve('$wsPath/polling', method: "get").listen((e) {
       print("doing long polling on server!");
     });
     
-    router.serve('/ws', method: "post").listen((e) {
+    router.serve('$wsPath/polling', method: "post").listen((e) {
       print("send data from longpolling!");
     });
   }
