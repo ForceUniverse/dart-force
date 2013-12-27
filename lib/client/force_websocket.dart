@@ -6,7 +6,7 @@ class ForceWebSocket {
     if (WebSocket.supported) {
       return new WebSocketWrapper(url);
     } else {
-      // use long polling!
+      return new PollingSocket(url);
     }
   }
 }
