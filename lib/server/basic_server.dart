@@ -78,9 +78,5 @@ class BasicServer {
     router.serve('$wsPath/polling', method: "POST").listen((e) {
       print("send data from longpolling!");
     });
-    
-    router.serve('$wsPath/polling').listen((e) {
-      print("just polling request from longpolling!");
-    });
   }
 }
