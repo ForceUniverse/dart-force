@@ -44,7 +44,9 @@ class BasicServer {
       router.serve('/ws')
         .transform(new WebSocketTransformer())
           .listen(handleWs);
-
+      
+      long_polling();
+      
       // Set up default handler. This will serve files from our 'build' directory.
       virDir = new http_server.VirtualDirectory(buildDir);
       // Disable jail-root, as packages are local sym-links.
@@ -65,5 +67,15 @@ class BasicServer {
 
       // Serve everything not routed elsewhere through the virtual directory.
       virDir.serve(router.defaultStream);
+  }
+  
+  void long_polling() {
+    router.serve('/ws', method: "get").listen((e) {
+      print("doing long polling on server!");
+    });
+    
+    router.serve('/ws', method: "post").listen((e) {
+      print("send data from longpolling!");
+    });
   }
 }
