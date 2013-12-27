@@ -9,11 +9,11 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   
   var _profileInfo = {};
   
-  ForceClient({wsPath: "/ws"}) {
+  ForceClient({wsPath: "/ws", usePolling: false}) {
     _messageDispatcher = new ForceMessageDispatcher(this);
     this.wsPath = wsPath;
     
-    this.socket = ForceWebSocket.createSocket('${Uri.base.host}:${Uri.base.port}$wsPath');
+    this.socket = ForceWebSocket.createSocket('${Uri.base.host}:${Uri.base.port}$wsPath', usePolling: usePolling);
   }
   
   void connect() {
