@@ -84,11 +84,7 @@ class BasicServer {
       var dynamic = {"status" : "ok"};
       String data = JSON.encode(dynamic);
       req.response.write(data);
-      response
-        ..statusCode = 200
-        ..headers.contentType = "application/json"
-        ..headers.contentLength = data.length;
-      req.response.close();
+      
     });
     
     router.serve('/polling', method: "GET").listen((HttpRequest req) {
@@ -98,11 +94,6 @@ class BasicServer {
       var dynamic = {"status" : "ok"};
       String data = JSON.encode(dynamic);
       req.response.write(data);
-      response
-        ..statusCode = 200
-        ..headers.contentType = "application/json"
-        ..headers.contentLength = data.length;
-      req.response.close();
     });
     
     router.serve('/polling', method: "POST").listen((HttpRequest req) {
@@ -112,11 +103,6 @@ class BasicServer {
       var dynamic = {"status" : "ok"};
       String data = JSON.encode(dynamic);
       req.response.write(data);
-      response
-        ..statusCode = 200
-        ..headers.contentType = "application/json"
-        ..headers.contentLength = data.length;
-      req.response.close();
 
     });
   }
