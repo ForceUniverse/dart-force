@@ -22,7 +22,10 @@ class PollingSocket extends AbstractSocket {
   }
   
   void processString(String value) {
-    _messageController.add(new MessageEvent("polling", data: value));
+    print('processString ...');
+    if (value!=null) {
+      _messageController.add(new MessageEvent("polling", data: value));
+    }
   }
   
   String _encodeMap(Map data) {
