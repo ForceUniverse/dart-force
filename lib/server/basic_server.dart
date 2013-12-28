@@ -52,16 +52,12 @@ class BasicServer {
       // Disable jail-root, as packages are local sym-links.
       virDir.jailRoot = false;
       virDir.allowDirectoryListing = true;
-      virDir.directoryHandler = (dir, HttpRequest request) {
+      virDir.directoryHandler = (dir, request) {
         // Redirect directory-requests to index.html files.
-        var path = request.uri.path;
-        print('directHandler is doing the request ... $path');
-        if (request.uri.path.indexOf("polling")==-1) {
-          var indexUri = new Uri.file(dir.path).resolve(startPage);
-          virDir.serveFile(new File(indexUri.toFilePath()), request);
-        } else {
-          print("no request send");
-        }
+        print('directHandler is doing the request ...');
+        
+        var indexUri = new Uri.file(dir.path).resolve(startPage);
+        virDir.serveFile(new File(indexUri.toFilePath()), request);
       };
 
       // Add an error page handler.
@@ -83,8 +79,12 @@ class BasicServer {
       var response = req.response;
       var dynamic = {"status" : "ok"};
       String data = JSON.encode(dynamic);
-      req.response.write(data);
-      
+      response
+        ..statusCode = 200
+        ..headers.contentType = "application/json"
+        ..headers.contentLength = data.length
+        ..write(data)
+        ..close();
     });
     
     router.serve('/polling', method: "GET").listen((HttpRequest req) {
@@ -93,7 +93,12 @@ class BasicServer {
       var response = req.response;
       var dynamic = {"status" : "ok"};
       String data = JSON.encode(dynamic);
-      req.response.write(data);
+      response
+        ..statusCode = 200
+        ..headers.contentType = "application/json"
+        ..headers.contentLength = data.length
+        ..write(data)
+        ..close();
     });
     
     router.serve('/polling', method: "POST").listen((HttpRequest req) {
@@ -102,7 +107,12 @@ class BasicServer {
       var response = req.response;
       var dynamic = {"status" : "ok"};
       String data = JSON.encode(dynamic);
-      req.response.write(data);
+      response
+        ..statusCode = 200
+        ..headers.contentType = "application/json"
+        ..headers.contentLength = data.length
+        ..write(data)
+        ..close();
 
     });
   }
