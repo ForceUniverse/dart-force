@@ -81,7 +81,7 @@ class BasicServer {
       String data = JSON.encode(dynamic);
       response
         ..statusCode = 200
-        ..headers.contentType = "application/json"
+        ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
         ..headers.contentLength = data.length
         ..write(data)
         ..close();
@@ -95,7 +95,7 @@ class BasicServer {
       String data = JSON.encode(dynamic);
       response
         ..statusCode = 200
-        ..headers.contentType = "application/json"
+        ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
         ..headers.contentLength = data.length
         ..write(data)
         ..close();
@@ -109,7 +109,7 @@ class BasicServer {
       String data = JSON.encode(dynamic);
       response
         ..statusCode = 200
-        ..headers.contentType = "application/json"
+        ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
         ..headers.contentLength = data.length
         ..write(data)
         ..close();
