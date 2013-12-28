@@ -87,21 +87,7 @@ class BasicServer {
         ..close();
     });
     
-    router.serve('/polling', method: "GET").listen((HttpRequest req) {
-      print("get data from longpolling!");
-      
-      var response = req.response;
-      var dynamic = {"status" : "ok"};
-      String data = JSON.encode(dynamic);
-      response
-        ..statusCode = 200
-        ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
-        ..headers.contentLength = data.length
-        ..write(data)
-        ..close();
-    });
-    
-    router.serve('/polling', method: "POST").listen((HttpRequest req) {
+    router.serve('$wsPath/polling', method: "POST").listen((HttpRequest req) {
       print("send data from longpolling!");
       
       var response = req.response;
