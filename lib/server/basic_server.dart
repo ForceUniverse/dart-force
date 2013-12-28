@@ -71,12 +71,33 @@ class BasicServer {
   
   void long_polling() {
     print('long polling ... $wsPath/polling');
-    router.serve('$wsPath/polling', method: "GET").listen((e) {
-      print("doing long polling on server!");
+    router.serve('$wsPath/polling', method: "GET").listen((HttpRequest req) {
+      print("get data from longpolling!");
+      
+      var response = req.response;
+      var dynamic = {"status" : "ok"};
+      String data = JSON.encode(dynamic);
+      req.response.write(data);
+      response
+        ..statusCode = 200
+        ..headers.contentType = "application/json"
+        ..headers.contentLength = data.length;
+      req.response.close();
     });
     
-    router.serve('$wsPath/polling', method: "POST").listen((e) {
+    router.serve('$wsPath/polling', method: "POST").listen((HttpRequest req) {
       print("send data from longpolling!");
+      
+      var response = req.response;
+      var dynamic = {"status" : "ok"};
+      String data = JSON.encode(dynamic);
+      req.response.write(data);
+      response
+        ..statusCode = 200
+        ..headers.contentType = "application/json"
+        ..headers.contentLength = data.length;
+      req.response.close();
+
     });
   }
 }
