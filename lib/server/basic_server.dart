@@ -13,6 +13,8 @@ class BasicServer {
   var virDir;
   var bind_address = InternetAddress.ANY_IP_V6;
   
+  PollingServer pollingServer;
+  
   BasicServer(this.wsPath, {port: 8080, host: null, buildPath: '../build' }) {
     this.port = port;
     if (host!=null) {
@@ -45,7 +47,8 @@ class BasicServer {
         .transform(new WebSocketTransformer())
           .listen(handleWs);
       
-      long_polling();
+      // long_polling();
+      pollingServer = new PollingServer(router, wsPath);
       
       // Set up default handler. This will serve files from our 'build' directory.
       virDir = new http_server.VirtualDirectory(buildDir);
@@ -54,8 +57,6 @@ class BasicServer {
       virDir.allowDirectoryListing = true;
       virDir.directoryHandler = (dir, request) {
         // Redirect directory-requests to index.html files.
-        print('directHandler is doing the request ...');
-        
         var indexUri = new Uri.file(dir.path).resolve(startPage);
         virDir.serveFile(new File(indexUri.toFilePath()), request);
       };
@@ -71,35 +72,4 @@ class BasicServer {
       virDir.serve(router.defaultStream);
   }
   
-  void long_polling() {
-    print('long polling ... $wsPath/polling');
-    router.serve('$wsPath/polling', method: "GET").listen((HttpRequest req) {
-      print("get data from longpolling!");
-      
-      var response = req.response;
-      var dynamic = {"status" : "ok"};
-      String data = JSON.encode(dynamic);
-      response
-        ..statusCode = 200
-        ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
-        ..headers.contentLength = data.length
-        ..write(data)
-        ..close();
-    });
-    
-    router.serve('$wsPath/polling', method: "POST").listen((HttpRequest req) {
-      print("send data from longpolling!");
-      
-      var response = req.response;
-      var dynamic = {"status" : "ok"};
-      String data = JSON.encode(dynamic);
-      response
-        ..statusCode = 200
-        ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
-        ..headers.contentLength = data.length
-        ..write(data)
-        ..close();
-
-    });
-  }
 }
