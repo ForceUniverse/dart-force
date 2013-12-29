@@ -111,3 +111,9 @@ If you are new to Git or GitHub, please read [this guide](https://help.github.co
 #### Twitter ####
 
 Follow us on twitter https://twitter.com/usethedartforce
+
+#### examples ####
+
+Links to some examples that I made with this framework.
+
+[chat](http://forcechat.herokuapp.com/) [source code](https://github.com/jorishermans/dart-force-chat-example)
