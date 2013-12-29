@@ -51,6 +51,9 @@ class BasicServer {
       
       // long_polling();
       pollingServer = new PollingServer(router, wsPath);
+      pollingServer.onConnection.listen((PollingSocket socket) {
+        handleWs(socket);
+      });
       
       // Set up default handler. This will serve files from our 'build' directory.
       virDir = new http_server.VirtualDirectory(buildDir);
