@@ -16,14 +16,9 @@ class PollingServer {
   void polling(HttpRequest req) {
     print("get data from longpolling!");
     
-    UTF8.decodeStream(req).then((content) {
-      final params = Uri.splitQueryString(content);
-      print(params['pid']);
-    });
-    print("get pid?");
-    print(req.uri.queryParameters['pid']);
+    String pid = req.uri.queryParameters['pid'];
+    print("get pid? $pid");
 
-    
     var response = req.response;
     var dynamic = {"status" : "ok"};
     String data = JSON.encode(dynamic);
