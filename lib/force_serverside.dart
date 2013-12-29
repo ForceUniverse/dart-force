@@ -22,6 +22,7 @@ part 'server/polling_server.dart';
 
 part 'serversocket/abstract_socket.dart';
 part 'serversocket/websocket_wrapper.dart';
+part 'serversocket/polling_socket.dart';
 
 //mixins
 part 'server/force_serveable.dart';
