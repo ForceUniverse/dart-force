@@ -8,16 +8,16 @@ import 'package:uuid/uuid.dart';
 
 import 'force_common.dart';
 
-part 'dms/force_ws_client.dart';
-part 'dms/force_connect_event.dart';
+part 'client/force_ws_client.dart';
+part 'client/force_connect_event.dart';
 
-part 'client/abstract_socket.dart';
-part 'client/force_websocket.dart';
-part 'client/websocket_wrapper.dart';
-part 'client/polling_socket.dart';
+part 'clientsocket/abstract_socket.dart';
+part 'clientsocket/force_websocket.dart';
+part 'clientsocket/websocket_wrapper.dart';
+part 'clientsocket/polling_socket.dart';
 
 // mixins
-part 'dms/force_ws_sendable.dart';
+part 'client/force_ws_sendable.dart';
 
 
 
