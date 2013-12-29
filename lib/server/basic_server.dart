@@ -45,7 +45,9 @@ class BasicServer {
       // forward them to 'handleWebSocket'.
       router.serve(this.wsPath)
         .transform(new WebSocketTransformer())
-          .listen(handleWs);
+          .listen((WebSocket ws) {
+            handleWs(new WebSocketWrapper(ws));
+          });
       
       // long_polling();
       pollingServer = new PollingServer(router, wsPath);

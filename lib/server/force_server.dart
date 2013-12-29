@@ -14,7 +14,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
   ForceServer({wsPath: "/ws", port: 8080, host: null, buildPath: '../build', startPage: "index.html" }) {
     basicServer = new BasicServer(wsPath, port: port, host: host, buildPath: buildPath);
     basicServer.startPage = startPage;
-    webSockets = new Map<String, WebSocket>();
+    webSockets = new Map<String, Socket>();
     
     messageDispatcher = new ForceMessageDispatcher(this);
     
@@ -55,15 +55,15 @@ class ForceServer extends ForceBaseMessageSendReceiver
     });
   }
   
-  void handleWs(WebSocket webSocket) {
+  void handleWs(Socket webSocket) {
     String id = uuid.v4();
     log.info("register id $id");
     
     this.webSockets[id] = webSocket;
-    this.webSockets[id].listen((data) {
-      handleMessages(id, data);
+    this.webSockets[id].onMessage.listen((e) {
+      handleMessages(id, e.data);
     });
-    this.webSockets[id].done.then((e) {
+    this.webSockets[id].done().then((e) {
       print("ws done");
       checkConnections();
     });
@@ -91,8 +91,8 @@ class ForceServer extends ForceBaseMessageSendReceiver
   
   void checkConnections() {
     List<String> removeWs = new List<String>();
-    this.webSockets.forEach((String key, WebSocket ws) {
-      if (ws.readyState == WebSocket.CLOSED) {
+    this.webSockets.forEach((String key, Socket ws) {
+      if (ws.isClosed()) {
         removeWs.add(key);
       }
     });

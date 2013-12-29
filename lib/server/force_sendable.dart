@@ -4,7 +4,7 @@ class Sendable implements Sender {
 
  final Logger log = new Logger('Sendable');
   
-  Map<String, WebSocket> webSockets;
+  Map<String, Socket> webSockets;
   Map<String, dynamic> profiles;
   
   void send(request, data) {
@@ -15,7 +15,7 @@ class Sendable implements Sender {
           'data': data
       };
     
-    webSockets.forEach((String key, WebSocket ws) {
+    webSockets.forEach((String key, Socket ws) {
       log.info("breadcasting ... to $key");
       ws.add(JSON.encode(sendingPackage));
     });
@@ -23,7 +23,7 @@ class Sendable implements Sender {
   
   void sendTo(id, request, data) {
     log.info("*** send to $id");
-    WebSocket ws = webSockets[id];
+    Socket ws = webSockets[id];
     var sendingPackage =  {
           'request': request,
           'data': data
