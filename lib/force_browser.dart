@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
+import 'package:uuid/uuid.dart';
+
 import 'force_common.dart';
 
 part 'dms/force_ws_client.dart';
