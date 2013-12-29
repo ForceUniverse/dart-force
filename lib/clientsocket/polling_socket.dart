@@ -25,14 +25,18 @@ class PollingSocket extends AbstractSocket {
     HttpRequest.getString('http://$_url/polling?pid=$_uuid').then(processString);
   }
   
-  void processString(String value) {
-    print('process return from polling ...$value');
+  void processString(String values) {
+    print('process return from polling ...$values');
+    var messages = JSON.decode(values);
     if (!_alreadyConnected) {
       _connectController.add(new ForceConnectEvent("connected"));
       _alreadyConnected = true;
     }
-    if (value!=null) {
-      _messageController.add(new MessageEvent("polling", data: value));
+    if (values!=null) {
+      for (var value in values) {
+        var encodedValue = JSON.encode(value);
+        _messageController.add(new MessageEvent("polling", data: encodedValue));
+      }
     }
     new Timer(RECONNECT_DELAY, polling);
   }
