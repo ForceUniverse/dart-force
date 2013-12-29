@@ -20,6 +20,9 @@ class PollingServer {
       final params = Uri.splitQueryString(content);
       print(params['pid']);
     });
+    print("get pid?");
+    print(req.uri.queryParameters['pid']);
+
     
     var response = req.response;
     var dynamic = {"status" : "ok"};
