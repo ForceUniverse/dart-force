@@ -18,7 +18,7 @@ class PollingServer {
     
     UTF8.decodeStream(req).then((content) {
       final params = Uri.splitQueryString(content);
-      print(params['id']);
+      print(params['pid']);
     });
     
     var response = req.response;
