@@ -22,10 +22,11 @@ class PollingSocket extends AbstractSocket {
   }
   
   void processString(String value) {
-    print('processString ...');
+    print('process return from polling ...');
     if (value!=null) {
       _messageController.add(new MessageEvent("polling", data: value));
     }
+    new Timer(RECONNECT_DELAY, polling);
   }
   
   String _encodeMap(Map data) {
