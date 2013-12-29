@@ -22,11 +22,11 @@ class PollingSocket extends AbstractSocket {
   
   void polling() {
     print('polling to ... http://$_url/polling?pid=$_uuid');
-    HttpRequest.getString('http://$_url/polling').then(processString);
+    HttpRequest.getString('http://$_url/polling?pid=$_uuid').then(processString);
   }
   
   void processString(String value) {
-    print('process return from polling ...');
+    print('process return from polling ...$value');
     if (!_alreadyConnected) {
       _connectController.add(new ForceConnectEvent("connected"));
       _alreadyConnected = true;
