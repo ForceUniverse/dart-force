@@ -14,6 +14,8 @@ class PollingServer {
     print('start long polling server ... $wsPath/polling');
     router.serve('$wsPath/polling', method: "GET").listen(polling);
     router.serve('$wsPath/polling', method: "POST").listen(sendedData);
+    
+    _socketController = new StreamController<PollingSocket>();
   }
   
   void polling(HttpRequest req) {
