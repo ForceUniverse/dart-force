@@ -1,14 +1,18 @@
 part of dart_force_client_lib;
 
 class PollingSocket extends AbstractSocket {
-  static const Duration RECONNECT_DELAY = const Duration(milliseconds: 500);
+  static const Duration RECONNECT_DELAY = const Duration(milliseconds: 2000);
   
   String _url;
+  bool _alreadyConnected = false;
+  
+  String _uuid;
   
   PollingSocket(this._url) {
     _connectController = new StreamController<ForceConnectEvent>();
     _messageController = new StreamController<MessageEvent>();
     
+    _uuid = new Uuid().v4();
     print('polling socket is created');
   }
   
@@ -17,12 +21,16 @@ class PollingSocket extends AbstractSocket {
   }
   
   void polling() {
-    print('polling to ... http://$_url/polling');
+    print('polling to ... http://$_url/polling?pid=$_uuid');
     HttpRequest.getString('http://$_url/polling').then(processString);
   }
   
   void processString(String value) {
     print('process return from polling ...');
+    if (!_alreadyConnected) {
+      _connectController.add(new ForceConnectEvent("connected"));
+      _alreadyConnected = true;
+    }
     if (value!=null) {
       _messageController.add(new MessageEvent("polling", data: value));
     }
