@@ -116,4 +116,4 @@ Follow us on twitter https://twitter.com/usethedartforce
 
 Links to some examples that I made with this framework.
 
-[chat](http://forcechat.herokuapp.com/) [source code](https://github.com/jorishermans/dart-force-chat-example)
+[chat](http://forcechat.herokuapp.com/) - [source code](https://github.com/jorishermans/dart-force-chat-example)
