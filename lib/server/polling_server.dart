@@ -44,6 +44,8 @@ class PollingServer {
     req.listen((List<int> buffer) {
       // Return the data back to the client.
       String dataOnAString = new String.fromCharCodes(buffer);
+      print(dataOnAString);
+      
       var package = JSON.decode(dataOnAString);
       
       var pid = package["pid"];
