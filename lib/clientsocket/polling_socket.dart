@@ -51,7 +51,7 @@ class PollingSocket extends AbstractSocket {
     // var encodedData = _encodeMap(data);
     var pacakge = JSON.encode({
                    "pid" : _uuid,
-                   "data" : JSON.decode(data)
+                   "data" : data
     });
     print('sending data to the post http://$_url/polling');
     var httpRequest = new HttpRequest();
