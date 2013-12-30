@@ -25,6 +25,10 @@ class PollingSocket extends Socket {
   void close() {
     completer.complete(const []);
   }
+  
+  void sendedData(data) {
+    _messageController.add(new MessageEvent(data));
+  }
 
   void add(data) {
     messages.add(data);
