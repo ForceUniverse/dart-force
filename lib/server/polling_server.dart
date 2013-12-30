@@ -27,6 +27,7 @@ class PollingServer {
     if (connections.containsKey(pid)) {
       pollingSocket = connections[pid];
     } else {
+      pollingSocket = new PollingSocket();
       connections[pid] = pollingSocket;
       _socketController.add(pollingSocket);
     }
