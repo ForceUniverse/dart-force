@@ -23,14 +23,7 @@ class PollingServer {
     
     String pid = req.uri.queryParameters['pid'];
     print("get pid? $pid");
-    PollingSocket pollingSocket;
-    if (connections.containsKey(pid)) {
-      pollingSocket = connections[pid];
-    } else {
-      pollingSocket = new PollingSocket();
-      connections[pid] = pollingSocket;
-      _socketController.add(pollingSocket);
-    }
+    PollingSocket pollingSocket = retrieveSocket(pid);
     
     var messages = pollingSocket.messages;
     
@@ -50,7 +43,13 @@ class PollingServer {
     
     req.listen((List<int> buffer) {
       // Return the data back to the client.
-      print(new String.fromCharCodes(buffer));
+      String dataOnAString = new String.fromCharCodes(buffer);
+      var package = JSON.decode(dataOnAString);
+      
+      var pid = package["pid"];
+      
+      PollingSocket pollingSocket = retrieveSocket(pid);
+      pollingSocket.sendedData(package["data"]);
     });
     
     var response = req.response;
@@ -62,6 +61,18 @@ class PollingServer {
     ..headers.contentLength = data.length
     ..write(data)
       ..close();
+  }
+  
+  PollingSocket retrieveSocket(pid) {
+    PollingSocket pollingSocket;
+    if (connections.containsKey(pid)) {
+      pollingSocket = connections[pid];
+    } else {
+      pollingSocket = new PollingSocket();
+      connections[pid] = pollingSocket;
+      _socketController.add(pollingSocket);
+    }
+    return pollingSocket;
   }
   
   Stream<PollingSocket> get onConnection => _socketController.stream;
