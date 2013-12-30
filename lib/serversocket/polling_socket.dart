@@ -10,6 +10,10 @@ class PollingSocket extends Socket {
   List<DataPackage> messages = new List<DataPackage>();
   Completer completer = new Completer.sync();
   
+  PollingSocket() {
+    _messageController = new   StreamController<MessageEvent>();
+  }
+  
   Future done() {
     return completer.future;
   }
