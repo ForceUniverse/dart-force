@@ -46,6 +46,12 @@ class PollingServer {
   }
   
   void sendedData(HttpRequest req) {
+    
+    req.listen((List<int> buffer) {
+      // Return the data back to the client.
+      print(new String.fromCharCodes(buffer));
+    });
+    
     var response = req.response;
     var dynamic = {"status" : "ok"};
     String data = JSON.encode(dynamic);
