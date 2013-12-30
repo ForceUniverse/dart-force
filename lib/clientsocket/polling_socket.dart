@@ -32,8 +32,8 @@ class PollingSocket extends AbstractSocket {
       _connectController.add(new ForceConnectEvent("connected"));
       _alreadyConnected = true;
     }
-    if (values!=null) {
-      for (var value in values) {
+    if (messages!=null) {
+      for (var value in messages) {
         var encodedValue = JSON.encode(value);
         _messageController.add(new MessageEvent("polling", data: encodedValue));
       }
@@ -49,13 +49,17 @@ class PollingSocket extends AbstractSocket {
   
   void send(data) {
     // var encodedData = _encodeMap(data);
+    var pacakge = {
+                   "pid" : _uuid,
+                   "data" : data
+    };
     print('sending data to the post http://$_url/polling');
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', 'http://$_url/polling');
     httpRequest.setRequestHeader('Content-type', 
     'application/x-www-form-urlencoded');
     httpRequest.onLoadEnd.listen((e) => loadEnd(httpRequest));
-    httpRequest.send(data);
+    httpRequest.send(pacakge);
   }
   
   void loadEnd(HttpRequest request) {
