@@ -31,6 +31,6 @@ class PollingSocket extends Socket {
   }
 
   void add(data) {
-    messages.add(data);
+    messages.add(new DataPackage(data));
   }
 }
