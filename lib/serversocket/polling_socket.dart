@@ -1,13 +1,8 @@
 part of dart_force_server_lib;
 
-class DataPackage {
-  var data;
-  DataPackage(this.data);
-}
-
 class PollingSocket extends Socket {
   
-  List<DataPackage> messages = new List<DataPackage>();
+  var messages = new List();
   Completer completer = new Completer.sync();
   
   PollingSocket() {
@@ -31,6 +26,6 @@ class PollingSocket extends Socket {
   }
 
   void add(data) {
-    messages.add(new DataPackage(data));
+    messages.add(data);
   }
 }
