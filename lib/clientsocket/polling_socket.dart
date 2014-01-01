@@ -34,6 +34,7 @@ class PollingSocket extends AbstractSocket {
     }
     if (messages!=null) {
       for (var value in messages) {
+        print('individual value -> $value');
         var encodedValue = JSON.encode(value);
         _messageController.add(new SocketEvent(encodedValue));
       }
