@@ -10,7 +10,7 @@ class PollingSocket extends AbstractSocket {
   
   PollingSocket(this._url) {
     _connectController = new StreamController<ForceConnectEvent>();
-    _messageController = new StreamController<MessageEvent>();
+    _messageController = new StreamController<SocketEvent>();
     
     _uuid = new Uuid().v4();
     print('polling socket is created');
@@ -35,7 +35,7 @@ class PollingSocket extends AbstractSocket {
     if (messages!=null) {
       for (var value in messages) {
         var encodedValue = JSON.encode(value);
-        _messageController.add(new MessageEvent("polling", data: encodedValue));
+        _messageController.add(new SocketEvent(encodedValue));
       }
     }
     new Timer(RECONNECT_DELAY, polling);

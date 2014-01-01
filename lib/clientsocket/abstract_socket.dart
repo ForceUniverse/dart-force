@@ -1,9 +1,14 @@
 part of dart_force_client_lib;
 
+class SocketEvent {
+  var data;
+  SocketEvent(this.data);
+}
+
 abstract class AbstractSocket {
   
   StreamController<ForceConnectEvent> _connectController;
-  StreamController<MessageEvent> _messageController;
+  StreamController<SocketEvent> _messageController;
   
   void connect();
   
@@ -11,6 +16,6 @@ abstract class AbstractSocket {
   
   bool isOpen();
   
-  Stream<MessageEvent> get onMessage => _messageController.stream;
+  Stream<SocketEvent> get onMessage => _messageController.stream;
   Stream<ForceConnectEvent> get onConnecting => _connectController.stream;
 }

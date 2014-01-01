@@ -10,7 +10,7 @@ class WebSocketWrapper extends AbstractSocket {
     
     WebSocketWrapper(this._url) {
       _connectController = new StreamController<ForceConnectEvent>();
-      _messageController = new StreamController<MessageEvent>();
+      _messageController = new StreamController<SocketEvent>();
     }
     
     void connect() {
@@ -37,7 +37,7 @@ class WebSocketWrapper extends AbstractSocket {
       _connectController.add(new ForceConnectEvent("connected"));
       print("wicked new ForceEvent no ? ? !");
       webSocket.onMessage.listen((e) {
-        _messageController.add(e);
+        _messageController.add(new SocketEvent(e.data));
       });
     }
     
