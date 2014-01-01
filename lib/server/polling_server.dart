@@ -19,12 +19,9 @@ class PollingServer {
   }
   
   void polling(HttpRequest req) {
-    print("get data from longpolling!");
-    
     String pid = req.uri.queryParameters['pid'];
-    print("get pid? $pid");
-    PollingSocket pollingSocket = retrieveSocket(pid);
     
+    PollingSocket pollingSocket = retrieveSocket(pid);
     var messages = pollingSocket.messages;
     
     var response = req.response;
@@ -70,6 +67,8 @@ class PollingServer {
     if (connections.containsKey(pid)) {
       pollingSocket = connections[pid];
     } else {
+      print("new polling connection! $pid");
+      
       pollingSocket = new PollingSocket();
       connections[pid] = pollingSocket;
       _socketController.add(pollingSocket);
