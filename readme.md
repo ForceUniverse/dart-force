@@ -94,6 +94,12 @@ Just add the following code in your client side code.
 
 	forceClient.sendToProfile(key, value, request, data);
 
+##### Long polling #####
+
+You can easily use long polling as follow!
+
+	forceClient = new ForceClient(usePolling: true);
+
 #### TODO ####
 
 - fallback support for legacy browser with no capability of websockets
