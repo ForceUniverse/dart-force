@@ -124,7 +124,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
           newProfile.forEach((key, value) {
             if (oldProfile.containsKey(key)) {
               if (oldProfile[key]!=value) {
-                _profileController.add(new ForceProfileEvent(ForceProfileType.ChangedProperty, e.wsId, e.profile, property: new ForceProperty(key, value)));
+                _profileController.add(new ForceProfileEvent(ForceProfileType.ChangedProperty, e.wsId, e.profile, property: new ForceProperty(key, oldProfile[key])));
               }
             } else {
               _profileController.add(new ForceProfileEvent(ForceProfileType.NewProperty, e.wsId, e.profile,  property: new ForceProperty(key, value)));
