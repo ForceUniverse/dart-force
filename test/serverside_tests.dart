@@ -100,7 +100,8 @@ void main() {
     fs.onProfileChanged.listen(expectAsync1((e) {
       if (e.type == ForceProfileType.ChangedProperty) {
         expect(e.property.key, 'name');
-        expect(e.property.value, channelName);
+        expect(e.property.value, profileName);
+        expect(e.profileInfo['name'], channelName);
       }
     }, count: 2));
     
