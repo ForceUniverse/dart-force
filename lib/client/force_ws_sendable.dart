@@ -2,7 +2,7 @@ part of dart_force_client_lib;
 
 class ClientSendable implements Sender {
   
-  AbstractSocket socket;
+  Socket socket;
  
   var _profileInfo;
   
