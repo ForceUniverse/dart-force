@@ -12,7 +12,6 @@ part 'client/force_ws_client.dart';
 part 'client/force_connect_event.dart';
 
 part 'clientsocket/abstract_socket.dart';
-part 'clientsocket/force_websocket.dart';
 part 'clientsocket/websocket_wrapper.dart';
 part 'clientsocket/polling_socket.dart';
 
