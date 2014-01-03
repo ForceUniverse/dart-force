@@ -26,18 +26,14 @@ class PollingServer {
     
     var response = req.response;
     String data = JSON.encode(messages);
-    try {  
-      response
-      ..statusCode = 200
-      ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
-      ..headers.contentLength = data.length
-      ..write(data)
-        ..close();
-      
-      messages.clear();
-    } catch (ex) {
-      print("Could not react on poll request content $data");
-    }
+    response
+    ..statusCode = 200
+    ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
+    //..headers.contentLength = data.length
+    ..write(data)
+      ..close();
+    
+    messages.clear();
   }
   
   void sendedData(HttpRequest req) {
@@ -58,16 +54,12 @@ class PollingServer {
     var response = req.response;
     var dynamic = {"status" : "ok"};
     String data = JSON.encode(dynamic);
-    try {
-      response
-      ..statusCode = 200
-      ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
-      ..headers.contentLength = data.length
-      ..write(data)
-        ..close();
-    } catch (ex) {
-      print("Could not handle sended data content $data");
-    }
+    response
+    ..statusCode = 200
+    ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
+    ..headers.contentLength = data.length
+    ..write(data)
+      ..close();
   }
   
   PollingSocket retrieveSocket(pid) {
