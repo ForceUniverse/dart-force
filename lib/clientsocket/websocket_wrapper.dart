@@ -1,6 +1,6 @@
 part of dart_force_client_lib;
 
-class WebSocketWrapper extends AbstractSocket {
+class WebSocketWrapper extends Socket {
     static const Duration RECONNECT_DELAY = const Duration(milliseconds: 500);
   
     bool _connectPending = false;
@@ -8,7 +8,7 @@ class WebSocketWrapper extends AbstractSocket {
     
     String _url;
     
-    WebSocketWrapper(this._url) {
+    WebSocketWrapper(this._url) : super._() {
       _connectController = new StreamController<ForceConnectEvent>();
       _messageController = new StreamController<SocketEvent>();
     }

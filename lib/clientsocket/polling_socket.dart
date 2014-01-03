@@ -1,6 +1,6 @@
 part of dart_force_client_lib;
 
-class PollingSocket extends AbstractSocket {
+class PollingSocket extends Socket {
   static const Duration RECONNECT_DELAY = const Duration(milliseconds: 2000);
   
   String _url;
@@ -8,7 +8,7 @@ class PollingSocket extends AbstractSocket {
   
   String _uuid;
   
-  PollingSocket(this._url) {
+  PollingSocket(this._url) : super._() {
     _connectController = new StreamController<ForceConnectEvent>();
     _messageController = new StreamController<SocketEvent>();
     

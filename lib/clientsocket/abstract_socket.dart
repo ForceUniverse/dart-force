@@ -5,7 +5,19 @@ class SocketEvent {
   SocketEvent(this.data);
 }
 
-abstract class AbstractSocket {
+abstract class Socket {
+  
+  // For subclasses
+  Socket._();
+  
+  factory Socket(String url, {usePolling: false}) {
+    print("choose a socket implementation!");
+    if (usePolling || !WebSocket.supported) {
+      return new PollingSocket(url);
+    } else {
+      return new WebSocketWrapper(url);
+    }
+  }
   
   StreamController<ForceConnectEvent> _connectController;
   StreamController<SocketEvent> _messageController;
