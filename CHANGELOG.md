@@ -5,6 +5,7 @@ This file contains highlights of what changes on each version of the polymer pac
 #### Pub version 0.3.0+2 ####
 
 Refactor the code so it uses a factory instead of a static method to choose the socket implementation clientside.
+Use try catch in polling server to handle http exception errors.
 
 #### Pub version 0.3.0+1 ####
 
