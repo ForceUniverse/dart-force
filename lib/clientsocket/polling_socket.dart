@@ -1,14 +1,14 @@
 part of dart_force_client_lib;
 
 class PollingSocket extends Socket {
-  static const Duration RECONNECT_DELAY = const Duration(milliseconds: 2000);
+  Duration heartbeat = new Duration(milliseconds: 2000);
   
   String _url;
   bool _alreadyConnected = false;
   
   String _uuid;
   
-  PollingSocket(this._url) : super._() {
+  PollingSocket(this._url, this.heartbeat) : super._() {
     _connectController = new StreamController<ForceConnectEvent>();
     _messageController = new StreamController<SocketEvent>();
     
@@ -17,7 +17,7 @@ class PollingSocket extends Socket {
   }
   
   void connect() {
-    new Timer(RECONNECT_DELAY, polling);
+    new Timer(heartbeat, polling);
   }
   
   void polling() {
@@ -38,7 +38,7 @@ class PollingSocket extends Socket {
         _messageController.add(new SocketEvent(value));
       }
     }
-    new Timer(RECONNECT_DELAY, polling);
+    new Timer(heartbeat, polling);
   }
   
   String _encodeMap(Map data) {
