@@ -98,7 +98,7 @@ Just add the following code in your client side code.
 
 You can easily use long polling as follow!
 
-	forceClient = new ForceClient(usePolling: true);
+	forceClient = new ForceClient(usePolling: true, heartbeat: 200);
 
 #### TODO ####
 
