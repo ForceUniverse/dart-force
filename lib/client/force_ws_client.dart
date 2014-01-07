@@ -30,6 +30,10 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   void on(String request, MessageReceiver vaderMessageController) {
     _messageDispatcher.register(request, vaderMessageController);
   }
+  
+  void generateId() {
+    return new Uuid().v4();
+  }
    
   Stream<ForceConnectEvent> get onConnecting =>  this.socket.onConnecting;
 }
