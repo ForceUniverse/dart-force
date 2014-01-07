@@ -4,6 +4,10 @@ This file contains highlights of what changes on each version of the polymer pac
 
 #### Pub version 0.3.0+3 ####
 
+Adding a generateId method to the forceclient class. So you can use this unique id in the client to start something, for example a gamesession!
+
+#### Pub version 0.3.0+3 ####
+
 Added an optional parameter url to forceclient so you can set the url to another hosted force server endpoint.
 Added an optional parameter heartbeat, to specify in milliseconds the heartbeat duration.
 
