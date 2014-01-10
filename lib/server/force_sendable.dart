@@ -16,7 +16,7 @@ class Sendable implements Sender {
       };
     
     webSockets.forEach((String key, Socket ws) {
-      log.info("breadcasting ... to $key");
+      log.info("broadcasting ... to $key");
       ws.add(JSON.encode(sendingPackage));
     });
   }

@@ -40,7 +40,6 @@ class ForceServer extends ForceBaseMessageSendReceiver
     decls.forEach((MethodMirror mm) {
       if (mm.metadata.isNotEmpty) {
         var request = mm.metadata.first.reflectee;
-        log.info("check is receiver -> $request");
         if (request is Receiver) {
           log.info("just a simple receiver method on -> $request");
           String name = (MirrorSystem.getName(mm.simpleName));
