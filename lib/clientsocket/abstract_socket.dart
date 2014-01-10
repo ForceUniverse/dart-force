@@ -11,7 +11,7 @@ abstract class Socket {
   Socket._();
   
   factory Socket(String url, {bool usePolling: false, int heartbeat: 2000}) {
-    print("choose a socket implementation!");
+    print("chosing a socket implementation!");
     if (usePolling || !WebSocket.supported) {
       return new PollingSocket(url, heartbeat);
     } else {
