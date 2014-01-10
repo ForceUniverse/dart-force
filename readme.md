@@ -99,7 +99,19 @@ Just add the following code in your client side code.
 You can easily use long polling as follow!
 
 	forceClient = new ForceClient(usePolling: true, heartbeat: 200);
+	
+##### Serverside Classes with Receiver method annotations #####
 
+On the server you can use @Receiver on a method to define that this is a receiver method.
+It is the same as forceServer.on("play", (e, sendable) { 
+
+	@Receiver("play") 
+  	void onGamePlay(ForceMessageEvent vme, Sender sender) {
+
+You can register this class with the register method of a ForceServer object.
+
+	forceServer.register(new GameReceiver());
+	
 #### TODO ####
 
 - fallback support for legacy browser with no capability of websockets
