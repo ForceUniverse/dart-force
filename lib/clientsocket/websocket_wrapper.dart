@@ -15,8 +15,7 @@ class WebSocketWrapper extends Socket {
     
     void connect() {
       _connectPending = false;
-      //_connectController = new StreamController<ForceConnectEvent>();
-      print("try to connect to this url -> $_url");
+      //print("try to connect to this url -> $_url");
       webSocket = new WebSocket('ws://$_url');
       webSocket.onOpen.first.then((_) {
         _onConnected();
@@ -35,7 +34,6 @@ class WebSocketWrapper extends Socket {
     void _onConnected() {
       print("connected!");
       _connectController.add(new ForceConnectEvent("connected"));
-      print("wicked new ForceEvent no ? ? !");
       webSocket.onMessage.listen((e) {
         _messageController.add(new SocketEvent(e.data));
       });
