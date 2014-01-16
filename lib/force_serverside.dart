@@ -5,17 +5,16 @@ import 'dart:convert';
 import 'dart:mirrors';
 import 'dart:io';
 
-import 'package:http_server/http_server.dart' as http_server;
 import 'package:route/server.dart' show Router;
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 import 'package:uuid/uuid.dart';
+import 'package:forcemvc/force_mvc.dart';
 
 import 'force_common.dart';
 
 part 'server/force_server.dart';
 
 part 'server/force_receiver.dart';
-part 'server/basic_server.dart';
 part 'server/force_typedefs.dart';
 part 'server/force_profile_event.dart';
 part 'server/polling_server.dart';
