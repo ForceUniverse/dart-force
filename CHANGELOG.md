@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.1 ####
+
+Extract webServer code and put it into forcemvc package 
+
 #### Pub version 0.3.0+5 & 0.3.0+6 ####
 
 Some small changes in logging and an update to the documentation.
