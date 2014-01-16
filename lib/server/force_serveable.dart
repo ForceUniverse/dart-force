@@ -2,7 +2,7 @@ part of dart_force_server_lib;
 
 class Serveable {
 
-  BasicServer basicServer;
+  WebServer basicServer;
   
   Stream<HttpRequest> serve(String name) {
     return basicServer.router.serve(name);

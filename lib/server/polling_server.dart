@@ -4,17 +4,18 @@ class PollingServer {
   
   final Logger log = new Logger('PollingServer');
   
-  Router router;
   String wsPath;
+  WebServer server;
   
   Map<String, PollingSocket> connections = new Map<String, PollingSocket>();
   StreamController<PollingSocket> _socketController;
   
-  PollingServer(this.router, this.wsPath) {
+  PollingServer(this.wsPath, this.server) {
     print('start long polling server ... $wsPath/polling');
-    router.serve('$wsPath/polling', method: "GET").listen(polling);
-    router.serve('$wsPath/polling', method: "POST").listen(sendedData);
+    String pollingPath = '$wsPath/polling';
     
+    this.server.on(pollingPath, polling, method: "GET");
+    this.server.on(pollingPath, sendedData, method: "POST");
     _socketController = new StreamController<PollingSocket>();
   }
   

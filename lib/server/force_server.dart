@@ -6,13 +6,13 @@ class ForceServer extends ForceBaseMessageSendReceiver
   final Logger log = new Logger('VaderServer');
 
   var uuid = new Uuid();
-  BasicServer basicServer;
+  WebServer basicServer;
   ForceMessageDispatcher messageDispatcher;
   
   StreamController<ForceProfileEvent> _profileController;
   
   ForceServer({wsPath: "/ws", port: 8080, host: null, buildPath: '../build', startPage: "index.html" }) {
-    basicServer = new BasicServer(wsPath, port: port, host: host, buildPath: buildPath);
+    basicServer = new WebServer(wsPath: wsPath, port: port, host: host, buildPath: buildPath);
     basicServer.startPage = startPage;
     webSockets = new Map<String, Socket>();
     
@@ -24,10 +24,18 @@ class ForceServer extends ForceBaseMessageSendReceiver
     
     // listen on info from the client
     this.before(_checkProfiles);
+    
+    // start pollingServer
+    PollingServer pollingServer = new PollingServer(wsPath, basicServer);
+    pollingServer.onConnection.listen((PollingSocket socket) {
+      handleWs(socket);
+    });
   }
   
   Future start() {
-    return basicServer.start(handleWs);
+    return basicServer.start((WebSocket ws) {
+      handleWs(new WebSocketWrapper(ws)); 
+    });
   }
   
   void register(Object obj) {
