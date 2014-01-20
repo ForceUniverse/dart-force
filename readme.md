@@ -130,6 +130,10 @@ If you are new to Git or GitHub, please read [this guide](https://help.github.co
 
 Follow us on twitter https://twitter.com/usethedartforce
 
+#### Google+ ####
+
+Follow us on [google+](https://plus.google.com/111406188246677273707)
+
 #### examples ####
 
 Links to some examples that I made with this framework.
