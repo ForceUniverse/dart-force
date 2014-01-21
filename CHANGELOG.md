@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.1+1 ####
+
+Iterate over all the annotations at a method until you found the Receiver annotation.
+
 #### Pub version 0.3.1 ####
 
 Extract webServer code and put it into forcemvc package 
