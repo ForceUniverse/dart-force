@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.1+2 ####
+
+Update to the new force mvc package, update polling server code.
+
 #### Pub version 0.3.1+1 ####
 
 Iterate over all the annotations at a method until you found the Receiver annotation.
