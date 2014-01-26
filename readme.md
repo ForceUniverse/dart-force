@@ -112,6 +112,12 @@ You can register this class with the register method of a ForceServer object.
 
 	forceServer.register(new GameReceiver());
 	
+##### Dart Force mvc access #####
+
+You have access to the force mvc webserver if you do the following:
+
+	forceServer.server.on(url, controllerHandler, method: 'GET');
+	
 #### TODO ####
 
 - fallback support for legacy browser with no capability of websockets
