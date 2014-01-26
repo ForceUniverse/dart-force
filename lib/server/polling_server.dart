@@ -19,26 +19,18 @@ class PollingServer {
     _socketController = new StreamController<PollingSocket>();
   }
   
-  void polling(HttpRequest req) {
+  String polling(HttpRequest req, Model model) {
     String pid = req.uri.queryParameters['pid'];
     
     PollingSocket pollingSocket = retrieveSocket(pid);
     var messages = pollingSocket.messages;
     
-    var response = req.response;
-    String data = JSON.encode(messages);
-    response
-    ..statusCode = 200
-    ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
-    //..headers.contentLength = data.length
-    ..write(data)
-      ..close();
+    model.addAttributeObject(messages);
     
-    messages.clear();
+    pollingSocket.messages.clear();
   }
   
-  void sendedData(HttpRequest req) {
-    
+  String sendedData(HttpRequest req, Model model) {
     req.listen((List<int> buffer) {
       // Return the data back to the client.
       String dataOnAString = new String.fromCharCodes(buffer);
@@ -52,15 +44,8 @@ class PollingServer {
       pollingSocket.sendedData(package["data"]);
     });
     
-    var response = req.response;
     var dynamic = {"status" : "ok"};
-    String data = JSON.encode(dynamic);
-    response
-    ..statusCode = 200
-    ..headers.contentType = new ContentType("application", "json", charset: "utf-8")
-    ..headers.contentLength = data.length
-    ..write(data)
-      ..close();
+    model.addAttributeObject(dynamic);
   }
   
   PollingSocket retrieveSocket(pid) {
