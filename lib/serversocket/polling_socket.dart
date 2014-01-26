@@ -2,7 +2,7 @@ part of dart_force_server_lib;
 
 class PollingSocket extends Socket {
   
-  var messages = new List();
+  List messages = new List();
   Completer completer = new Completer.sync();
   
   PollingSocket() {
