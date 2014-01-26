@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.1+3 ####
+
+You have access to the webserver through server property of the force server implementation.
+
 #### Pub version 0.3.1+2 ####
 
 Update to the new force mvc package, update polling server code.
