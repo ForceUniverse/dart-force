@@ -1,5 +1,5 @@
 name: force
-version: 0.3.1+2
+version: 0.3.1+3
 author: Joris Hermans <hermansj@gmail.com>
 description: A real time web framework for dart, embracing websockets, making communication even better
 homepage: https://github.com/jorishermans/dart-force
