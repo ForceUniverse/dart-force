@@ -23,7 +23,11 @@ class PollingServer {
     String pid = req.uri.queryParameters['pid'];
     
     PollingSocket pollingSocket = retrieveSocket(pid);
-    var messages = pollingSocket.messages;
+    
+    List messages = new List();
+    for (var message in pollingSocket.messages) {
+      messages.add(message);
+    }
     
     model.addAttributeObject(messages);
     
