@@ -35,5 +35,6 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     return new Uuid().v4();
   }
    
-  Stream<ForceConnectEvent> get onConnecting =>  this.socket.onConnecting;
+  Stream<ConnectEvent> get onConnected =>  this.socket.onConnecting;
+  Stream<ConnectEvent> get onDisconnected =>  this.socket.onDisconnecting;
 }
