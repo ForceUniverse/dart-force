@@ -9,7 +9,7 @@ class WebSocketWrapper extends Socket {
     String _url;
     
     WebSocketWrapper(this._url) : super._() {
-      _connectController = new StreamController<ForceConnectEvent>();
+      _connectController = new StreamController<ConnectEvent>();
       _messageController = new StreamController<SocketEvent>();
     }
     
@@ -33,7 +33,7 @@ class WebSocketWrapper extends Socket {
     
     void _onConnected() {
       print("connected!");
-      _connectController.add(new ForceConnectEvent("connected"));
+      _connectController.add(new ConnectEvent());
       webSocket.onMessage.listen((e) {
         _messageController.add(new SocketEvent(e.data));
       });
@@ -41,7 +41,7 @@ class WebSocketWrapper extends Socket {
     
     void _onDisconnected() {
       print("disconnected!");
-      _connectController.add(new ForceConnectEvent("disconnected"));
+      _disconnectController.add(new ConnectEvent());
       if (_connectPending) return;
       _connectPending = true;
       new Timer(RECONNECT_DELAY, connect);

@@ -5,6 +5,8 @@ class SocketEvent {
   SocketEvent(this.data);
 }
 
+class ConnectEvent {}
+
 abstract class Socket {
   
   // For subclasses
@@ -19,7 +21,8 @@ abstract class Socket {
     }
   }
   
-  StreamController<ForceConnectEvent> _connectController;
+  StreamController<ConnectEvent> _connectController;
+  StreamController<ConnectEvent> _disconnectController;
   StreamController<SocketEvent> _messageController;
   
   void connect();
@@ -29,5 +32,6 @@ abstract class Socket {
   bool isOpen();
   
   Stream<SocketEvent> get onMessage => _messageController.stream;
-  Stream<ForceConnectEvent> get onConnecting => _connectController.stream;
+  Stream<ConnectEvent> get onConnecting => _connectController.stream;
+  Stream<ConnectEvent> get onDisconnecting => _disconnectController.stream;
 }

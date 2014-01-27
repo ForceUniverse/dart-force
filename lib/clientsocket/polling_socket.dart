@@ -9,7 +9,7 @@ class PollingSocket extends Socket {
   String _uuid;
   
   PollingSocket(this._url, heartbeat_ms) : super._() {
-    _connectController = new StreamController<ForceConnectEvent>();
+    _connectController = new StreamController<ConnectEvent>();
     _messageController = new StreamController<SocketEvent>();
     
     _heartbeat = new Duration(milliseconds : heartbeat_ms);
@@ -30,7 +30,7 @@ class PollingSocket extends Socket {
     print('process return from polling ...$values');
     var messages = JSON.decode(values);
     if (!_alreadyConnected) {
-      _connectController.add(new ForceConnectEvent("connected"));
+      _connectController.add(new ConnectEvent());
       _alreadyConnected = true;
     }
     if (messages!=null) {
