@@ -21,16 +21,18 @@ First create a client.
 	 ForceClient forceClient = new ForceClient();
 	 forceClient.connect();
 	 
-Listen on the connection, when it is established and when is been broken.
+Listen on the connection, when it is established.
 
-	 forceClient.onConnecting.listen((e) {
-	      if (e.type=="connected") {
-	        ...
-	      } else if (e.type=="disconnected") {
-	        ...
-	      }
+	 forceClient.onConnected.listen((e) {
+	      
 	 });
 	 
+Listen on the connection, when it is been broken.
+
+	 forceClient.onDisconnected.listen((e) {
+	      
+	 });
+
 Listen on messages with the request of text.
 
 	 forceClient.on("text", (e, sender) {
