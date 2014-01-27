@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.2 ####
+
+Solving issue #12 and more toolable way to handle connecting. 
+So now you need to implement onConnected and onDisconnected.
+
 #### Pub version 0.3.1+3 ####
 
 You have access to the webserver through server property of the force server implementation.
