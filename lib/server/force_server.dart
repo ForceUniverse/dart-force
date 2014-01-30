@@ -3,7 +3,7 @@ part of dart_force_server_lib;
 class ForceServer extends ForceBaseMessageSendReceiver 
                                   with Serveable, Sendable { 
   
-  final Logger log = new Logger('VaderServer');
+  final Logger log = new Logger('ForceServer');
 
   var uuid = new Uuid();
   WebServer _basicServer;
