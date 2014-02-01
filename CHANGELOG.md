@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.2+2 ####
+
+Solving a nullpointer in the client
+
 #### Pub version 0.3.2 ####
 
 Solving issue #12 and more toolable way to handle connecting. 
