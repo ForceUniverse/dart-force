@@ -10,6 +10,7 @@ class WebSocketWrapper extends Socket {
     
     WebSocketWrapper(this._url) : super._() {
       _connectController = new StreamController<ConnectEvent>();
+      _disconnectController = new StreamController<ConnectEvent>();
       _messageController = new StreamController<SocketEvent>();
     }
     

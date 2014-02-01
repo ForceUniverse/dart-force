@@ -10,6 +10,7 @@ class PollingSocket extends Socket {
   
   PollingSocket(this._url, heartbeat_ms) : super._() {
     _connectController = new StreamController<ConnectEvent>();
+    _disconnectController = new StreamController<ConnectEvent>();
     _messageController = new StreamController<SocketEvent>();
     
     _heartbeat = new Duration(milliseconds : heartbeat_ms);
