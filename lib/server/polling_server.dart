@@ -19,8 +19,8 @@ class PollingServer {
     _socketController = new StreamController<PollingSocket>();
   }
   
-  String polling(HttpRequest req, Model model) {
-    String pid = req.uri.queryParameters['pid'];
+  String polling(ForceRequest forceRequest, Model model) {
+    String pid = forceRequest.request.uri.queryParameters['pid'];
     
     PollingSocket pollingSocket = retrieveSocket(pid);
     
@@ -34,14 +34,8 @@ class PollingServer {
     pollingSocket.messages.clear();
   }
   
-  String sendedData(HttpRequest req, Model model) {
-    req.listen((List<int> buffer) {
-      // Return the data back to the client.
-      String dataOnAString = new String.fromCharCodes(buffer);
-      print(dataOnAString);
-      
-      var package = JSON.decode(dataOnAString);
-      
+  String sendedData(ForceRequest req, Model model) {
+    req.postData().then((package) {
       var pid = package["pid"];
       
       PollingSocket pollingSocket = retrieveSocket(pid);
