@@ -39,29 +39,15 @@ class ForceServer extends ForceBaseMessageSendReceiver
   }
   
   void register(Object obj) {
-    InstanceMirror myClassInstanceMirror = reflect(obj);
-    ClassMirror MyClassMirror = myClassInstanceMirror.type;
-   
-    Iterable<DeclarationMirror> decls =
-        MyClassMirror.declarations.values.where(
-            (dm) => dm is MethodMirror && dm.isRegularMethod);
-    decls.forEach((MethodMirror mm) {
-      if (mm.metadata.isNotEmpty) {
-        for (var metadata in mm.metadata) {
-          var request = metadata.reflectee;
-          if (request is Receiver) {
-            log.info("just a simple receiver method on -> $request");
-            String name = (MirrorSystem.getName(mm.simpleName));
-            Symbol memberName = mm.simpleName;
-            
-            on(request.path, (e, sendable) {
-              log.info("execute this please!");
-              InstanceMirror res = myClassInstanceMirror.invoke(memberName, [e, sendable]);
-            }); 
-          }
-        }
-      }
-    });
+    MetaDataHelper<Receiver> metaDataHelper = new MetaDataHelper<Receiver>();
+    List<MetaDataValue<Receiver>> metaDataValues = metaDataHelper.getMirrorValues(obj);
+    
+    for (MetaDataValue mdv in metaDataValues) {
+       on(mdv.object.path, (e, sendable) {
+          log.info("execute this please!");
+          InstanceMirror res = mdv.instanceMirror.invoke(mdv.memberName, [e, sendable]);
+       }); 
+    }    
   }
   
   void handleWs(Socket webSocket) {
