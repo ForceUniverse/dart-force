@@ -4,7 +4,7 @@ This file contains highlights of what changes on each version of the force packa
 
 #### Pub version 0.3.2+2 ####
 
-Solving a nullpointer in the client
+Solving the initialization of the client socket.
 
 #### Pub version 0.3.2 ####
 
