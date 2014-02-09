@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.2+4 ####
+
+Updating dependencies and force mirrors code.
+
 #### Pub version 0.3.2+2 ####
 
 Solving the initialization of the client socket.
