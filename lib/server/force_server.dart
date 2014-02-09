@@ -45,7 +45,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
     for (MetaDataValue mdv in metaDataValues) {
        on(mdv.object.path, (e, sendable) {
           log.info("execute this please!");
-          InstanceMirror res = mdv.instanceMirror.invoke(mdv.memberName, [e, sendable]);
+          InstanceMirror res = mdv.invoke([e, sendable]);
        }); 
     }    
   }
