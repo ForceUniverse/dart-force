@@ -18,6 +18,8 @@ class ForceServer extends ForceBaseMessageSendReceiver
     
     messageDispatcher = new ForceMessageDispatcher(this);
     
+    _scanning();
+    
     // Profiles
     profiles = new Map<String, dynamic>();
     _profileController = new StreamController<ForceProfileEvent>();
@@ -36,6 +38,15 @@ class ForceServer extends ForceBaseMessageSendReceiver
     return _basicServer.start((WebSocket ws) {
       handleWs(new WebSocketWrapper(ws)); 
     });
+  }
+  
+  void _scanning() {
+    Scanner<Receivable, Object> classesHelper = new Scanner<Receivable, Object>();
+    List<Object> classes = classesHelper.scan();
+    
+    for (var obj in classes) {
+      this.register(obj);
+    }
   }
   
   void register(Object obj) {
