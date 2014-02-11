@@ -114,6 +114,8 @@ You can register this class with the register method of a ForceServer object.
 
 	forceServer.register(new GameReceiver());
 	
+You can also annotate a class with the @Receivable annotation, so the system can pick up this class and automatically register these classes.
+	
 ##### Dart Force mvc access #####
 
 You have access to the force mvc webserver if you do the following:
