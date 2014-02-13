@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.3 ####
+
+Introducing @Receivable so you can annotate a class that has receiver methods.
+
 #### Pub version 0.3.2+4 ####
 
 Updating dependencies and force mirrors code.
