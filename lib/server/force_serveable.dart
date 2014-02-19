@@ -4,11 +4,7 @@ class Serveable {
 
   WebServer _basicServer;
   
-  Stream<HttpRequest> serve(String name) {
-    return _basicServer.router.serve(name);
-  }
-  
-  Stream<HttpRequest> serveByPattern(Pattern name) {
+  Stream<HttpRequest> serve(name) {
     return _basicServer.router.serve(name);
   }
   
