@@ -2,6 +2,14 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.3+2 ####
+
+Updating dependencies.
+
+#### Pub version 0.3.3+1 ####
+
+Changing force_serveable with serve(name) with typing it with String.
+
 #### Pub version 0.3.3 ####
 
 Introducing @Receivable so you can annotate a class that has receiver methods.
