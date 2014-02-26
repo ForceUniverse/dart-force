@@ -35,7 +35,7 @@ class PollingServer {
   }
   
   String sendedData(ForceRequest req, Model model) {
-    req.postData().then((package) {
+    req.getPostData().then((package) {
       var pid = package["pid"];
       
       PollingSocket pollingSocket = retrieveSocket(pid);
