@@ -4,6 +4,10 @@ This file contains highlights of what changes on each version of the force packa
 
 #### Pub version 0.3.3+2 & 0.3.3+3 ####
 
+Updated this buildPath: '../build/web' to get it working in Dart 1.2
+
+#### Pub version 0.3.3+2 & 0.3.3+3 ####
+
 Updating dependencies.
 
 #### Pub version 0.3.3+1 ####
