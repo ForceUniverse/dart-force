@@ -2,7 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
-#### Pub version 0.3.3+2 & 0.3.3+3 ####
+#### Pub version 0.3.3+5 ####
+
+Solving issue with startpage rendering!
+
+#### Pub version 0.3.3+4 ####
 
 Updated this buildPath: '../build/web' to get it working in Dart 1.2
 
