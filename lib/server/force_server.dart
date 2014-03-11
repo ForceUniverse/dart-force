@@ -11,8 +11,8 @@ class ForceServer extends ForceBaseMessageSendReceiver
   
   StreamController<ForceProfileEvent> _profileController;
   
-  ForceServer({wsPath: "/ws", port: 8080, host: null, buildPath: '../build/web/', startPage: "index.html" }) {
-    _basicServer = new WebServer(wsPath: wsPath, port: port, host: host, buildPath: buildPath);
+  ForceServer({wsPath: "/ws", port: 8080, host: null, buildPath: '../build/web/', startPage: "index.html", staticDir: 'static' }) {
+    _basicServer = new WebServer(wsPath: wsPath, port: port, host: host, buildPath: buildPath, staticDir: staticDir);
     _basicServer.startPage = startPage;
     webSockets = new Map<String, Socket>();
     
