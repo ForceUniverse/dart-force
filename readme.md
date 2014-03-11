@@ -53,6 +53,15 @@ Import Serverside code for dart force.
 Instantiate a forceserver.
 
 	ForceServer fs = new ForceServer( port: 9223, startPage: 'start.html' );
+	
+Other optional properties that are possible on ForceServer:
+
+wsPath: is the websocket path of the server
+host: is the domain name of your application, by default to localhost
+port: is the adres port of the application
+buildPath: is the build path of the application by default this is ../build/web/
+startPage: the startpage of the application, the html name that the app needs to use as default root page
+staticDir: is the public directory where you can put your stylesheets and images
 
 Listen on messages of type text and react upon that.
 
