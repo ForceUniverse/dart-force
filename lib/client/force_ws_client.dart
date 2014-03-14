@@ -31,7 +31,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     _messageDispatcher.register(request, vaderMessageController);
   }
   
-  int generateId() {
+  dynamic generateId() {
     var rng = new Random();
     return rng.nextInt(10000000);
   }
