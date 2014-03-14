@@ -16,7 +16,8 @@ class PollingSocket extends Socket {
     _heartbeat = new Duration(milliseconds : heartbeat_ms);
     
     var rng = new Random();
-    _uuid = rng.nextInt(10000000);
+    var rndNumber = rng.nextInt(10000000) + new DateTime.now().millisecondsSinceEpoch;
+    _uuid = "$rndNumber";
     
     print('polling socket is created');
   }
