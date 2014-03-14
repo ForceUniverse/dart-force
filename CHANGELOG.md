@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.3+8 ####
+
+Updating uuid package dependencies
+
 #### Pub version 0.3.3+7 ####
 
 Adding option for static folder of force mvc, staticDir.
