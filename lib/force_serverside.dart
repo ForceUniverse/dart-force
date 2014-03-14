@@ -6,7 +6,7 @@ import 'dart:io';
 
 import 'package:route/server.dart' show Router;
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
-import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid_server.dart';
 import 'package:forcemvc/force_mvc.dart';
 
 import 'package:forcemirrors/force_mirrors.dart';
