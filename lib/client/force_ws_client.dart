@@ -7,8 +7,6 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   
   String wsPath;
   
-  Uuid uuid = new Uuid();
-  
   var _profileInfo = {};
   
   ForceClient({String wsPath: "/ws", String url: null, int heartbeat: 200, bool usePolling: false}) {
@@ -33,8 +31,9 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     _messageDispatcher.register(request, vaderMessageController);
   }
   
-  void generateId() {
-    return uuid.v4();
+  int generateId() {
+    var rng = new Random();
+    return rng.nextInt(10000000);
   }
    
   Stream<ConnectEvent> get onConnected =>  this.socket.onConnecting;
