@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
-import 'package:uuid/uuid_client.dart';
+import 'dart:math';
 
 import 'force_common.dart';
 
