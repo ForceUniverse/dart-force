@@ -14,7 +14,10 @@ class PollingSocket extends Socket {
     _messageController = new StreamController<SocketEvent>();
     
     _heartbeat = new Duration(milliseconds : heartbeat_ms);
-    _uuid = new Uuid().v4();
+    
+    var rng = new Random();
+    _uuid = rng.nextInt(10000000);
+    
     print('polling socket is created');
   }
   
