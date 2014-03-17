@@ -61,17 +61,19 @@ class PollingSocket extends Socket {
   
   void send(data) {
     // var encodedData = _encodeMap(data);
-    var pacakge = JSON.encode({
-                   "pid" : _uuid,
-                   "data" : data
-    });
-    print('sending data to the post http://$_url/polling/');
-    var httpRequest = new HttpRequest();
-    httpRequest.open('POST', 'http://$_url/polling/');
-    httpRequest.setRequestHeader('Content-type', 
-    'application/x-www-form-urlencoded');
-    httpRequest.onLoadEnd.listen((e) => loadEnd(httpRequest));
-    httpRequest.send(pacakge);
+    if (_uuid!=null) {
+      var pacakge = JSON.encode({
+                     "pid" : _uuid,
+                     "data" : data
+      });
+      print('sending data to the post http://$_url/polling/');
+      var httpRequest = new HttpRequest();
+      httpRequest.open('POST', 'http://$_url/polling/');
+      httpRequest.setRequestHeader('Content-type', 
+      'application/x-www-form-urlencoded');
+      httpRequest.onLoadEnd.listen((e) => loadEnd(httpRequest));
+      httpRequest.send(pacakge);
+    }
   }
   
   void loadEnd(HttpRequest request) {
