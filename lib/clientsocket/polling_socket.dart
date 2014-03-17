@@ -19,11 +19,13 @@ class PollingSocket extends Socket {
   }
   
   void connect() {
-    HttpRequest.getString('http://$_url/uuid/?pid=$_uuid').then(procces_id);
+    HttpRequest.getString('http://$_url/uuid/').then(procces_id);
   }
   
   void procces_id(String value) {
     var json = JSON.decode(value);
+    
+    print(json);
     
     _uuid = json.id;
     
