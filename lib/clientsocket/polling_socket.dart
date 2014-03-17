@@ -15,22 +15,24 @@ class PollingSocket extends Socket {
     
     _heartbeat = new Duration(milliseconds : heartbeat_ms);
     
-    var rng = new Random();
-    var rndNumber = rng.nextInt(10000000) + new DateTime.now().millisecondsSinceEpoch;
-    _uuid = "$rndNumber";
-    
-    // _uuid = new Uuid().v4();
-    
     print('polling socket is created');
   }
   
   void connect() {
+    HttpRequest.getString('http://$_url/uuid/?pid=$_uuid').then(procces_id);
+  }
+  
+  void procces_id(String value) {
+    var json = JSON.decode(value);
+    
+    _uuid = json.id;
+    
     new Timer(_heartbeat, polling);
   }
   
   void polling() {
-    print('polling to ... http://$_url/polling?pid=$_uuid');
-    HttpRequest.getString('http://$_url/polling?pid=$_uuid').then(processString);
+    print('polling to ... http://$_url/polling/?pid=$_uuid');
+    HttpRequest.getString('http://$_url/polling/?pid=$_uuid').then(processString);
   }
   
   void processString(String values) {
