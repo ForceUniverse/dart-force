@@ -11,12 +11,17 @@ class PollingServer {
   StreamController<PollingSocket> _socketController;
   
   PollingServer(this.wsPath, this.server) {
-    print('start long polling server ... $wsPath/polling');
-    String pollingPath = '$wsPath/polling';
+    print('start long polling server ... $wsPath/polling/');
+    String pollingPath = '$wsPath/polling/';
     
+    this.server.on('$wsPath/uuid/', uuid, method: "GET");
     this.server.on(pollingPath, polling, method: "GET");
     this.server.on(pollingPath, sendedData, method: "POST");
     _socketController = new StreamController<PollingSocket>();
+  }
+  
+  String uuid(ForceRequest forceRequest, Model model) {
+    model.addAttribute("id", new Uuid().v4());
   }
   
   String polling(ForceRequest forceRequest, Model model) {
