@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.4 ####
+
+Improve the working of the polling mechanics
+
 #### Pub version 0.3.3+8 ####
 
 Updating uuid package dependencies
