@@ -27,7 +27,7 @@ class PollingSocket extends Socket {
     
     print(json);
     
-    _uuid = json.id;
+    _uuid = json["id"];
     
     new Timer(_heartbeat, polling);
   }
