@@ -2,9 +2,9 @@
 
 This file contains highlights of what changes on each version of the force package.
 
-#### Pub version 0.3.4 ####
+#### Pub version 0.3.3+9 ####
 
-Improve the working of the polling mechanics
+Improve the working of the polling mechanics into the right direction.
 
 #### Pub version 0.3.3+8 ####
 
