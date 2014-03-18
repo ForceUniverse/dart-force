@@ -9,7 +9,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   
   var _profileInfo = {};
   
-  ForceClient({String wsPath: "/ws", String url: null, int heartbeat: 200, bool usePolling: false}) {
+  ForceClient({String wsPath: "/ws", String url: null, int heartbeat: 500, bool usePolling: false}) {
     print("create a forceclient");
     _messageDispatcher = new ForceMessageDispatcher(this);
     this.wsPath = wsPath;
