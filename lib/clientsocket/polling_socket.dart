@@ -34,7 +34,6 @@ class PollingSocket extends Socket {
   
   void polling() {
     print('polling to ... http://$_url/polling/?pid=$_uuid');
-    window.alert("polling");
     HttpRequest.getString('http://$_url/polling/?pid=$_uuid').then(processString);
   }
   
