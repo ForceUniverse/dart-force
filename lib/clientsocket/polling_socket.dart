@@ -8,6 +8,8 @@ class PollingSocket extends Socket {
   
   String _uuid;
   
+  int count = 0;
+  
   PollingSocket(this._url, heartbeat_ms) : super._() {
     _connectController = new StreamController<ConnectEvent>();
     _disconnectController = new StreamController<ConnectEvent>();
@@ -33,8 +35,9 @@ class PollingSocket extends Socket {
   }
   
   void polling() {
-    print('polling to ... http://$_url/polling/?pid=$_uuid');
-    HttpRequest.getString('http://$_url/polling/?pid=$_uuid').then(processString);
+    count++;
+    print('polling to ... http://$_url/polling/?pid=$_uuid&count=$count');
+    HttpRequest.getString('http://$_url/polling/?pid=$_uuid&count=$count').then(processString);
   }
   
   void processString(String values) {
