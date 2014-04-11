@@ -158,3 +158,4 @@ Follow us on [google+](https://plus.google.com/111406188246677273707)
 Links to some examples that I made with this framework.
 
 [chat](http://forcechat.herokuapp.com/) - [source code](https://github.com/jorishermans/dart-force-chat-example)
+[polymer example](https://github.com/jorishermans/dart-force-polymer-example)
