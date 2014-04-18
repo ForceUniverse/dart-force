@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.3+10 ####
+
+Update dependency forcemvc.
+
 #### Pub version 0.3.3+9 ####
 
 Improve the working of the polling mechanics into the right direction.
