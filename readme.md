@@ -133,7 +133,6 @@ You have access to the force mvc webserver if you do the following:
 	
 #### TODO ####
 
-- fallback support for legacy browser with no capability of websockets
 - adding authentication support and security support
 - writing tests
 
