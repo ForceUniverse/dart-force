@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.4 ####
+
+Add host and port parameters to force client.
+
 #### Pub version 0.3.3+10 ####
 
 Update dependency forcemvc.
