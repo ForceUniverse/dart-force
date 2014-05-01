@@ -8,7 +8,7 @@ dependencies:
   logging: '>=0.9.0 <0.10.0'
   uuid: '>=0.3.0 <0.4.0'
   forcemvc: 
-    git: https://github.com/Scorpiion/dart-forcemvc
+    git: https://github.com/jorishermans/dart-forcemvc
 dev_dependencies:
   unittest: '>=0.9.0 <0.9.1'
   
