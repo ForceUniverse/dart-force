@@ -15,12 +15,14 @@ class ForceServer extends ForceBaseMessageSendReceiver
                port: 8080,
                wsPath: "/ws",
                clientFiles: '../client/',
-               clientServe: true}) {
+               clientServe: true,
+               startPage: "index.html"}) {
     _basicServer = new WebServer(host: host,
                                  port: port,
                                  wsPath: wsPath, 
                                  clientFiles: clientFiles,
-                                 clientServe: clientServe); 
+                                 clientServe: clientServe,
+                                 startPage: startPage); 
     
     webSockets = new Map<String, Socket>();
     
