@@ -9,21 +9,27 @@ abstract class ForceBaseMessageSendReceiver {
   }
   
   ForceMessageEvent onInnerMessage(message, {wsId: "-"}) {
-    var json = JSON.decode(message);
-    dynamic data = json["data"];
-    dynamic profile = json["profile"];
-    dynamic request = json["request"];
-    dynamic type = json["type"];
-    
-    ForceMessageType fmt = new ForceMessageType.fromJson(type);
-    ForceMessageEvent vme = new ForceMessageEvent(request, fmt, data, profile, wsId: wsId);
-    
-    _controller.add(vme);
-    return vme;
+    ForceMessageEvent fme = constructForceMessageEvent(message, wsId: wsId);
+    addMessage(fme);
+    return fme;
   }
   
-  void addMessage(ForceMessageEvent vme) {
+  ForceMessageEvent constructForceMessageEvent(message, {wsId: "-"}) {
+      var json = JSON.decode(message);
+      dynamic data = json["data"];
+      dynamic profile = json["profile"];
+      dynamic request = json["request"];
+      dynamic type = json["type"];
+      
+      ForceMessageType fmt = new ForceMessageType.fromJson(type);
+      ForceMessageEvent vme = new ForceMessageEvent(request, fmt, data, profile, wsId: wsId);
+      
+      return vme;
+    }
+  
+  ForceMessageEvent addMessage(ForceMessageEvent vme) {
     _controller.add(vme);
+    return vme;
   }
   
   void send(request, data);
