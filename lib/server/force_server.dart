@@ -9,6 +9,8 @@ class ForceServer extends ForceBaseMessageSendReceiver
   WebServer _basicServer;
   ForceMessageDispatcher messageDispatcher;
   
+  ForceMessageSecurity messageSecurity;
+  
   StreamController<ForceProfileEvent> _profileController;
   
   ForceServer({host: "127.0.0.1",          
@@ -27,6 +29,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
     webSockets = new Map<String, Socket>();
     
     messageDispatcher = new ForceMessageDispatcher(this);
+    messageSecurity = new ForceMessageSecurity(_basicServer.securityContext);
     
     _scanning();
     
@@ -87,14 +90,20 @@ class ForceServer extends ForceBaseMessageSendReceiver
   }
   
   void handleMessages(String id, data) {
-    messageDispatcher.onMessageDispatch(onInnerMessage(data, wsId: id));
+    ForceMessageEvent fme = constructForceMessageEvent(data, wsId: id);
+    if (messageSecurity.checkSecurity(fme)) {
+      messageDispatcher.onMessageDispatch(addMessage(fme));
+    } else {
+      sendTo(id, "unauthorized", data);
+    }
   } 
   
   void before(MessageReceiver messageController) {
     messageDispatcher.before(messageController); 
   }
   
-  void on(String request, MessageReceiver messageController) {
+  void on(String request, MessageReceiver messageController, {bool authentication: false}) {
+    messageSecurity.register(request, authentication);
     messageDispatcher.register(request, messageController);
   }
   
