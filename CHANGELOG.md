@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.6 ####
+
+Add authentication rules into the framework.
+
 #### Pub version 0.3.5 ####
 
 New structure! Look at the examples.
