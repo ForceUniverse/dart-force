@@ -48,7 +48,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
   }
   
   Future start() {
-    return _basicServer.start((WebSocket ws) {
+    return _basicServer.start((WebSocket ws, HttpRequest req) {
       handleWs(new WebSocketWrapper(ws)); 
     });
   }
