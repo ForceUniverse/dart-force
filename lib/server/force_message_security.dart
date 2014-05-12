@@ -11,10 +11,10 @@ class ForceMessageSecurity {
     requestList[request] = authentication;
   }
   
-  bool checkSecurity(ForceMessageEvent fme) {
-    if (requestList[fme.request]) {
+  bool checkSecurity(String request, HttpRequest req) {
+    if (requestList[request]) {
       // check if you are logged in
-      this.securityContextHolder.checkAuthorization(fme);
+      return this.securityContextHolder.checkAuthorization(req);
     } else {
       return true;
     }

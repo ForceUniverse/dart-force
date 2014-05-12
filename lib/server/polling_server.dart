@@ -24,10 +24,10 @@ class PollingServer {
     model.addAttribute("id", new Uuid().v4());
   }
   
-  String polling(ForceRequest forceRequest, Model model) {
-    String pid = forceRequest.request.uri.queryParameters['pid'];
+  String polling(ForceRequest req, Model model) {
+    String pid = req.request.uri.queryParameters['pid'];
     
-    PollingSocket pollingSocket = retrieveSocket(pid);
+    PollingSocket pollingSocket = retrieveSocket(pid, req.request);
     
     List messages = new List();
     for (var message in pollingSocket.messages) {
@@ -43,7 +43,7 @@ class PollingServer {
     req.getPostData().then((package) {
       var pid = package["pid"];
       
-      PollingSocket pollingSocket = retrieveSocket(pid);
+      PollingSocket pollingSocket = retrieveSocket(pid, req.request);
       pollingSocket.sendedData(package["data"]);
     });
     
@@ -51,14 +51,15 @@ class PollingServer {
     model.addAttributeObject(dynamic);
   }
   
-  PollingSocket retrieveSocket(pid) {
+  PollingSocket retrieveSocket(pid, HttpRequest req) {
     PollingSocket pollingSocket;
     if (connections.containsKey(pid)) {
       pollingSocket = connections[pid];
+      pollingSocket.request = req;
     } else {
       print("new polling connection! $pid");
       
-      pollingSocket = new PollingSocket();
+      pollingSocket = new PollingSocket(req);
       connections[pid] = pollingSocket;
       _socketController.add(pollingSocket);
     }

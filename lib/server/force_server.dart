@@ -49,7 +49,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
   
   Future start() {
     return _basicServer.start((WebSocket ws, HttpRequest req) {
-      handleWs(new WebSocketWrapper(ws)); 
+      handleWs(new WebSocketWrapper(ws, req)); 
     });
   }
   
@@ -80,7 +80,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
     
     this.webSockets[id] = webSocket;
     this.webSockets[id].onMessage.listen((e) {
-      handleMessages(id, e.data);
+      handleMessages(e.request, id, e.data);
     });
     this.webSockets[id].done().then((e) {
       print("ws done");
@@ -89,9 +89,9 @@ class ForceServer extends ForceBaseMessageSendReceiver
     checkConnections();
   }
   
-  void handleMessages(String id, data) {
+  void handleMessages(HttpRequest req, String id, data) {
     ForceMessageEvent fme = constructForceMessageEvent(data, wsId: id);
-    if (messageSecurity.checkSecurity(fme)) {
+    if (messageSecurity.checkSecurity(fme.request, req)) {
       messageDispatcher.onMessageDispatch(addMessage(fme));
     } else {
       sendTo(id, "unauthorized", data);

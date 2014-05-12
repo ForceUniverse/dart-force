@@ -4,8 +4,9 @@ class PollingSocket extends Socket {
   
   List messages = new List();
   Completer completer = new Completer.sync();
+  HttpRequest request;
   
-  PollingSocket() {
+  PollingSocket(this.request) {
     _messageController = new   StreamController<MessageEvent>();
   }
   
@@ -22,7 +23,7 @@ class PollingSocket extends Socket {
   }
   
   void sendedData(data) {
-    _messageController.add(new MessageEvent(data));
+    _messageController.add(new MessageEvent(request, data));
   }
 
   void add(data) {
