@@ -66,11 +66,14 @@ class ForceServer extends ForceBaseMessageSendReceiver
     MetaDataHelper<Receiver> metaDataHelper = new MetaDataHelper<Receiver>();
     List<MetaDataValue<Receiver>> metaDataValues = metaDataHelper.getMirrorValues(obj);
     
+    AnnotationChecker<Authentication> annoChecker = new AnnotationChecker<Authentication>();
+    bool auth = annoChecker.hasOnClazz(obj);
+    
     for (MetaDataValue mdv in metaDataValues) {
        on(mdv.object.path, (e, sendable) {
           log.info("execute this please!");
           mdv.invoke([e, sendable]);
-       }); 
+       }, authentication: auth); 
     }    
   }
   
