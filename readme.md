@@ -160,6 +160,10 @@ You can set a strategy by extending the class SecurityStrategy.
 And then add this strategy to the webserver.
 
 	forceServer.server.strategy = new SessionStrategy();
+	
+When you are not authorized, the system sends the following message back:
+"unauthorized" with the data you send over the system. 
+So you can also listen to the message "unauthorized" in your client, then you can inform the user he need to login.
 
 ### Notes to Contributors ###
 
