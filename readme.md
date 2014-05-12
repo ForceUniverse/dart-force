@@ -130,11 +130,36 @@ You can also annotate a class with the @Receivable annotation, so the system can
 You have access to the force mvc webserver if you do the following:
 
 	forceServer.server.on(url, controllerHandler, method: 'GET');
-	
-#### TODO ####
 
-- adding authentication support and security support
-- writing tests
+##### Authentication #####
+
+You can now add the annotation @Authentication() to a receiver class.
+
+You can also do the following.
+
+	forceServer.on("examplerequest", (e, sendable) {
+	   // do something
+	}, authentication: auth); 
+
+An authentication in force is following a strategy.
+You can set a strategy by extending the class SecurityStrategy.
+
+	class SessionStrategy extends SecurityStrategy {
+	  
+	  bool checkAuthorization(HttpRequest req) {
+	    HttpSession session = req.session;
+	    return (session["user"]!=null);
+	  }   
+	  
+	  Uri getRedirectUri(HttpRequest req) {
+	    var referer = req.uri.toString();
+	    return Uri.parse("/login/?referer=$referer");
+	  }
+	} 
+	
+And then add this strategy to the webserver.
+
+	forceServer.server.strategy = new SessionStrategy();
 
 ### Notes to Contributors ###
 
