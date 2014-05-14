@@ -1,10 +1,12 @@
 import 'package:unittest/unittest.dart';
 import 'package:force/force_serverside.dart';
 import 'dart:convert';
+import 'dart:io';
 
 void main() {
   var request = "req:";
   var profileName = 'chatName';
+  HttpRequest req;
   
   test('force basic messageDispatcher test', () {  
     ForceServer fs = new ForceServer();
@@ -18,9 +20,8 @@ void main() {
         expect(e.json['key'], 'value');
         expect(e.json['key2'], 'value2');
     }));
-
     
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
   
   test('force id messageDispatcher test', () {
@@ -34,7 +35,7 @@ void main() {
         expect(true, isFalse, reason: 'Should not be reached')));
 
     
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
   
   test('force profile messageDispatcher test', () {
@@ -47,7 +48,7 @@ void main() {
     fs.on(request, protectAsync2((e, sendable) =>
         expect(true, isFalse, reason: 'Should not be reached')));
 
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
   
   test('force profile changing test', () {
@@ -63,7 +64,7 @@ void main() {
       expect(name, profileName);
     }));
 
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
   
   test('force new property profile changing test', () {
@@ -74,7 +75,7 @@ void main() {
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
 
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
     
     fs.onProfileChanged.listen(expectAsync1((e) {
       if (e.type == ForceProfileType.NewProperty) {
@@ -84,7 +85,7 @@ void main() {
     }, count: 2));
     
     sendingPackage['profile'] = {'name' : profileName, 'channel' : channelName};
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
    
   test('force changed property profile changing test', () {
@@ -95,7 +96,7 @@ void main() {
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
 
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
     
     fs.onProfileChanged.listen(expectAsync1((e) {
       if (e.type == ForceProfileType.ChangedProperty) {
@@ -106,6 +107,6 @@ void main() {
     }, count: 2));
     
     sendingPackage['profile'] = {'name' : channelName};
-    fs.handleMessages("id:bla", JSON.encode(sendingPackage));
+    fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
 }
