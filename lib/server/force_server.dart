@@ -94,7 +94,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
   
   void handleMessages(HttpRequest req, String id, data) {
     ForceMessageEvent fme = constructForceMessageEvent(data, wsId: id);
-    if (messageSecurity.checkSecurity(fme.request, req)) {
+    if (messageSecurity.checkSecurity(req, fme)) {
       messageDispatcher.onMessageDispatch(addMessage(fme));
     } else {
       sendTo(id, "unauthorized", data);
