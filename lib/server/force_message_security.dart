@@ -12,7 +12,7 @@ class ForceMessageSecurity {
   }
   
   bool checkSecurity(HttpRequest req, ForceMessageEvent fme) {
-    if (requestList[fme.request]) {
+    if (requestList[fme.request] != null && requestList[fme.request]) {
       // check if you are logged in
       return this.securityContextHolder.checkAuthorization(req, data: fme);
     } else {
