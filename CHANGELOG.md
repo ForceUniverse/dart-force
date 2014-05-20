@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.3.7 ####
+
+Making the setup of a project easier by creating a logging function.
+
 #### Pub version 0.3.6 ####
 
 Add authentication rules into the framework.
