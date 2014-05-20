@@ -165,6 +165,12 @@ When you are not authorized, the system sends the following message back:
 "unauthorized" with the data you send over the system. 
 So you can also listen to the message "unauthorized" in your client, then you can inform the user he need to login.
 
+#### Logging ####
+
+You can easily boostrap logging.
+
+	server.setupConsoleLog();
+
 ### Notes to Contributors ###
 
 #### Fork Dart Force ####
