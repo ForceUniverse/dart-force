@@ -77,6 +77,10 @@ class ForceServer extends ForceBaseMessageSendReceiver
     }    
   }
   
+  void setupConsoleLog([Level level = Level.INFO]) {
+    _basicServer.setupConsoleLog(level);
+  }
+  
   void handleWs(Socket webSocket) {
     String id = uuid.v4();
     log.info("register id $id");
