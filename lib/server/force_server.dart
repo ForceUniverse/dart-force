@@ -55,7 +55,7 @@ class ForceServer extends ForceBaseMessageSendReceiver
   
   void _scanning() {
     Scanner<Receivable, Object> classesHelper = new Scanner<Receivable, Object>();
-    List<Object> classes = classesHelper.scan();
+    List<Object> classes = ApplicationContext.component(classesHelper);
     
     for (var obj in classes) {
       this.register(obj);
