@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.4.0 & 0.4.0+1 ####
+
+Make it possible to add @Autowired and @Value into the classes with @Receivable annotations.
+
 #### Pub version 0.3.7 ####
 
 Making the setup of a project easier by creating a logging function.
