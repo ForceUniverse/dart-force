@@ -171,6 +171,10 @@ You can easily boostrap logging.
 
 	server.setupConsoleLog();
 
+### Api documents ###
+
+You can find them [here](https://jorishermans.github.io/dart-force/api/index.html) 
+
 ### Notes to Contributors ###
 
 #### Fork Dart Force ####
