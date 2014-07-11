@@ -191,6 +191,8 @@ Follow us on twitter https://twitter.com/usethedartforce
 
 Follow us on [google+](https://plus.google.com/111406188246677273707)
 
+or join our [G+ Community](https://plus.google.com/u/0/communities/109050716913955926616) 
+
 #### Join our discussion group ####
 
 [Google group](https://groups.google.com/forum/#!forum/dart-force)
