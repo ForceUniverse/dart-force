@@ -191,6 +191,10 @@ Follow us on twitter https://twitter.com/usethedartforce
 
 Follow us on [google+](https://plus.google.com/111406188246677273707)
 
+#### Join our discussion group ####
+
+[Google group](https://groups.google.com/forum/#!forum/dart-force)
+
 #### examples ####
 
 Links to some examples that I made with this framework.
