@@ -30,6 +30,10 @@ void main() {
                            'type': { 'name' : 'id', 'id' : 'aefed'},
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
+
+    fs.on(request, expectAsync((e, sendable) {
+        print('Should not be reached'); }, count: 0));
+
     
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
@@ -40,6 +44,9 @@ void main() {
                            'type': { 'name' : 'profile', 'key' : 'key', 'value' : 'value'},
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
+
+    fs.on(request, expectAsync((e, sendable) {
+            print('Should not be reached'); }, count: 0));
 
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });

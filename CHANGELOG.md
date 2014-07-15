@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.4.0+2 ####
+
+Adding more tests for polling implementation, small improvements to the polling implementation.
+
 #### Pub version 0.4.0 & 0.4.0+1 ####
 
 Make it possible to add @Autowired and @Value into the classes with @Receivable annotations.

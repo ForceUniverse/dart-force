@@ -27,16 +27,20 @@ class PollingServer {
   String polling(ForceRequest req, Model model) {
     String pid = req.request.uri.queryParameters['pid'];
     
+    checkMessages(req, model, pid);
+  }
+  
+  String checkMessages(ForceRequest req, Model model, pid) {
     PollingSocket pollingSocket = retrieveSocket(pid, req.request);
-    
-    List messages = new List();
-    for (var message in pollingSocket.messages) {
-      messages.add(message);
-    }
-    
-    model.addAttributeObject(messages);
-    
-    pollingSocket.messages.clear();
+        
+        List messages = new List();
+        for (var message in pollingSocket.messages) {
+          messages.add(message);
+        }
+        
+        model.addAttributeObject(messages);
+        
+        pollingSocket.messages.clear();
   }
   
   String sendedData(ForceRequest req, Model model) {
@@ -44,7 +48,9 @@ class PollingServer {
       var pid = package["pid"];
       
       PollingSocket pollingSocket = retrieveSocket(pid, req.request);
-      pollingSocket.sendedData(package["data"]);
+      if (pollingSocket != null) {
+        pollingSocket.sendedData(package["data"]);
+      }
     });
     
     var dynamic = {"status" : "ok"};
@@ -56,7 +62,7 @@ class PollingServer {
     if (connections.containsKey(pid)) {
       pollingSocket = connections[pid];
       pollingSocket.request = req;
-    } else {
+    } else if (pid!=null) {
       print("new polling connection! $pid");
       
       pollingSocket = new PollingSocket(req);

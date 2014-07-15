@@ -5,7 +5,7 @@ class WebSocketWrapper extends Socket {
   WebSocket webSocket;
   HttpRequest request;
   
-  WebSocketWrapper(this.webSocket, this.request) {
+  WebSocketWrapper(this.webSocket, [this.request]) {
     _messageController = new StreamController<MessageEvent>();
     
     this.webSocket.listen((data) {

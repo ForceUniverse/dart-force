@@ -10,7 +10,6 @@ class ForceServer extends ForceBaseMessageSendReceiver
   ForceMessageDispatcher messageDispatcher;
   
   ForceMessageSecurity messageSecurity;
-  
   StreamController<ForceProfileEvent> _profileController;
   
   ForceServer({host: "127.0.0.1",          
