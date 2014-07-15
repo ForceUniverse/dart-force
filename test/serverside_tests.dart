@@ -15,7 +15,7 @@ void main() {
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
 
-    fs.on(request, expectAsync2((e, sendable) {
+    fs.on(request, expectAsync((e, sendable) {
         expect(e.profile['name'], profileName);
         expect(e.json['key'], 'value');
         expect(e.json['key2'], 'value2');
@@ -30,10 +30,6 @@ void main() {
                            'type': { 'name' : 'id', 'id' : 'aefed'},
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
-
-    fs.on(request, protectAsync2((e, sendable) =>
-        expect(true, isFalse, reason: 'Should not be reached')));
-
     
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
@@ -45,9 +41,6 @@ void main() {
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
 
-    fs.on(request, protectAsync2((e, sendable) =>
-        expect(true, isFalse, reason: 'Should not be reached')));
-
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
   
@@ -58,7 +51,7 @@ void main() {
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
 
-    fs.onProfileChanged.listen(expectAsync1((e) {
+    fs.onProfileChanged.listen(expectAsync((e) {
       String name = e.profileInfo['name'];
       
       expect(name, profileName);
@@ -77,7 +70,7 @@ void main() {
 
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
     
-    fs.onProfileChanged.listen(expectAsync1((e) {
+    fs.onProfileChanged.listen(expectAsync((e) {
       if (e.type == ForceProfileType.NewProperty) {
         expect(e.property.key, 'channel');
         expect(e.property.value, channelName);
@@ -98,7 +91,7 @@ void main() {
 
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
     
-    fs.onProfileChanged.listen(expectAsync1((e) {
+    fs.onProfileChanged.listen(expectAsync((e) {
       if (e.type == ForceProfileType.ChangedProperty) {
         expect(e.property.key, 'name');
         expect(e.property.value, profileName);

@@ -9,6 +9,6 @@ dependencies:
   uuid: '>=0.3.0 <0.4.0'
   forcemvc: '>=0.3.0 <0.4.0'
 dev_dependencies:
-  unittest: '>=0.9.0 <0.9.1'
+  unittest: '>=0.11.0 <0.11.1'
   
   
