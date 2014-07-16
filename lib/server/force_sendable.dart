@@ -4,8 +4,8 @@ class Sendable implements Sender {
 
  final Logger log = new Logger('Sendable');
   
-  Map<String, Socket> webSockets;
-  Map<String, dynamic> profiles;
+  Map<String, Socket> webSockets = new Map<String, Socket>();
+  Map<String, dynamic> profiles = new Map<String, dynamic>();
   
   void send(request, data) {
     printAmountOfConnections();

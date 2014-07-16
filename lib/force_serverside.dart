@@ -13,6 +13,7 @@ import 'package:forcemirrors/force_mirrors.dart';
 
 import 'force_common.dart';
 
+part 'server/force.dart';
 part 'server/force_server.dart';
 
 part 'server/force_receiver.dart';

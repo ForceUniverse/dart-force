@@ -4,6 +4,10 @@ This file contains highlights of what changes on each version of the force packa
 
 #### Pub version 0.4.0+2 ####
 
+First steps in making the force logic abstract, independent of the serverside http logic.
+
+#### Pub version 0.4.0+2 ####
+
 Adding more tests for polling implementation, small improvements to the polling implementation.
 
 #### Pub version 0.4.0 & 0.4.0+1 ####
