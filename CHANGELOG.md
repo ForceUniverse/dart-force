@@ -2,7 +2,7 @@
 
 This file contains highlights of what changes on each version of the force package.
 
-#### Pub version 0.4.0+2 ####
+#### Pub version 0.4.1 ####
 
 First steps in making the force logic abstract, independent of the serverside http logic.
 
