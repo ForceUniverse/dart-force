@@ -13,7 +13,7 @@ class PollingServer {
     _socketController = new StreamController<PollingSocket>();
   }
   
-  void uuid(ForceRequest forceRequest, Model model) {
+  void retrieveUuid(ForceRequest forceRequest, Model model) {
     model.addAttribute("id", new Uuid().v4());
   }
   
