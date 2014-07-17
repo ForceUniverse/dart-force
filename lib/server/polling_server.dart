@@ -4,33 +4,26 @@ class PollingServer {
   
   final Logger log = new Logger('PollingServer');
   
-  String wsPath;
-  WebServer server;
+  static String pollingPath(String wsPath) => '$wsPath/polling/';
   
   Map<String, PollingSocket> connections = new Map<String, PollingSocket>();
   StreamController<PollingSocket> _socketController;
   
-  PollingServer(this.wsPath, this.server) {
-    print('start long polling server ... $wsPath/polling/');
-    String pollingPath = '$wsPath/polling/';
-    
-    this.server.on('$wsPath/uuid/', uuid, method: "GET");
-    this.server.on(pollingPath, polling, method: "GET");
-    this.server.on(pollingPath, sendedData, method: "POST");
+  PollingServer() {
     _socketController = new StreamController<PollingSocket>();
   }
   
-  String uuid(ForceRequest forceRequest, Model model) {
+  void uuid(ForceRequest forceRequest, Model model) {
     model.addAttribute("id", new Uuid().v4());
   }
   
-  String polling(ForceRequest req, Model model) {
+  void polling(ForceRequest req, Model model) {
     String pid = req.request.uri.queryParameters['pid'];
     
     checkMessages(req, model, pid);
   }
   
-  String checkMessages(ForceRequest req, Model model, pid) {
+  void checkMessages(ForceRequest req, Model model, pid) {
     PollingSocket pollingSocket = retrieveSocket(pid, req.request);
         
         List messages = new List();
@@ -43,7 +36,7 @@ class PollingServer {
         pollingSocket.messages.clear();
   }
   
-  String sendedData(ForceRequest req, Model model) {
+  void sendedData(ForceRequest req, Model model) {
     req.getPostData().then((package) {
       var pid = package["pid"];
       

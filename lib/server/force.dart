@@ -12,6 +12,8 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   ForceMessageSecurity messageSecurity = new ForceMessageSecurity(_securityContext);
   StreamController<ForceProfileEvent> _profileController = new StreamController<ForceProfileEvent>();
   
+  PollingServer pollingServer = new PollingServer();
+  
   void scan() {
       Scanner<Receivable, Object> classesHelper = new Scanner<Receivable, Object>();
       List<Object> classes = ApplicationContext.component(classesHelper);

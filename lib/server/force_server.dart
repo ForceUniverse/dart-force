@@ -26,10 +26,13 @@ class ForceServer extends Force with Serveable {
     this.before(_checkProfiles);
     
     // start pollingServer
-    PollingServer pollingServer = new PollingServer(wsPath, _basicServer);
     pollingServer.onConnection.listen((PollingSocket socket) {
       handleWs(socket);
     });
+    
+    this.server.on('$wsPath/uuid/', uuid, method: "GET");
+    this.server.on(PollingServer.pollingPath(wsPath), pollingServer.polling, method: "GET");
+    this.server.on(PollingServer.pollingPath(wsPath), pollingServer.sendedData, method: "POST");
   }
   
   Future start() {
