@@ -30,7 +30,7 @@ class ForceServer extends Force with Serveable {
       handleWs(socket);
     });
     
-    this.server.on('$wsPath/uuid/', pollingServer.uuid, method: "GET");
+    this.server.on('$wsPath/uuid/', pollingServer.retrieveUuid, method: "GET");
     this.server.on(PollingServer.pollingPath(wsPath), pollingServer.polling, method: "GET");
     this.server.on(PollingServer.pollingPath(wsPath), pollingServer.sendedData, method: "POST");
   }
