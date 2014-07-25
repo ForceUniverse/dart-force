@@ -28,6 +28,8 @@ part 'serversocket/abstract_socket.dart';
 part 'serversocket/websocket_wrapper.dart';
 part 'serversocket/polling_socket.dart';
 
+part 'serversocket/stream_socket.dart'; /* experimental */
+
 //mixins
 part 'server/force_serveable.dart';
 part 'server/force_sendable.dart';

@@ -27,7 +27,7 @@ class ForceServer extends Force with Serveable {
     
     // start pollingServer
     pollingServer.onConnection.listen((PollingSocket socket) {
-      handleWs(socket);
+      handle(socket);
     });
     
     this.server.on('$wsPath/uuid/', pollingServer.retrieveUuid, method: "GET");
@@ -37,7 +37,7 @@ class ForceServer extends Force with Serveable {
   
   Future start() {
     return _basicServer.start((WebSocket ws, HttpRequest req) {
-      handleWs(new WebSocketWrapper(ws, req)); 
+      handle(new WebSocketWrapper(ws, req)); 
     });
   }
   

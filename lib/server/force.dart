@@ -37,12 +37,16 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
          }, authentication: auth); 
       }    
   }
-    
-  void handleWs(Socket webSocket) {
+  
+  /**
+   * Handles the abstract Socket implementation of Force, so we can wrap any kind of Socket into this abstract class.
+   *  
+   **/
+  void handle(Socket socket) {
       String id = uuid.v4();
       log.info("register id $id");
       
-      this.webSockets[id] = webSocket;
+      this.webSockets[id] = socket;
       this.webSockets[id].onMessage.listen((e) {
         handleMessages(e.request, id, e.data);
       });

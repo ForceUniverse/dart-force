@@ -2,9 +2,13 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.4.1+1 ####
+
+Small changes in the Force class, renaming of the handle method.
+
 #### Pub version 0.4.1 ####
 
-First steps in making the force logic abstract, independent of the serverside http logic.
+Making the force logic abstract, independent of the serverside http logic.
 
 #### Pub version 0.4.0+2 ####
 
