@@ -193,6 +193,10 @@ Follow us on [google+](https://plus.google.com/111406188246677273707)
 
 or join our [G+ Community](https://plus.google.com/u/0/communities/109050716913955926616) 
 
+#### Screencast tutorial ####
+
+Screencast todo tutorial about the dart force realtime functionality on [youtube](http://youtu.be/FZr75CsBNag)
+
 #### Join our discussion group ####
 
 [Google group](https://groups.google.com/forum/#!forum/dart-force)
