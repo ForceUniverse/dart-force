@@ -9,15 +9,15 @@ import 'dart:math';
 
 import 'force_common.dart';
 
-part 'client/force_ws_client.dart';
-part 'client/force_connect_event.dart';
+part 'client/ws_client.dart';
+part 'client/connect_event.dart';
 
 part 'clientsocket/abstract_socket.dart';
 part 'clientsocket/websocket_wrapper.dart';
 part 'clientsocket/polling_socket.dart';
 
 // mixins
-part 'client/force_ws_sendable.dart';
+part 'client/ws_sendable.dart';
 
 
 
