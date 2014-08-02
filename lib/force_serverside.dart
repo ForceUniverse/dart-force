@@ -16,13 +16,13 @@ import 'force_common.dart';
 part 'server/force.dart';
 part 'server/force_server.dart';
 
-part 'server/force_receiver.dart';
-part 'server/force_receivable.dart';
+part 'server/receiver.dart';
+part 'server/receivable.dart';
 part 'server/force_typedefs.dart';
-part 'server/force_profile_event.dart';
+part 'server/profile_event.dart';
 part 'server/polling_server.dart';
 
-part 'server/force_message_security.dart';
+part 'server/message_security.dart';
 
 part 'serversocket/abstract_socket.dart';
 part 'serversocket/websocket_wrapper.dart';
@@ -31,5 +31,5 @@ part 'serversocket/polling_socket.dart';
 part 'serversocket/stream_socket.dart'; /* experimental */
 
 //mixins
-part 'server/force_serveable.dart';
-part 'server/force_sendable.dart';
+part 'server/serveable.dart';
+part 'server/sendable.dart';
