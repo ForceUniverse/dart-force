@@ -15,7 +15,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   PollingServer pollingServer = new PollingServer();
   
   /// When a new Socket is been created a new [SocketEvent] will be added.
-  StreamController<SocketEvent> onSocket = new StreamController<SocketEvent>();
+  StreamController<SocketEvent> _onSocket = new StreamController<SocketEvent>();
   
   void scan() {
       Scanner<Receivable, Object> classesHelper = new Scanner<Receivable, Object>();
@@ -58,7 +58,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
         checkConnections();
       });
       checkConnections();
-      onSocket.add(new SocketEvent(id, socket));
+      _onSocket.add(new SocketEvent(id, socket));
   }
     
   void handleMessages(HttpRequest req, String id, data) {
@@ -140,5 +140,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   }
     
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
+  
+  Stream<SocketEvent> get onSocket => _onSocket.stream;
     
 }
