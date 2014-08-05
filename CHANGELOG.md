@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.4.2 ####
+
+When a new Socket is been created a new SocketEvent will be added.
+
 #### Pub version 0.4.1+1 ####
 
 Small changes in the Force class, renaming of the handle method.
