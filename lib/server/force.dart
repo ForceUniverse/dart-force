@@ -14,6 +14,8 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   
   PollingServer pollingServer = new PollingServer();
   
+  StreamController<SocketEvent> onSocket = new StreamController<SocketEvent>();
+  
   void scan() {
       Scanner<Receivable, Object> classesHelper = new Scanner<Receivable, Object>();
       List<Object> classes = ApplicationContext.component(classesHelper);
@@ -55,6 +57,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
         checkConnections();
       });
       checkConnections();
+      onSocket.add(new SocketEvent(id, socket));
   }
     
   void handleMessages(HttpRequest req, String id, data) {
