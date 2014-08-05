@@ -14,6 +14,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   
   PollingServer pollingServer = new PollingServer();
   
+  /// When a new Socket is been created a new [SocketEvent] will be added.
   StreamController<SocketEvent> onSocket = new StreamController<SocketEvent>();
   
   void scan() {
