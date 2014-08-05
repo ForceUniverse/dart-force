@@ -79,6 +79,12 @@ You can also serve files from the server part.
 	    });
 	});
 	
+You can listen when a new Socket connection is been created.
+
+	fs.onSocket.listen((SocketEvent se) {
+		// socket event
+	});
+	
 #### Other features ####
 
 ##### Profile info & client to client communication #####
