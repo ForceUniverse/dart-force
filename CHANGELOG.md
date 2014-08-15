@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.4.2+1 ####
+
+Moving this framework to an organisation repo in github
+
 #### Pub version 0.4.2 ####
 
 When a new Socket is been created a new SocketEvent will be added.

@@ -30,8 +30,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       MetaDataHelper<Receiver> metaDataHelper = new MetaDataHelper<Receiver>();
       List<MetaDataValue<Receiver>> metaDataValues = metaDataHelper.getMirrorValues(obj);
       
-      AnnotationChecker<Authentication> annoChecker = new AnnotationChecker<Authentication>();
-      bool auth = annoChecker.hasOnClazz(obj);
+      bool auth = MVCAnnotationHelper.hasAuthentication(obj);
       
       for (MetaDataValue mdv in metaDataValues) {
          on(mdv.object.path, (e, sendable) {

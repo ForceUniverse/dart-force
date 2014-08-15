@@ -1,8 +1,6 @@
-[![Build Status](https://drone.io/github.com/jorishermans/dart-force/status.png)](https://drone.io/github.com/jorishermans/dart-force/latest)
-
 ### Dart Force Framework ###
 
-![LOGO!](https://raw.github.com/jorishermans/dart-force/master/resources/dart_force_logo.jpg)
+![LOGO!](https://raw.github.com/ForceUniverse/dart-force/master/resources/dart_force_logo.jpg)
 
 A realtime web framework for dart.
 
