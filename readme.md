@@ -173,11 +173,7 @@ So you can also listen to the message "unauthorized" in your client, then you ca
 
 You can easily boostrap logging.
 
-	server.setupConsoleLog();
-
-### Api documents ###
-
-You can find them [here](https://jorishermans.github.io/dart-force/api/index.html) 
+	server.setupConsoleLog(); 
 
 ### Notes to Contributors ###
 
@@ -210,4 +206,5 @@ Screencast todo tutorial about the dart force realtime functionality on [youtube
 Links to some examples that I made with this framework.
 
 [chat](http://forcechat.herokuapp.com/) - [source code](https://github.com/jorishermans/dart-force-chat-example)
+
 [polymer example](http://polymerforce.herokuapp.com) - [source code](https://github.com/jorishermans/dart-force-polymer-example)
