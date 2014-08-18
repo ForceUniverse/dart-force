@@ -1,7 +1,9 @@
 part of dart_force_server_lib;
 
-class Receivable {
+const Receivable = const _Receivable();
+
+class _Receivable {
   
-  const Receivable();
+  const _Receivable();
   
 }

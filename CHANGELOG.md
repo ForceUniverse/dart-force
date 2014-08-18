@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.0 ####
+
+Remove parentheses from annotations.
+
 #### Pub version 0.4.2+1 ####
 
 Moving this framework to an organisation repo in github

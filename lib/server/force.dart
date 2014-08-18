@@ -18,7 +18,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   StreamController<SocketEvent> _onSocket = new StreamController<SocketEvent>();
   
   void scan() {
-      Scanner<Receivable, Object> classesHelper = new Scanner<Receivable, Object>();
+      Scanner<_Receivable, Object> classesHelper = new Scanner<_Receivable, Object>();
       List<Object> classes = ApplicationContext.component(classesHelper);
       
       for (var obj in classes) {
