@@ -5,6 +5,7 @@ This file contains highlights of what changes on each version of the force packa
 #### Pub version 0.5.0 ####
 
 Remove parentheses from annotations.
+Upgrade to latest forcemvc version.
 
 #### Pub version 0.4.2+1 ####
 

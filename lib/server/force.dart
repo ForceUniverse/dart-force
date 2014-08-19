@@ -18,8 +18,9 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   StreamController<SocketEvent> _onSocket = new StreamController<SocketEvent>();
   
   void scan() {
-      Scanner<_Receivable, Object> classesHelper = new Scanner<_Receivable, Object>();
-      List<Object> classes = ApplicationContext.component(classesHelper);
+      Scanner<_Receivable> classesHelper = new Scanner<_Receivable>();
+      
+      List<Object> classes = ApplicationContext.addComponents(classesHelper.scan());
       
       for (var obj in classes) {
         this.register(obj);
@@ -27,8 +28,8 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   }
     
   void register(Object obj) {
-      MetaDataHelper<Receiver> metaDataHelper = new MetaDataHelper<Receiver>();
-      List<MetaDataValue<Receiver>> metaDataValues = metaDataHelper.getMirrorValues(obj);
+      MetaDataHelper<Receiver, MethodMirror> metaDataHelper = new MetaDataHelper<Receiver, MethodMirror>();
+      List<MetaDataValue<Receiver>> metaDataValues = metaDataHelper.from(obj);
       
       bool auth = MVCAnnotationHelper.hasAuthentication(obj);
       

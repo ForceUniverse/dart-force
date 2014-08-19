@@ -3,6 +3,7 @@ library dart_force_server_lib;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:mirrors';
 
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 import 'package:uuid/uuid_server.dart';
