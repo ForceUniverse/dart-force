@@ -31,15 +31,13 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       MetaDataHelper<Receiver, MethodMirror> metaDataHelper = new MetaDataHelper<Receiver, MethodMirror>();
       List<MetaDataValue<Receiver>> metaDataValues = metaDataHelper.from(obj);
       
-      bool auth = MVCAnnotationHelper.hasAuthentication(obj);
+      var auth = MVCAnnotationHelper.getAuthentication(obj);
       
       var _ref; //Variable to check null values
+      var roles = (auth != null ? auth.roles : null);
       
-      if (auth) { 
-        var roles = ["BASIC"];
-      }
-      // then look at PreAuthorizeRoles, when they are defined
-      var roles = (_ref = new AnnotationScanner<PreAuthorizeRoles>().instanceFrom(obj))== null ? null : _ref.roles;
+      // then look at Pr eAuthorizeRoles, when they are defined
+      roles = (_ref = new AnnotationScanner<PreAuthorizeRoles>().instanceFrom(obj))== null ? null : _ref.roles;
       
       for (MetaDataValue mdv in metaDataValues) {
          on(mdv.object.path, (e, sendable) {
