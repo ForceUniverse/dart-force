@@ -137,13 +137,13 @@ You have access to the force mvc webserver if you do the following:
 
 ##### Authentication #####
 
-You can now add the annotation @Authentication() to a receiver class.
+You can now add the annotation @Authentication to a receiver class.
 
 You can also do the following.
 
 	forceServer.on("examplerequest", (e, sendable) {
 	   // do something
-	}, authentication: auth); 
+	}, roles: ["ADMIN", "BASIC"]); 
 
 An authentication in force is following a strategy.
 You can set a strategy by extending the class SecurityStrategy.
