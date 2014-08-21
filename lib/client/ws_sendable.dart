@@ -11,34 +11,45 @@ class ClientSendable implements Sender {
     send('profileInfo', {});
   }
   
+  // send it to the server
   void send(request, data) {
-    var sendingPackage =  {
-        'request': request,
-        'type': { 'name' : 'normal'},
-        'profile': _profileInfo,
-        'data': data
-    };
-    this._send(sendingPackage);
+    this._send(_prepare(ForceMessageType.NORMAL, request, data));
   }
   
+  // broadcast it directly to all the clients
+  void broadcast(request, data) {
+    this._send(_prepare(ForceMessageType.BROADCAST, request, data));
+  }
+  
+  // send to a specific socket with an id
   void sendTo(id, request, data) {
      var sendingPackage =  {
           'request': request,
           'profile': _profileInfo,
-          'type': { 'name' : 'id', 'id' : id},
+          'type': { 'name' : ForceMessageType.ID, 'id' : id},
           'data': data
      };
      this._send(sendingPackage);
   }
   
+  // send to a profile with specific values
   void sendToProfile(key, value, request, data) {
     var sendingPackage =  {
          'request': request,
          'profile': _profileInfo,
-         'type': { 'name' : 'profile', 'key' : key, 'value' : value},
+         'type': { 'name' : ForceMessageType.PROFILE, 'key' : key, 'value' : value},
          'data': data
     };
     this._send(sendingPackage);
+  }
+  
+  void _prepare(type, request, data) {
+    var sendingPackage =  {
+            'request': request,
+            'type': { 'name' : type},
+            'profile': _profileInfo,
+            'data': data
+        };
   }
   
   void _send(sendingPackage) {

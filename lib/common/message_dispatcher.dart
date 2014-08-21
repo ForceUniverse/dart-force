@@ -33,6 +33,9 @@ class ForceMessageDispatcher {
       if (vme.messageType.type == ForceMessageType.PROFILE) {
         sender.sendToProfile(vme.messageType.key, vme.messageType.value, vme.request, vme.json);
       }
+      if (vme.messageType.type == ForceMessageType.BROADCAST) {
+          sender.send(vme.request, vme.json);
+      }
     }
   }
   

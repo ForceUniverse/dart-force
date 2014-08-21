@@ -3,6 +3,7 @@ part of dart_force_common_lib;
 class ForceMessageType {
   
   static const NORMAL = 'normal';
+  static const BROADCAST = 'broadcast';
   static const ID = 'id';
   static const PROFILE = 'profile';
   
