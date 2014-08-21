@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/ForceUniverse/dart-force/status.png)](https://drone.io/github.com/ForceUniverse/dart-force/latest)
+
 ### Dart Force Framework ###
 
 ![LOGO!](https://raw.github.com/ForceUniverse/dart-force/master/resources/dart_force_logo.jpg)
