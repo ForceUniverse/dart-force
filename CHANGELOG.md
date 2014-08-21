@@ -7,6 +7,7 @@ This file contains highlights of what changes on each version of the force packa
 Remove parentheses from annotations.
 Upgrade to latest forcemvc version (0.5.0+1).
 Expanding functionality for authentication with roles, like in forcemvc.
+Adding broadcast functionality
 
 #### Pub version 0.4.2+1 ####
 
