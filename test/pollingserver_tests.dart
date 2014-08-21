@@ -24,7 +24,7 @@ main() {
   
   test('testing the polling server', () {
       
-      PollingServer pollingServer = new PollingServer("/ws", new WebServer());
+      PollingServer pollingServer = new PollingServer();
       pollingServer.onConnection.listen(expectAsync((PollingSocket socket) {
          socket.onMessage.listen(expectAsync((MessageEvent event) {
            expect(event.data["request"], request);
