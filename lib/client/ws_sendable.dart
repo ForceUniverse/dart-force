@@ -50,6 +50,7 @@ class ClientSendable implements Sender {
             'profile': _profileInfo,
             'data': data
         };
+    return sendingPackage;
   }
   
   void _send(sendingPackage) {
