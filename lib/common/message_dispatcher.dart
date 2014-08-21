@@ -25,6 +25,9 @@ class ForceMessageDispatcher {
     }
     if (vme.messageType.type == ForceMessageType.NORMAL) {
       _executeMessageReceiver(vme, mapping[key]);
+    } else if (vme.messageType.type == ForceMessageType.BROADCAST) {
+      sender.send(vme.request, vme.json);  
+      _executeMessageReceiver(vme, mapping[key]);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
       if (vme.messageType.type == ForceMessageType.ID) {
@@ -33,10 +36,7 @@ class ForceMessageDispatcher {
       if (vme.messageType.type == ForceMessageType.PROFILE) {
         sender.sendToProfile(vme.messageType.key, vme.messageType.value, vme.request, vme.json);
       }
-      if (vme.messageType.type == ForceMessageType.BROADCAST) {
-        sender.send(vme.request, vme.json);  
-        _executeMessageReceiver(vme, mapping[key]);
-      }
+      
     }
   }
   
