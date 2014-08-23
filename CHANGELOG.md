@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.0+1 ####
+
+Improve internal working.
+
 #### Pub version 0.5.0 ####
 
 Remove parentheses from annotations.
