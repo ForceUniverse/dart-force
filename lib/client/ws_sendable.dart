@@ -43,7 +43,7 @@ class ClientSendable implements Sender {
     this._send(sendingPackage);
   }
   
-  void _prepare(type, request, data) {
+  dynamic _prepare(type, request, data) {
     var sendingPackage =  {
             'request': request,
             'type': { 'name' : type},
