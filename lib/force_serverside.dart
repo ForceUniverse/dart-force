@@ -17,8 +17,7 @@ import 'force_common.dart';
 part 'server/force.dart';
 part 'server/force_server.dart';
 
-part 'server/receiver.dart';
-part 'server/receivable.dart';
+part 'server/metadata.dart';
 part 'server/force_typedefs.dart';
 part 'server/profile_event.dart';
 part 'server/polling_server.dart';
