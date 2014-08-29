@@ -63,8 +63,14 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
         print("ws done");
         checkConnections();
       });
-      checkConnections();
-      _onSocket.add(new SocketEvent(id, socket));
+      _startNewConnection(id, socket);
+  }
+  
+  void _startNewConnection(String socketId, Socket socket) {
+    checkConnections();
+    _onSocket.add(new SocketEvent(socketId, socket));
+    // send a first message to the newly connected socket
+    this.sendTo(socketId, "ack", "ack");
   }
     
   void handleMessages(HttpRequest req, String id, data) {
