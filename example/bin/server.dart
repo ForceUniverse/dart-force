@@ -2,6 +2,8 @@ library dart_force_todo;
 
 import "package:force/force_serverside.dart";
 
+part 'justareceiver.dart';
+
 void main() {
   
   ForceServer fs = new ForceServer(clientFiles: "../build/web/", startPage: "dartforcetodo.html");

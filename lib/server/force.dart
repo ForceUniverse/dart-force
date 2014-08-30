@@ -15,7 +15,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   PollingServer pollingServer = new PollingServer();
   
   /// When a new Socket is been created a new [SocketEvent] will be added.
-  StreamController<SocketEvent> _onSocket = new StreamController<SocketEvent>();
+  StreamController<SocketEvent> _onSocket = new StreamController<SocketEvent>.broadcast();
   
   void scan() {
       Scanner<_Receivable> classesHelper = new Scanner<_Receivable>();
@@ -39,12 +39,22 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       // then look at Pr eAuthorizeRoles, when they are defined
       roles = (_ref = new AnnotationScanner<PreAuthorizeRoles>().instanceFrom(obj))== null ? null : _ref.roles;
       
-      for (MetaDataValue mdv in metaDataValues) {
-         on(mdv.object.path, (e, sendable) {
+      for (MetaDataValue mdv in metaDataValues) { 
+        on(mdv.object.request, (e, sendable) {
             log.info("execute this please!");
             mdv.invoke([e, sendable]);
          }, roles: roles); 
       }    
+      
+      // Look for new connection annotations
+      MetaDataHelper<_NewConnection, MethodMirror> newConnectionMetaDataHelper = new MetaDataHelper<_NewConnection, MethodMirror>();
+      List<MetaDataValue<_NewConnection>> ncMetaData = newConnectionMetaDataHelper.from(obj);
+      
+      _onSocket.stream.listen((SocketEvent se) {
+        for (MetaDataValue mdv in ncMetaData) { 
+          mdv.invoke([se.wsId, se.socket]);
+        }
+      });
   }
   
   /**
