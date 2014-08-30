@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.1 & pub version 0.5.1+1 ####
+
+introduce @NewConnection
+send a message 'ack' to the new client on connection
+
 #### Pub version 0.5.0+1 ####
 
 Improve internal working.
