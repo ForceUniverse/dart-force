@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.2 ####
+
+fix dependencies on 'wired'
+
 #### Pub version 0.5.1 & pub version 0.5.1+1 ####
 
 introduce @NewConnection
