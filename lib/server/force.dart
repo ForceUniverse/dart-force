@@ -122,6 +122,16 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       _messageDispatch().before(messageController); 
   }
     
+  /**
+   * You can use this method when you want to do something when a message comes in for a certain request.
+   * 
+   * So imagine you want to do something when a message with request 'info' comes in. Then you can do it like this.
+   * 
+   * on('info', (e, sendable) {
+   *    sendable.send("received", { "data": "ok" });
+   * });
+   * 
+   **/
   void on(String request, MessageReceiver messageController, {List<String> roles}) {
       messageSecurity.register(request, roles);
       _messageDispatch().register(request, messageController);
