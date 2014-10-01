@@ -17,6 +17,11 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   /// When a new Socket is been created a new [SocketEvent] will be added.
   StreamController<SocketEvent> _onSocket = new StreamController<SocketEvent>.broadcast();
   
+  /**
+   * The register method provides a way to add objects that contain the [Receiver] annotation, 
+   * these methods are then executed when the request value match an incoming message. 
+   *  
+   **/
   void scan() {
       Scanner<_Receivable> classesHelper = new Scanner<_Receivable>();
       
@@ -26,7 +31,22 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
         this.register(obj);
       }
   }
-    
+   
+  /**
+   * The register method provides a way to add objects that contain the [Receiver] annotation, 
+   * these methods are then executed when the request value match an incoming message. 
+   * 
+   * So this will turn 
+   * 
+   * @Receiver("request")
+   * void whenRequest(e, sendable) {}
+   * 
+   * into 
+   * 
+   * on("request", (e, sendable) {} 
+   *
+   * 
+    **/
   void register(Object obj) {
       MetaDataHelper<Receiver, MethodMirror> metaDataHelper = new MetaDataHelper<Receiver, MethodMirror>();
       List<MetaDataValue<Receiver>> metaDataValues = metaDataHelper.from(obj);
@@ -91,7 +111,13 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
         sendTo(id, "unauthorized", data);
       }
   } 
-    
+   
+  /**
+   * This will be executed before the on method.
+   * 
+   * It will be executed before every message that is been send. This method can help with intercept the message before it goes into the loop.
+   *  
+   **/
   void before(MessageReceiver messageController) {
       _messageDispatch().before(messageController); 
   }
