@@ -137,6 +137,10 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       _messageDispatch().register(request, messageController);
   }
     
+  /**
+   * Close a specific websocket connection.
+   * 
+   **/
   void close(String id) {
       if (webSockets.containsKey(id)) {
         this.webSockets[id].close();
@@ -144,6 +148,10 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       checkConnections();
   }
     
+  /**
+   * check all the connections if they are still all active, otherwise these connections will be closed and removed from the websockets list.
+   * 
+   **/
   void checkConnections() {
       List<String> removeWs = new List<String>();
       this.webSockets.forEach((String key, Socket ws) {
@@ -152,10 +160,10 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
         }
       });
       
-      removeWsConnections(removeWs);
+      _removeWsConnections(removeWs);
   }
     
-  void removeWsConnections(List<String> removeWs) {
+  void _removeWsConnections(List<String> removeWs) {
       printAmountOfConnections();
       
       for (String wsId in removeWs) {
