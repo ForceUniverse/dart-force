@@ -73,10 +73,20 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       MetaDataHelper<_NewConnection, MethodMirror> newConnectionMetaDataHelper = new MetaDataHelper<_NewConnection, MethodMirror>();
       List<MetaDataValue<_NewConnection>> ncMetaData = newConnectionMetaDataHelper.from(obj);
       
-      _onSocket.stream.listen((SocketEvent se) {
-        for (MetaDataValue mdv in ncMetaData) { 
-          mdv.invoke([se.wsId, se.socket]);
-        }
+      _invokeMetaDataSocketEvent(_onSocket.stream, ncMetaData);
+      
+      // Look for close connection annotations
+      MetaDataHelper<_ClosedConnection, MethodMirror> closedConnectionMetaDataHelper = new MetaDataHelper<_ClosedConnection, MethodMirror>();
+      List<MetaDataValue<_ClosedConnection>> ccMetaData = closedConnectionMetaDataHelper.from(obj);
+      
+      _invokeMetaDataSocketEvent(_onSocketClosed.stream, ccMetaData);
+  }
+  
+  void _invokeMetaDataSocketEvent(Stream stream, List<MetaDataValue> metaData) {
+      stream.listen((SocketEvent se) {
+            for (MetaDataValue mdv in metaData) {
+              mdv.invoke([se.wsId, se.socket]);
+            }
       });
   }
   

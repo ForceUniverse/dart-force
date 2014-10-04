@@ -13,4 +13,8 @@ class JustAReceiver {
     // do some logic for help ...
   }
   
+  @ClosedConnection
+  void closedConnection(socketId, Socket socket) {
+     print("connection closed for $socketId");
+  }
 }

@@ -50,3 +50,20 @@ class _NewConnection {
   const _NewConnection();
   
 }
+
+/**
+ * This annotation can be used when you want to catch closed connections,
+ * when somebody closed his browser
+ * 
+ * @ClosedConnection
+ * void someNewConnection(socketId, Socket socket) {
+ *   ...
+ * }
+ */
+const ClosedConnection = const _ClosedConnection();
+
+class _ClosedConnection {
+  
+  const _ClosedConnection();
+  
+}
