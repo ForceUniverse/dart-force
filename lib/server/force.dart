@@ -17,6 +17,9 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   /// When a new Socket is been created a new [SocketEvent] will be added.
   StreamController<SocketEvent> _onSocket = new StreamController<SocketEvent>.broadcast();
   
+  /// When a Socket connection is been closed a new [SocketEvent] will be added.
+  StreamController<SocketEvent> _onSocketClosed = new StreamController<SocketEvent>.broadcast();
+  
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
    * these methods are then executed when the request value match an incoming message. 
@@ -167,6 +170,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       printAmountOfConnections();
       
       for (String wsId in removeWs) {
+        _onSocketClosed.add(new SocketEvent(wsId, this.webSockets[wsId]));
         this.webSockets.remove(wsId);
         if (this.profiles.containsKey(wsId)) {
           _profileController.add(new ForceProfileEvent(ForceProfileType.Removed, wsId, this.profiles[wsId]));
@@ -207,6 +211,10 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
     
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
   
+  /// When a new socket is been created
   Stream<SocketEvent> get onSocket => _onSocket.stream;
-    
+  
+  /// When a socket connection is been closed
+  Stream<SocketEvent> get onClosed => _onSocketClosed.stream;
+  
 }
