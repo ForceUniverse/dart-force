@@ -175,6 +175,24 @@ You can easily boostrap logging.
 
 	server.setupConsoleLog(); 
 
+#### Other Annotations ####
+
+In the @Receivable classes you can also use:
+
+@NewConnection : when a new socket connection is established
+
+	@NewConnection
+	void connection(socketId, Socket socket) {
+		print("new connection created for $socketId");
+	}
+
+@ClosedConnection : when a socket connection is been closed
+
+	@ClosedConnection
+	void closedConnection(socketId, Socket socket) {
+		print("connection closed for $socketId");
+	}
+
 ### Notes to Contributors ###
 
 #### Fork Dart Force ####
