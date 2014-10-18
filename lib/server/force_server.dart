@@ -35,12 +35,34 @@ class ForceServer extends Force with Serveable {
     this.server.on(PollingServer.pollingPath(wsPath), pollingServer.sendedData, method: "POST");
   }
   
+  /**
+   * This method will start the server.
+   * 
+   * @return a future when the server is been started.
+   */
   Future start() {
-    return _basicServer.start((WebSocket ws, HttpRequest req) {
-      handle(new WebSocketWrapper(ws, req)); 
-    });
+    return _basicServer.start(this._socketsHandler);
   }
   
+  void _socketsHandler(WebSocket ws, HttpRequest req) {
+        handle(new WebSocketWrapper(ws, req)); 
+  }
+  
+  /**
+   * This requestHandler can be used to hook into the system without having to start a server.
+   * You need to use this method for example with Google App Engine runtime.
+   * 
+   * @param request is the current HttpRequest that needs to be handled by the system.
+   */
+  void requestHandler(HttpRequest request) {
+      _basicServer.requestHandler(request, this._socketsHandler);
+  } 
+  
+  /**
+   * Activate server logging in forcemvc
+   * 
+   * @param the level of login
+   */
   void setupConsoleLog([Level level = Level.INFO]) {
     _basicServer.setupConsoleLog(level);
   }
