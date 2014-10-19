@@ -2,6 +2,15 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.4 ####
+
+- Prepare code for use on appengine
+
+#### Pub version 0.5.3 ####
+
+- Add new annotation @ClosedConnection and event stream for closedConnection
+- Add more documentation in the code
+
 #### Pub version 0.5.2 ####
 
 fix dependencies on 'wired'
