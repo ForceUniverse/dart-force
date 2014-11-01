@@ -9,8 +9,10 @@ class JustAReceiver {
   }
   
   @Receiver("help")
-  void help(vme, sender) {
-    // do some logic for help ...
+  void help(fme, sender) {
+    sender.send("options", {"values": ["a", "b", "c"]});
+    
+    // do more with this!
   }
   
   @ClosedConnection
