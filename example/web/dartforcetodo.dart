@@ -23,7 +23,6 @@ void  broadcast(MouseEvent event) {
   
   var data = {"todo": input.value};
   
-  print("broadcast");
   fc.send("add", data);
   
   input.value = "";
