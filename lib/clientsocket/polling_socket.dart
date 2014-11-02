@@ -65,7 +65,7 @@ class PollingSocket extends Socket {
   void send(data) {
     // var encodedData = _encodeMap(data);
     if (_uuid!=null) {
-      var pacakge = JSON.encode({
+      var package = JSON.encode({
                      "pid" : _uuid,
                      "data" : data
       });
@@ -75,7 +75,7 @@ class PollingSocket extends Socket {
       httpRequest.setRequestHeader('Content-type', 
       'application/x-www-form-urlencoded');
       httpRequest.onLoadEnd.listen((e) => loadEnd(httpRequest));
-      httpRequest.send(pacakge);
+      httpRequest.send(package);
     }
   }
   
