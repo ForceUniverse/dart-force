@@ -35,7 +35,6 @@ part 'serversocket/server_socket.dart';
 // custom connectors to the force system
 part 'connectors/connector.dart';
 part 'connectors/server_socket_connector.dart';
-part 'connectors/server_socket_client_connector.dart';
 
 // server socket client
 part 'serverclient/force_client.dart';
