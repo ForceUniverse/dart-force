@@ -10,7 +10,7 @@ import 'dart:math';
 import 'force_common.dart';
 export 'force_common.dart';
 
-part 'client/ws_client.dart';
+part 'client/force_client.dart';
 part 'client/connect_event.dart';
 
 part 'clientsocket/abstract_socket.dart';
@@ -18,7 +18,7 @@ part 'clientsocket/websocket_wrapper.dart';
 part 'clientsocket/polling_socket.dart';
 
 // mixins
-part 'client/ws_sendable.dart';
+part 'client/client_sendable.dart';
 
 
 

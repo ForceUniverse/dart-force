@@ -35,6 +35,9 @@ void main() {
      var data = {"todo": "server communication"};
      force.send("add", data);
      
+     var data2 = {"todo": "server communication 2 ..."};
+     force.send("add", data2);
+     
      // force.send("add", "I add something new");
          
      print("Sended");
