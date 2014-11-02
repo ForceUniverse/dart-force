@@ -8,6 +8,7 @@ import 'dart:math';
 // import 'package:uuid/uuid_client.dart';
 
 import 'force_common.dart';
+export 'force_common.dart';
 
 part 'client/ws_client.dart';
 part 'client/connect_event.dart';

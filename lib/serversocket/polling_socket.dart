@@ -1,6 +1,6 @@
 part of dart_force_server_lib;
 
-class PollingSocket extends Socket {
+class PollingSocket extends ForceSocket {
   
   List messages = new List();
   Completer completer = new Completer.sync();

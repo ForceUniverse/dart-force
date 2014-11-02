@@ -13,6 +13,7 @@ import 'package:wired/wired.dart';
 import 'package:forcemirrors/force_mirrors.dart';
 
 import 'force_common.dart';
+export 'force_common.dart';
 
 part 'server/force.dart';
 part 'server/force_server.dart';
@@ -27,6 +28,14 @@ part 'server/message_security.dart';
 part 'serversocket/abstract_socket.dart';
 part 'serversocket/websocket_wrapper.dart';
 part 'serversocket/polling_socket.dart';
+part 'serversocket/stream_socket.dart';
+
+part 'serversocket/server_socket.dart';
+
+// custom connectors to the force system
+part 'connectors/connector.dart';
+part 'connectors/server_socket_connector.dart';
+part 'connectors/server_socket_client_connector.dart';
 
 //mixins
 part 'server/serveable.dart';

@@ -20,6 +20,9 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   /// When a Socket connection is been closed a new [SocketEvent] will be added.
   StreamController<SocketEvent> _onSocketClosed = new StreamController<SocketEvent>.broadcast();
   
+  /// List of special connectors
+  List<Connector> connectors = new List<Connector>();
+  
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
    * these methods are then executed when the request value match an incoming message. 
@@ -94,7 +97,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
    * Handles the abstract Socket implementation of Force, so we can wrap any kind of Socket into this abstract class.
    *  
    **/
-  void handle(Socket socket) {
+  void handle(ForceSocket socket) {
       String id = uuid.v4();
       log.info("register id $id");
       
@@ -109,7 +112,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
       _startNewConnection(id, socket);
   }
   
-  void _startNewConnection(String socketId, Socket socket) {
+  void _startNewConnection(String socketId, ForceSocket socket) {
     checkConnections();
     _onSocket.add(new SocketEvent(socketId, socket));
     // send a first message to the newly connected socket
@@ -167,7 +170,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
    **/
   void checkConnections() {
       List<String> removeWs = new List<String>();
-      this.webSockets.forEach((String key, Socket ws) {
+      this.webSockets.forEach((String key, ForceSocket ws) {
         if (ws.isClosed()) {
           removeWs.add(key);
         }
@@ -188,6 +191,14 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
           this.profiles.remove(wsId);
         }
       } 
+  }
+  
+  void addConnector(Connector connector) {
+    connectors.add(connector);
+    
+    connector.wire().listen((ForceSocket forceSocket) {
+      handle(forceSocket);
+    });
   }
     
   void _checkProfiles(e, sendable) {

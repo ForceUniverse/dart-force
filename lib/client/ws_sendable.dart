@@ -4,7 +4,7 @@ class ClientSendable implements Sender {
   
   Socket socket;
  
-  var _profileInfo;
+  var _profileInfo; 
   
   void initProfileInfo(profileInfo) {
     _profileInfo = profileInfo;

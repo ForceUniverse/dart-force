@@ -7,7 +7,7 @@ class MessageEvent {
   MessageEvent(this.request, this.data);
 }
 
-abstract class Socket {
+abstract class ForceSocket {
   StreamController<MessageEvent> _messageController;
   
   HttpRequest request;

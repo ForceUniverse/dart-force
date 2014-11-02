@@ -1,6 +1,6 @@
 part of dart_force_server_lib;
 
-class WebSocketWrapper extends Socket {
+class WebSocketWrapper extends ForceSocket {
   
   WebSocket webSocket;
   HttpRequest request;

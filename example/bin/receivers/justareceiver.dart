@@ -4,7 +4,7 @@ part of dart_force_todo;
 class JustAReceiver {
   
   @NewConnection
-  void connection(socketId, Socket socket) {
+  void connection(socketId, ForceSocket socket) {
     print("new connection created for $socketId");
   }
   
@@ -16,7 +16,7 @@ class JustAReceiver {
   }
   
   @ClosedConnection
-  void closedConnection(socketId, Socket socket) {
+  void closedConnection(socketId, ForceSocket socket) {
      print("connection closed for $socketId");
   }
 }

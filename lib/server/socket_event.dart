@@ -7,7 +7,7 @@ part of dart_force_server_lib;
 class SocketEvent {
    
   String wsId;
-  Socket socket;
+  ForceSocket socket;
   
   SocketEvent(this.wsId, this.socket);
   

@@ -2,7 +2,7 @@ library dart_force_todo;
 
 import "package:force/force_serverside.dart";
 
-part 'justareceiver.dart';
+part 'receivers/justareceiver.dart';
 
 void main() {
   
@@ -19,5 +19,11 @@ void main() {
   });*/
   
   fs.start();
+  
+  // add serversocket implementation into the game! server 2 server communication 
+  Connector connector = new ServerSocketConnector();
+  fs.addConnector(connector);
+   
+  connector.start();
   
 }
