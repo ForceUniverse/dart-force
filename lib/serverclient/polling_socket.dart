@@ -21,7 +21,7 @@ class PollingSocket extends Socket {
   }
   
   void connect() {
-    HttpRequest.getString('http://$_url/uuid/').then(procces_id);
+    http.get('http://$_url/uuid/').then((r) => procces_id(r.body));
   }
   
   void procces_id(String value) {
@@ -37,7 +37,7 @@ class PollingSocket extends Socket {
   void polling() {
     count++;
     print('polling to ... http://$_url/polling/?pid=$_uuid&count=$count');
-    HttpRequest.getString('http://$_url/polling/?pid=$_uuid&count=$count').then(processString);
+    http.get('http://$_url/polling/?pid=$_uuid&count=$count').then((r) => processString(r.body));
   }
   
   void processString(String values) {
@@ -70,18 +70,13 @@ class PollingSocket extends Socket {
                      "data" : data
       });
       print('sending data to the post http://$_url/polling/');
-      var httpRequest = new HttpRequest();
-      httpRequest.open('POST', 'http://$_url/polling/');
-      httpRequest.setRequestHeader('Content-type', 
-      'application/x-www-form-urlencoded');
-      httpRequest.onLoadEnd.listen((e) => loadEnd(httpRequest));
-      httpRequest.send(package);
+      http.post('http://$_url/polling/', headers: {'Content-type': 'application/x-www-form-urlencoded'}, body: package).then((respond) => loadEnd(respond));
     }
   }
   
-  void loadEnd(HttpRequest request) {
-    if (request.status != 200) {
-      print('Uh oh, there was an error of ${request.status}');
+  void loadEnd(http.Response request) {
+    if (request.statusCode != 200) {
+      print('Uh oh, there was an error of ${request.statusCode}');
     } else {
       print('Data has been posted');
     }
