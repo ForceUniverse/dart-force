@@ -192,6 +192,29 @@ In the @Receivable classes you can also use:
 	void closedConnection(socketId, Socket socket) {
 		print("connection closed for $socketId");
 	}
+	
+#### Server 2 Server Communication ####
+
+With the implementation of ServerSockets it is possible to use a ForceClient on the server.
+
+This allows you todo server 2 server communication.
+
+On the Force Server you implements:
+
+	Connector connector = new ServerSocketConnector();
+	fs.addConnector(connector);
+   
+	connector.start();
+
+On the other server where you want to sent messages to the Force Server you use:
+
+	ForceClient fc = new ForceClient();
+    
+	fc.on("update", (fme, sender) {
+	      print("todo: ${fme.json["todo"]}");
+	});
+
+Under the hood it will establish a connection to the server socket.
 
 ### Notes to Contributors ###
 

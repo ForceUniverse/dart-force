@@ -14,10 +14,6 @@ void main() {
       fs.send("update", vme.json);
   });
   
-  /*fs.onSocket.listen((SocketEvent se) {
-    fs.sendTo(se.wsId, "ack", "ack");
-  });*/
-  
   fs.start();
   
   // add serversocket implementation into the game! server 2 server communication 
