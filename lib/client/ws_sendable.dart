@@ -6,51 +6,32 @@ class ClientSendable implements Sender {
  
   var _profileInfo; 
   
+  MessagesConstructHelper _messagesConstructHelper = new MessagesConstructHelper();
+  
   void initProfileInfo(profileInfo) {
-    _profileInfo = profileInfo;
+    _messagesConstructHelper.initProfileInfo(profileInfo);
     send('profileInfo', {});
   }
   
   // send it to the server
   void send(request, data) {
-    this._send(_prepare(ForceMessageType.NORMAL, request, data));
+    this._send(_messagesConstructHelper.send(request, data));
   }
   
   // broadcast it directly to all the clients
   void broadcast(request, data) {
-    this._send(_prepare(ForceMessageType.BROADCAST, request, data));
+    this._send(_messagesConstructHelper.broadcast(request, data));
   }
   
   // send to a specific socket with an id
   void sendTo(id, request, data) {
-     var sendingPackage =  {
-          'request': request,
-          'profile': _profileInfo,
-          'type': { 'name' : ForceMessageType.ID, 'id' : id},
-          'data': data
-     };
-     this._send(sendingPackage);
+     
+     this._send(_messagesConstructHelper.sendTo(id, request, data));
   }
   
   // send to a profile with specific values
   void sendToProfile(key, value, request, data) {
-    var sendingPackage =  {
-         'request': request,
-         'profile': _profileInfo,
-         'type': { 'name' : ForceMessageType.PROFILE, 'key' : key, 'value' : value},
-         'data': data
-    };
-    this._send(sendingPackage);
-  }
-  
-  dynamic _prepare(type, request, data) {
-    var sendingPackage =  {
-            'request': request,
-            'type': { 'name' : type},
-            'profile': _profileInfo,
-            'data': data
-        };
-    return sendingPackage;
+    this._send(_messagesConstructHelper.sendToProfile(key, value, request, data));
   }
   
   void _send(sendingPackage) {

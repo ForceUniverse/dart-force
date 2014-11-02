@@ -7,13 +7,12 @@ class Sendable implements Sender {
   Map<String, ForceSocket> webSockets = new Map<String, ForceSocket>();
   Map<String, dynamic> profiles = new Map<String, dynamic>();
   
+  MessagesConstructHelper _messagesConstructHelper = new MessagesConstructHelper();
+    
   void send(request, data) {
     printAmountOfConnections();
     
-    var sendingPackage =  {
-          'request': request,
-          'data': data
-      };
+    var sendingPackage = _messagesConstructHelper.send(request, data);
     
     webSockets.forEach((String key, ForceSocket ws) {
       log.info("broadcasting ... to $key");
@@ -21,13 +20,22 @@ class Sendable implements Sender {
     });
   }
   
+  void broadcast(request, data) {
+      printAmountOfConnections();
+      
+      var sendingPackage = _messagesConstructHelper.broadcast(request, data);
+      
+      webSockets.forEach((String key, ForceSocket ws) {
+        log.info("broadcasting ... to $key");
+        ws.add(JSON.encode(sendingPackage));
+      });
+    }
+  
   void sendTo(id, request, data) {
     log.info("*** send to $id");
     ForceSocket ws = webSockets[id];
-    var sendingPackage =  {
-          'request': request,
-          'data': data
-    };
+    var sendingPackage = _messagesConstructHelper.send(request, data);
+    
     if (ws != null) {
       ws.add(JSON.encode(sendingPackage));
     }

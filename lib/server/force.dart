@@ -198,6 +198,8 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
     
     connector.wire().listen((ForceSocket forceSocket) {
       handle(forceSocket);
+      
+      connector.complete();
     });
   }
     

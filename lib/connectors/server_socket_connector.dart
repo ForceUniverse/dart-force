@@ -11,13 +11,15 @@ class ServerSocketConnector extends Connector {
     _controller = new StreamController<ForceSocket>();
   }
   
-  void start() {
+  Future start() {
     ServerSocket.bind(this.address, 4041)
          .then((serverSocket) {
            serverSocket.listen((socket) {
              _controller.add(new ServerSocketWrapper(socket));
+             
            });
-         });
+    });
+    return _completer.future;
   }
  
 }

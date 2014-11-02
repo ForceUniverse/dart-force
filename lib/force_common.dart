@@ -10,4 +10,6 @@ part 'common/message_type.dart';
 part 'common/basic_sender.dart';
 part 'common/message_dispatcher.dart';
 
+part 'common/messages_construct_helper.dart';
+
 part 'common/common_typedefs.dart';

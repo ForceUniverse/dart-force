@@ -12,7 +12,7 @@ void main() {
   
   fs.on("add", (vme, sender) {
       fs.send("update", vme.json);
-    });
+  });
   
   /*fs.onSocket.listen((SocketEvent se) {
     fs.sendTo(se.wsId, "ack", "ack");
