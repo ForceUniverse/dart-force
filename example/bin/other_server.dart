@@ -19,27 +19,21 @@ void main() {
           }
         });
   
-  Force force = new Force();
+  ForceClient fc = new ForceClient();
     
-  Connector clientConnector = new ServerSocketClientConnector();
-  force.addConnector(clientConnector);
-  
-  force.on("update", (fme, sender) {
-          // querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>");
-      
+  fc.on("update", (fme, sender) {
       print("todo: ${fme.json["todo"]}");
   });
   
-  clientConnector.start().then((_) {
+  fc.connect().then((_) {
      print("Send");
      var data = {"todo": "server communication"};
-     force.send("add", data);
+     fc.send("add", data);
      
      var data2 = {"todo": "server communication 2 ..."};
-     force.send("add", data2);
+     fc.send("add", data2);
      
-     // force.send("add", "I add something new");
-         
+     // force.send("add", "I add something new");  
      print("Sended");
   });
   

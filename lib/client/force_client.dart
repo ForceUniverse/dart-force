@@ -24,6 +24,8 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     }
     
     this.socket = new Socket('$url$wsPath', usePolling: usePolling, heartbeat: heartbeat);
+    
+    this.messenger = new BrowserMessenger(socket);
   }
   
   void connect() {

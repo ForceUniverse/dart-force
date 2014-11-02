@@ -1,5 +1,12 @@
 part of dart_force_common_lib;
 
+abstract class Messenger {
+  void send(sendingPackage);
+  
+  void offline(sendingPackage);
+}
+
+
 class MessagesConstructHelper {
   
   var _profileInfo; 

@@ -1,8 +1,8 @@
-part of dart_force_client_lib;
+part of dart_force_common_lib;
 
 class ClientSendable implements Sender {
   
-  Socket socket;
+  Messenger messenger;
  
   var _profileInfo; 
   
@@ -25,7 +25,6 @@ class ClientSendable implements Sender {
   
   // send to a specific socket with an id
   void sendTo(id, request, data) {
-     
      this._send(_messagesConstructHelper.sendTo(id, request, data));
   }
   
@@ -35,12 +34,7 @@ class ClientSendable implements Sender {
   }
   
   void _send(sendingPackage) {
-    if (socket != null && socket.isOpen()) {
-      print('send package to the server $sendingPackage');
-      socket.send(JSON.encode(sendingPackage));
-    } else {
-      print('WebSocket not connected, message $sendingPackage not sent');
-    }
+    messenger.send(sendingPackage);
   }
 
 }
