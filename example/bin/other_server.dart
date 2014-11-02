@@ -26,15 +26,11 @@ void main() {
   });
   
   fc.connect().then((_) {
-     print("Send");
      var data = {"todo": "server communication"};
      fc.send("add", data);
      
      var data2 = {"todo": "server communication 2 ..."};
      fc.send("add", data2);
-     
-     // force.send("add", "I add something new");  
-     print("Sended");
   });
   
 //  const TIMEOUT = const Duration(seconds: 3);
