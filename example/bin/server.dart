@@ -6,7 +6,7 @@ part 'receivers/justareceiver.dart';
 
 void main() {
   
-  ForceServer fs = new ForceServer(clientFiles: "../build/web/", startPage: "dartforcetodo.html");
+  ForceServer fs = new ForceServer(port: 3030, clientFiles: "../build/web/", startPage: "dartforcetodo.html");
   
   fs.setupConsoleLog();
   

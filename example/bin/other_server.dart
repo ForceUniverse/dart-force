@@ -3,7 +3,7 @@ library dart_force_todo_server2;
 import "package:force/force_serverside.dart";
 
 import "dart:async";
-import "dart:math";
+import "dart:io";
 
 import 'package:logging/logging.dart' show Logger, Level, LogRecord;
 
@@ -25,26 +25,25 @@ void main() {
       print("todo: ${fme.json["todo"]}");
   });
   
+  var pathTo = Platform.script.resolve("../store/").toFilePath();
+  var uriKey = new Uri.file(pathTo).resolve("todo.txt");
+  File file = new File(uriKey.toFilePath());
+  Directory dir = new Directory(pathTo);
+  
   fc.connect().then((_) {
-     var data = {"todo": "server communication"};
-     fc.send("add", data);
-     
-     var data2 = {"todo": "server communication 2 ..."};
-     fc.send("add", data2);
+     // readlines    
+     dir.watch().listen((FileSystemEvent fse) {
+       if (fse.type == FileSystemEvent.MODIFY) {
+         file.readAsLines().then((List<String> lines) {
+           for (var line in lines) {
+              var data = {"todo": line};
+              fc.send("add", data);
+           }
+         }).whenComplete(() {
+           file.writeAsStringSync("");
+         });
+       }
+     });
   });
-  
-//  const TIMEOUT = const Duration(seconds: 3);
-//    var number = 0;
-//
-//    new Timer.periodic(TIMEOUT, (Timer t) {
-//      var rng = new Random();
-//      number=rng.nextInt(250);
-//      
-//      print("send a number to the clients $number");
-//      
-//      var data = { "count" : "$number"};
-//      force.send("add", data);
-//    });
-  
   
 }
