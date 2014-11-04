@@ -31,7 +31,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   void connect() {
    this.socket.connect();
    this.socket.onMessage.listen((e) {
-     _messageDispatcher.onMessageDispatch(onInnerMessage(e.data));
+     _messageDispatcher.onMessagesDispatch(onInnerMessage(e.data));
    });
   }
   

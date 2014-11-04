@@ -120,11 +120,13 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
   }
     
   void handleMessages(HttpRequest req, String id, data) {
-      ForceMessageEvent fme = constructForceMessageEvent(data, wsId: id);
-      if (messageSecurity.checkSecurity(req, fme)) {
-        _messageDispatch().onMessageDispatch(addMessage(fme));
-      } else {
-        sendTo(id, "unauthorized", data);
+      List<ForceMessageEvent> fmes = onInnerMessage(data, wsId: id);
+      for(ForceMessageEvent fme in fmes) {
+        if (messageSecurity.checkSecurity(req, fme)) {
+          _messageDispatch().onMessageDispatch(addMessage(fme));
+        } else {
+          sendTo(id, "unauthorized", data);
+        }
       }
   } 
    

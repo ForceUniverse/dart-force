@@ -7,7 +7,7 @@ class ServerMessenger extends Messenger {
   
   void send(sendingPackage) {
     if (socket != null && !socket.isClosed()) {
-        print('send package to the server $sendingPackage');
+        // print('send package to the server $sendingPackage');
         socket.add(JSON.encode(sendingPackage));
     } else {
         this.offline(sendingPackage);

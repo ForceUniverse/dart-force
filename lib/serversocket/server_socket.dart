@@ -33,6 +33,6 @@ class ServerSocketWrapper extends ForceSocket {
   }
 
   void add(data) {
-    this.socket.write(data);
+    this.socket.writeln(data);
   }
 }

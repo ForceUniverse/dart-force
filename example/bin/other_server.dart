@@ -30,16 +30,21 @@ void main() {
   File file = new File(uriKey.toFilePath());
   Directory dir = new Directory(pathTo);
   
+  String content = "";
+  
   fc.connect().then((_) {
      // readlines    
      dir.watch().listen((FileSystemEvent fse) {
        if (fse.type == FileSystemEvent.MODIFY && !fse.isDirectory) {
-         file.readAsLines().then((List<String> lines) {
-           for (var line in lines) {
-              var data = {"todo": line};
-              fc.send("add", data);
-           }
-         });
+         String newContent = file.readAsStringSync();
+         if (newContent != content) {
+             List<String> lines = newContent.split("\n");
+             for (var line in lines) {
+                var data = {"todo": line};
+                fc.send("add", data);
+             }
+         }
+         content = newContent;
        }
      });
   });

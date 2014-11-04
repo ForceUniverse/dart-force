@@ -12,7 +12,6 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   var _profileInfo = {};
   
   ForceClient({this.host: '127.0.0.1', this.port: 4041, this.url: null}) {
-    print("create a forceclient");
     _messageDispatcher = new ForceMessageDispatcher(this);
     
     this.messenger = new ServerMessenger(socket);
@@ -25,7 +24,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
      this.messenger = new ServerMessenger(socket);
      
      socket.onMessage.listen((e) {
-       _messageDispatcher.onMessageDispatch(onInnerMessage(e.data));
+       _messageDispatcher.onMessagesDispatch(onInnerMessage(e.data));
      });
      
      if (!completer.isCompleted) completer.complete();

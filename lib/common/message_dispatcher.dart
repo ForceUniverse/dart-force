@@ -17,24 +17,30 @@ class ForceMessageDispatcher {
     mapping[request] = messageController;
   }
   
-  void onMessageDispatch(ForceMessageEvent vme) {
-    var key = vme.request;
+  void onMessagesDispatch(List<ForceMessageEvent> fmes) {
+    for (var fme in fmes) {
+      this.onMessageDispatch(fme);
+    }
+  }
+  
+  void onMessageDispatch(ForceMessageEvent fme) {
+    var key = fme.request;
     
     for (MessageReceiver messageReceiver in beforeMapping) {
-      _executeMessageReceiver(vme, messageReceiver);
+      _executeMessageReceiver(fme, messageReceiver);
     }
-    if (vme.messageType.type == ForceMessageType.NORMAL) {
-      _executeMessageReceiver(vme, mapping[key]);
-    } else if (vme.messageType.type == ForceMessageType.BROADCAST) {
-      sender.send(vme.request, vme.json);  
-      _executeMessageReceiver(vme, mapping[key]);
+    if (fme.messageType.type == ForceMessageType.NORMAL) {
+      _executeMessageReceiver(fme, mapping[key]);
+    } else if (fme.messageType.type == ForceMessageType.BROADCAST) {
+      sender.send(fme.request, fme.json);  
+      _executeMessageReceiver(fme, mapping[key]);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
-      if (vme.messageType.type == ForceMessageType.ID) {
-        sender.sendTo(vme.messageType.id, vme.request, vme.json);
+      if (fme.messageType.type == ForceMessageType.ID) {
+        sender.sendTo(fme.messageType.id, fme.request, fme.json);
       }
-      if (vme.messageType.type == ForceMessageType.PROFILE) {
-        sender.sendToProfile(vme.messageType.key, vme.messageType.value, vme.request, vme.json);
+      if (fme.messageType.type == ForceMessageType.PROFILE) {
+        sender.sendToProfile(fme.messageType.key, fme.messageType.value, fme.request, fme.json);
       }
       
     }

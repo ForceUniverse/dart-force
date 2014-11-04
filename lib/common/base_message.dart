@@ -8,10 +8,15 @@ abstract class ForceBaseMessageSendReceiver {
     _controller = new StreamController<ForceMessageEvent>();
   }
   
-  ForceMessageEvent onInnerMessage(message, {wsId: "-"}) {
-    ForceMessageEvent fme = constructForceMessageEvent(message, wsId: wsId);
-    addMessage(fme);
-    return fme;
+  List<ForceMessageEvent> onInnerMessage(messages, {wsId: "-"}) {
+    List<ForceMessageEvent> fmes = new List<ForceMessageEvent>();
+    List<String> message_lines = removeEmptyLines(messages.split("\n"));
+    for (var message in message_lines) {
+      ForceMessageEvent fme = constructForceMessageEvent(message, wsId: wsId);
+      fmes.add(fme);
+      addMessage(fme);
+    }
+    return fmes;
   }
   
   ForceMessageEvent constructForceMessageEvent(message, {wsId: "-"}) {
@@ -30,6 +35,16 @@ abstract class ForceBaseMessageSendReceiver {
   ForceMessageEvent addMessage(ForceMessageEvent vme) {
     _controller.add(vme);
     return vme;
+  }
+  
+  List<String> removeEmptyLines(List<String> lines) {
+    List<String> notEmptyLines = new List<String>();
+    for (String line in lines) {
+      if (!line.trim().isEmpty) {
+        notEmptyLines.add(line);
+      }
+    }
+    return notEmptyLines;
   }
   
   void send(request, data);
