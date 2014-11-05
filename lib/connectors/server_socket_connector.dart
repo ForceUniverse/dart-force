@@ -12,7 +12,7 @@ class ServerSocketConnector extends Connector {
   }
   
   Future start() {
-    ServerSocket.bind(this.address, 4041)
+    ServerSocket.bind(this.address, this.port)
          .then((serverSocket) {
            serverSocket.listen((socket) {
              _controller.add(new ServerSocketWrapper(socket));
