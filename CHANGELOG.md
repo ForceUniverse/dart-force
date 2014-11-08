@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.5 ####
+
+- Server to server communication, based upon ServerSockets
+- Introducing connectors
+
 #### Pub version 0.5.4 ####
 
 - Prepare code for use on appengine
