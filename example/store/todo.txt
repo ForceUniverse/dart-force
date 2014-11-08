@@ -1,2 +1,3 @@
-from a file
-shizzle
+apples
+strawberry
+blackberry

@@ -14,10 +14,8 @@ class ServerSocketWrapper extends ForceSocket {
     _messageController = new StreamController<MessageEvent>();
     
     this.socket.transform(UTF8.decoder).listen((data) {
-      print(data);
       _messageController.add(new MessageEvent(request, data));
     }).onDone(() {
-      print("this is done!");
       closed = true;
     });
   }

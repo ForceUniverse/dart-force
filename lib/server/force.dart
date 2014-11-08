@@ -106,7 +106,7 @@ class Force extends ForceBaseMessageSendReceiver with Sendable {
         handleMessages(e.request, id, e.data);
       });
       this.webSockets[id].done().then((e) {
-        print("ws done");
+        log.info("socket ended");
         checkConnections();
       });
       _startNewConnection(id, socket);

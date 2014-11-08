@@ -57,7 +57,7 @@ class Sendable implements Sender {
   
   void printAmountOfConnections() {
     int size = this.webSockets.length;
-    log.info("*** total amount of ws $size");
+    log.info("*** total amount of sockets: $size");
   }
 
 }

@@ -56,7 +56,7 @@ class PollingServer {
       pollingSocket = connections[pid];
       pollingSocket.request = req;
     } else if (pid!=null) {
-      print("new polling connection! $pid");
+      log.info("new polling connection! $pid");
       
       pollingSocket = new PollingSocket(req);
       connections[pid] = pollingSocket;
