@@ -216,6 +216,14 @@ On the other server where you want to sent messages to the Force Server you use:
 
 Under the hood it will establish a connection to the server socket.
 
+#### Development trick ####
+
+Following the next steps will make it easier for you to develop, this allows you to adapt clientside files and immidiatly see results with doing a pub build.
+
+	pub serve web --hostname 0.0.0.0 --port 7777 &&
+	export DART_PUB_SERVE="http://localhost:7777" &&
+	pub run bin/server.dart
+
 ### Notes to Contributors ###
 
 #### Fork Dart Force ####
