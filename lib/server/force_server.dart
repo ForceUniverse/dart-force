@@ -4,15 +4,15 @@ class ForceServer extends Force with Serveable {
   
   final Logger log = new Logger('ForceServer');
 
-  WebServer _basicServer;
+  WebApplication _basicServer;
   
   ForceServer({host: "127.0.0.1",          
                port: 8080,
                wsPath: "/ws",
-               clientFiles: '../client/',
+               clientFiles: '../build/web/', 
                clientServe: true,
                startPage: "index.html"}) {
-    _basicServer = new WebServer(host: host,
+    _basicServer = new WebApplication(host: host,
                                  port: port,
                                  wsPath: wsPath, 
                                  clientFiles: clientFiles,
@@ -67,7 +67,7 @@ class ForceServer extends Force with Serveable {
     _basicServer.setupConsoleLog(level);
   }
 
-  WebServer get server => _basicServer;
+  WebApplication get server => _basicServer;
   
 }
 

@@ -2,12 +2,12 @@ part of dart_force_common_lib;
 
 class ForceMessageDispatcher {
   
-  Sender sender;
+  Sendable sendable;
   
   List<MessageReceiver> beforeMapping = new List<MessageReceiver>();
   Map<String, MessageReceiver> mapping = new Map<String, MessageReceiver>();
   
-  ForceMessageDispatcher(this.sender);
+  ForceMessageDispatcher(this.sendable);
   
   void before(MessageReceiver messageController) {
     beforeMapping.add(messageController);
@@ -32,15 +32,15 @@ class ForceMessageDispatcher {
     if (fme.messageType.type == ForceMessageType.NORMAL) {
       _executeMessageReceiver(fme, mapping[key]);
     } else if (fme.messageType.type == ForceMessageType.BROADCAST) {
-      sender.send(fme.request, fme.json);  
+      sendable.send(fme.request, fme.json);  
       _executeMessageReceiver(fme, mapping[key]);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
       if (fme.messageType.type == ForceMessageType.ID) {
-        sender.sendTo(fme.messageType.id, fme.request, fme.json);
+        sendable.sendTo(fme.messageType.id, fme.request, fme.json);
       }
       if (fme.messageType.type == ForceMessageType.PROFILE) {
-        sender.sendToProfile(fme.messageType.key, fme.messageType.value, fme.request, fme.json);
+        sendable.sendToProfile(fme.messageType.key, fme.messageType.value, fme.request, fme.json);
       }
       
     }
@@ -48,7 +48,7 @@ class ForceMessageDispatcher {
   
   void _executeMessageReceiver(ForceMessageEvent vme, MessageReceiver messageReceiver) {
     if (messageReceiver!=null) {
-      messageReceiver(vme, sender);
+      messageReceiver(vme, new Sender(sendable, vme.wsId));
     }
   }
 }

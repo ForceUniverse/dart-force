@@ -42,6 +42,6 @@ part 'serverclient/server_messenger.dart';
 
 //mixins
 part 'server/serveable.dart';
-part 'server/sendable.dart';
+part 'server/server_sendable.dart';
 
 part 'server/socket_event.dart';

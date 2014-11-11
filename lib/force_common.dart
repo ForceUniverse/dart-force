@@ -8,6 +8,7 @@ part 'common/message_event.dart';
 part 'common/message_type.dart';
 
 part 'common/basic_sender.dart';
+part 'common/basic_sendable.dart';
 part 'common/message_dispatcher.dart';
 
 part 'common/client_sendable.dart';

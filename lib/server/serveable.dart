@@ -6,14 +6,14 @@ part of dart_force_server_lib;
  */
 class Serveable {
 
-  WebServer _basicServer;
+  WebApplication _basicServer;
   
   Stream<HttpRequest> serve(name) {
     return _basicServer.serve(name);
   }
   
-  void serveFile(String fileName, HttpRequest request) {
-    _basicServer.serveFile(fileName, request);
+  void serveFile(HttpRequest request, String root, String fileName) {
+    _basicServer.serveFile(request, root, fileName);
   }
 
 }

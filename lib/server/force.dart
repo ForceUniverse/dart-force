@@ -1,6 +1,6 @@
 part of dart_force_server_lib;
 
-class Force extends ForceBaseMessageSendReceiver with Sendable {
+class Force extends ForceBaseMessageSendReceiver with ServerSendable {
 
   final Logger log = new Logger('Force');
 

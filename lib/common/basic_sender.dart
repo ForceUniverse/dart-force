@@ -1,11 +1,26 @@
 part of dart_force_common_lib;
 
-abstract class Sender {
-
-  void send(request, data);
+class Sender implements Sendable {
   
-  void sendTo(id, request, data);
+  Sendable sendable;
+  String _reply_id;
   
-  void sendToProfile(key, value, request, data);
-
+  Sender(this.sendable, this._reply_id);
+  
+  void send(request, data) {
+    sendable.send(request, data);
+  }
+  
+  void reply(request, data) {
+    sendable.sendTo(this._reply_id, request, data);
+  }
+  
+  void sendTo(id, request, data) {
+    sendable.sendTo(id, request, data);
+  }
+    
+  void sendToProfile(key, value, request, data) {
+    sendable.sendToProfile(key, value, request, data);
+  }
+  
 }

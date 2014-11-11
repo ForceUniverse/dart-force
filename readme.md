@@ -39,8 +39,13 @@ Listen on messages with the request of text.
 
 You can also send messages to the server.
 
-	forceClient.send('text', request);
+	forceClient.send('text', data);
+	
+When you are in the need to reply on a message, you can use the 'reply' method of sender.
 
+	forceClient.on("text", (e, sender) {
+		sender.reply("received", ok_data);
+	});
 
 ##### Server Side #####
 
