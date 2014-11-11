@@ -2,6 +2,12 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.6 ####
+
+- Add 'reply' method to sender
+- It works in IE9
+- Upgrade to the latest ForceMVC implementations
+
 #### Pub version 0.5.5 ####
 
 - Server to server communication, based upon ServerSockets
