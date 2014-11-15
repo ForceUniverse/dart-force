@@ -7,10 +7,16 @@ class ForceMessageType {
   static const ID = 'id';
   static const PROFILE = 'profile';
   
+  // all db types
+  static const SUBSCRIBE = 'db.subscribe';
+  static const ADD = 'db.add';
+  static const SET = 'db.set';
+  
   String type; 
   String id;
   String key;
   String value;
+  String collection;
   
   ForceMessageType(this.type);
   
@@ -22,7 +28,9 @@ class ForceMessageType {
       } else if (type == PROFILE) {
         key = json['key'];
         value = json['value'];
-      } 
+      } else if (type == SUBSCRIBE || type == ADD || type == SET) {
+        collection = json['collection'];
+      }
     } else {
       type = NORMAL;
     }

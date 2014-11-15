@@ -154,6 +154,11 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
       messageSecurity.register(request, roles);
       _messageDispatch().register(request, messageController);
   }
+  
+  void publish(String request, CargoBase cargo) {
+    //TODO: add security
+    _messageDispatch().cargoHolder.publish(request, cargo);
+  }
     
   /**
    * Close a specific websocket connection.
@@ -229,7 +234,8 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
   
   ForceMessageDispatcher _messageDispatch() {
     if (_messageDispatcherInternal==null) {
-      _messageDispatcherInternal = new ForceMessageDispatcher(this); 
+      _messageDispatcherInternal = new ForceMessageDispatcher(this);
+      _messageDispatcherInternal.cargoHolder = new CargoHolder(this);
     }
     return _messageDispatcherInternal;
   }

@@ -3,6 +3,7 @@ part of dart_force_common_lib;
 class ForceMessageDispatcher {
   
   Sendable sendable;
+  CargoHolder cargoHolder;
   
   List<MessageReceiver> beforeMapping = new List<MessageReceiver>();
   Map<String, MessageReceiver> mapping = new Map<String, MessageReceiver>();
@@ -34,6 +35,12 @@ class ForceMessageDispatcher {
     } else if (fme.messageType.type == ForceMessageType.BROADCAST) {
       sendable.send(fme.request, fme.json);  
       _executeMessageReceiver(fme, mapping[key]);
+    } else if (fme.messageType.type == ForceMessageType.SUBSCRIBE) {
+      cargoHolder.subscribe(fme.messageType.collection, fme.wsId);
+    } else if (fme.messageType.type == ForceMessageType.ADD) {
+      cargoHolder.add(fme.messageType.collection, fme.request, fme.json);
+    } else if (fme.messageType.type == ForceMessageType.SET) {
+      cargoHolder.set(fme.messageType.collection, fme.request, fme.json);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
       if (fme.messageType.type == ForceMessageType.ID) {

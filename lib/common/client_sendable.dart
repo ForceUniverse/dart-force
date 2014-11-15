@@ -33,6 +33,19 @@ class ClientSendable implements Sendable {
     this._send(_messagesConstructHelper.sendToProfile(key, value, request, data));
   }
   
+  // DB SENDABLE METHODS
+  void subscribe(collection) {
+    this._send(_messagesConstructHelper.subscribe(collection));
+  }
+  
+  void add(collection, key, value) {
+    this._send(_messagesConstructHelper.add(collection, key, value));
+  }
+  
+  void set(collection, key, value) {
+      this._send(_messagesConstructHelper.set(collection, key, value));
+  }
+  
   void _send(sendingPackage) {
     messenger.send(sendingPackage);
   }

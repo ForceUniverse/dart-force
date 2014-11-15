@@ -24,7 +24,22 @@ class MessagesConstructHelper {
   dynamic broadcast(request, data) {
       return _prepare(ForceMessageType.BROADCAST, request, data);
   }
-    
+  
+  // broadcast it directly to all the clients
+  dynamic subscribe(collection) {
+    return _prepare(ForceMessageType.SUBSCRIBE, "", {});
+  }
+  
+  // broadcast it directly to all the clients
+  dynamic add(collection, key, value) {
+    return _prepare(ForceMessageType.ADD, key, value);
+  }
+  
+  // broadcast it directly to all the clients
+  dynamic set(collection, key, value) {
+    return _prepare(ForceMessageType.SET, key, value);
+  }
+   
   // send to a specific socket with an id
   dynamic sendTo(id, request, data) {
        var sendingPackage =  {
