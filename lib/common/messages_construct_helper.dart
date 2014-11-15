@@ -27,17 +27,28 @@ class MessagesConstructHelper {
   
   // broadcast it directly to all the clients
   dynamic subscribe(collection) {
-    return _prepare(ForceMessageType.SUBSCRIBE, "", {});
+    return _collection(ForceMessageType.SUBSCRIBE, collection, "", {});
   }
   
   // broadcast it directly to all the clients
   dynamic add(collection, key, value) {
-    return _prepare(ForceMessageType.ADD, key, value);
+    return _collection(ForceMessageType.ADD, collection, key, value);
   }
   
   // broadcast it directly to all the clients
   dynamic set(collection, key, value) {
-    return _prepare(ForceMessageType.SET, key, value);
+    return _collection(ForceMessageType.SET, collection, key, value);
+  }
+  
+  // send to a specific socket with an id
+  dynamic _collection(type, collection, request, data) {
+      var sendingPackage =  {
+           'request': request,
+           'profile': _profileInfo,
+           'type': { 'name' : type, 'collection' : collection},
+           'data': data
+      };
+      return sendingPackage;
   }
    
   // send to a specific socket with an id
