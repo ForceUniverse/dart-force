@@ -20,17 +20,17 @@ class CargoHolder {
       List ids = _subscribers[collection];
       
       for (var id in ids) {
-        sendable.sendTo(id, collection, de);
+        sendable.sendTo(id, collection, {'key': de.key, 'rawdata': de.data});
       }
     });
   }
   
-  void _sendTo(collection, DataEvent de) {
+  void _sendTo(collection, data) {
     // inform all subscribers for this change!
     List ids = _subscribers[collection];
    
     for (var id in ids) {
-      sendable.sendTo(id, collection, de);
+      sendable.sendTo(id, collection, data);
     } 
   }
   
@@ -47,7 +47,7 @@ class CargoHolder {
       
       // send the collection to the clients
       _cargos[collection].export().then((Map values) {
-        values.forEach((key, value) => _sendTo(collection, new DataEvent(key, value)));
+        values.forEach((key, value) => _sendTo(collection, {'key': key, 'rawdata': value} ));
       });
     }
     return colExist;
