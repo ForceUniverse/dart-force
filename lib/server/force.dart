@@ -155,9 +155,9 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
       _messageDispatch().register(request, messageController);
   }
   
-  void publish(String request, CargoBase cargo) {
+  void publish(String collection, CargoBase cargo) {
     //TODO: add security
-    _messageDispatch().cargoHolder.publish(request, cargo);
+    _messageDispatch().cargoHolder.publish(collection, cargo);
   }
     
   /**
