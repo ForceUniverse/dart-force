@@ -20,7 +20,7 @@ class CargoHolder {
       List ids = _subscribers[collection];
       
       for (var id in ids) {
-        sendable.sendTo(id, collection, {'key': de.key, 'rawdata': de.data});
+        sendable.sendTo(id, collection, de.data);
       }
     });
   }
@@ -47,7 +47,7 @@ class CargoHolder {
       
       // send the collection to the clients
       _cargos[collection].export().then((Map values) {
-        values.forEach((key, value) => _sendTo(collection, {'key': key, 'rawdata': value} ));
+        values.forEach((key, value) => _sendTo(collection, value ));
       });
     }
     return colExist;
