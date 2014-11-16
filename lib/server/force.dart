@@ -235,7 +235,7 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
   ForceMessageDispatcher _messageDispatch() {
     if (_messageDispatcherInternal==null) {
       _messageDispatcherInternal = new ForceMessageDispatcher(this);
-      _messageDispatcherInternal.cargoHolder = new CargoHolder(this);
+      _messageDispatcherInternal.cargoHolder = new CargoHolderServer(this);
     }
     return _messageDispatcherInternal;
   }

@@ -45,3 +45,6 @@ part 'server/serveable.dart';
 part 'server/server_sendable.dart';
 
 part 'server/socket_event.dart';
+
+//cargo db api
+part 'cargo/cargo_holder_server.dart';
