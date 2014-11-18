@@ -228,6 +228,18 @@ Following the next steps will make it easier for you to develop, this allows you
 	pub serve web --hostname 0.0.0.0 --port 7777 &&
 	export DART_PUB_SERVE="http://localhost:7777" &&
 	pub run bin/server.dart
+	
+#### GAE ####
+
+You can now easily run your Force apps on a Google App Engine infrastructure by the following code! The rest is the same as a normal dart force app.
+
+  ForceServer forceServer = new ForceServer();
+    
+  runAppEngine(forceServer.requestHandler).then((_) {
+      // Server running. and you can do all the stuff you want!
+  });
+
+More info about [GAE overall](https://www.dartlang.org/cloud/) 
 
 ### Notes to Contributors ###
 
