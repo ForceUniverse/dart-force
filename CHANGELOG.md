@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.6+1 ####
+
+- exporting underlying packages!
+
 #### Pub version 0.5.6 ####
 
 - Add 'reply' method to sender
