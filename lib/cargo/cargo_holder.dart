@@ -8,9 +8,9 @@ abstract class CargoHolder {
   Map<String, CargoBase> _cargos = new Map<String, CargoBase>();
   Map<String, List<String>> _subscribers = new Map<String, List<String>>();
   
-  Sendable sendable;
+  DataChangeable dataChangeable;
   
-  CargoHolder(this.sendable);
+  CargoHolder(this.dataChangeable);
   
   void publish(String collection, CargoBase cargoBase);
   
@@ -19,6 +19,8 @@ abstract class CargoHolder {
   bool exist(String collection);
   
   bool add(String collection, key, data);
+  
+  bool update(String collection, key, data);
   
   bool set(String collection, data);
   

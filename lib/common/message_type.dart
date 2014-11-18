@@ -11,6 +11,8 @@ class ForceMessageType {
   static const SUBSCRIBE = 'db.subscribe';
   static const ADD = 'db.add';
   static const SET = 'db.set';
+  static const UPDATE = 'db.update';
+  static const REMOVE = 'db.remove';
   
   String type; 
   String id;

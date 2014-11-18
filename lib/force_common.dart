@@ -21,3 +21,4 @@ part 'common/messages_construct_helper.dart';
 part 'common/common_typedefs.dart';
 
 part 'cargo/cargo_holder.dart';
+part 'cargo/data_changeable.dart';

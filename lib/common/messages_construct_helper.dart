@@ -36,6 +36,16 @@ class MessagesConstructHelper {
   }
   
   // broadcast it directly to all the clients
+  dynamic update(collection, key, value) {
+    return _collection(ForceMessageType.UPDATE, collection, key, value);
+  }
+  
+  // broadcast it directly to all the clients
+  dynamic remove(collection, key, value) {
+    return _collection(ForceMessageType.REMOVE, collection, key, value);
+  }
+  
+  // broadcast it directly to all the clients
   dynamic set(collection, key, value) {
     return _collection(ForceMessageType.SET, collection, key, value);
   }

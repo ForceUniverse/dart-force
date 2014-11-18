@@ -12,6 +12,7 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   ForceClient({String wsPath: "/ws", String url: null, String host: null, String port: null, int heartbeat: 500, bool usePolling: false}) {
     print("create a forceclient");
     _messageDispatcher = new ForceMessageDispatcher(this);
+    _messageDispatcher.cargoHolder= new CargoHolderClient(this); 
     this.wsPath = wsPath;
     if (host==null) {
       host = '${Uri.base.host}';
@@ -26,6 +27,11 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     this.socket = new Socket('$url$wsPath', usePolling: usePolling, heartbeat: heartbeat);
     
     this.messenger = new BrowserMessenger(socket);
+  }
+  
+  void register(String collection, CargoBase cargo) {
+    this.subscribe(collection);
+    _messageDispatcher.cargoHolder.publish(collection, cargo);
   }
   
   void connect() {

@@ -39,6 +39,10 @@ class ForceMessageDispatcher {
       cargoHolder.subscribe(fme.messageType.collection, fme.wsId);
     } else if (fme.messageType.type == ForceMessageType.ADD) {
       cargoHolder.add(fme.messageType.collection, fme.request, fme.json);
+    } else if (fme.messageType.type == ForceMessageType.UPDATE) {
+      cargoHolder.update(fme.messageType.collection, fme.request, fme.json);
+    } else if (fme.messageType.type == ForceMessageType.REMOVE) {
+      cargoHolder.update(fme.messageType.collection, fme.request, fme.json);
     } else if (fme.messageType.type == ForceMessageType.SET) {
       cargoHolder.set(fme.messageType.collection, fme.json);
     } else {

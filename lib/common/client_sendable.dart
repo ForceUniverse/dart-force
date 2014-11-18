@@ -1,6 +1,6 @@
 part of dart_force_common_lib;
 
-class ClientSendable implements Sendable {
+class ClientSendable implements Sendable, DataChangeable {
   
   Messenger messenger;
  
@@ -38,11 +38,19 @@ class ClientSendable implements Sendable {
     this._send(_messagesConstructHelper.subscribe(collection));
   }
   
-  void add(collection, key, value) {
+  void add(collection, key, value, {id}) {
     this._send(_messagesConstructHelper.add(collection, key, value));
   }
   
-  void set(collection, key, value) {
+  void update(collection, key, value, {id}) {
+      this._send(_messagesConstructHelper.update(collection, key, value));
+  }
+  
+  void remove(collection, key, value, {id}) {
+      this._send(_messagesConstructHelper.remove(collection, key, value));
+  }
+  
+  void set(collection, key, value, {id}) {
       this._send(_messagesConstructHelper.set(collection, key, value));
   }
   
