@@ -10,6 +10,9 @@ import 'package:uuid/uuid.dart';
 import 'package:forcemvc/force_mvc.dart';
 import 'package:wired/wired.dart';
 
+export 'package:forcemvc/force_mvc.dart';
+export 'package:wired/wired.dart';
+
 import 'package:forcemirrors/force_mirrors.dart';
 
 import 'force_common.dart';
