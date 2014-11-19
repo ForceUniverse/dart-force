@@ -29,9 +29,11 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     this.messenger = new BrowserMessenger(socket);
   }
   
-  void register(String collection, CargoBase cargo) {
-    this.subscribe(collection);
+  ViewCollection register(String collection, CargoBase cargo) {
     _messageDispatcher.cargoHolder.publish(collection, cargo);
+    this.subscribe(collection);
+    
+    return new ViewCollection(collection, cargo, this);
   }
   
   void connect() {
