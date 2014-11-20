@@ -12,11 +12,8 @@ class CargoHolderClient implements CargoHolder {
   CargoHolderClient(this.dataChangeable);
   
   void publish(String collection, CargoBase cargoBase) {
+    print("publish cargo $collection");
     _cargos[collection] = cargoBase;
-    
-    cargoBase.onAll((de) {
-      //
-    });
   }
   
   bool subscribe(String collection, String id) {
@@ -38,8 +35,10 @@ class CargoHolderClient implements CargoHolder {
   }
   
   bool update(String collection, key, data) {
+    print("update collection: $collection");
     bool colExist = exist(collection);
     if (colExist) { 
+      print("with $key - $data");
       _cargos[collection].setItem(key, data);
     }
     return colExist;
