@@ -30,7 +30,7 @@ class ForceMessageType {
       } else if (type == PROFILE) {
         key = json['key'];
         value = json['value'];
-      } else if (type == SUBSCRIBE || type == ADD || type == SET) {
+      } else if (type == SUBSCRIBE || type == ADD || type == UPDATE || type == REMOVE || type == SET) {
         collection = json['collection'];
       }
     } else {
