@@ -9,11 +9,13 @@ class ViewCollection  {
   DataChangeable _changeable;
   String _collection;
   
-  Map<String, dynamic> all = new Map<String, dynamic>();
+  Map<String, EncapsulatedData> _all = new Map<String, EncapsulatedData>();
+  
+  Iterable get all => _all.values;
   
   ViewCollection(this._collection, this.cargo, this._changeable) {
    this.cargo.onAll((DataEvent de) {
-     all[de.key] = de.data;
+     _all[de.key] = new EncapsulatedData(de.key, de.data);
    }); 
   }
   
