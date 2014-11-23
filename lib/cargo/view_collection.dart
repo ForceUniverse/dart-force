@@ -11,8 +11,6 @@ class ViewCollection implements Iterable {
   
   Map<String, EncapsulatedData> _all = new Map<String, EncapsulatedData>();
   
-  Iterable get all => _all.values;
-  
   ViewCollection(this._collection, this.cargo, this._changeable) {
    this.cargo.onAll((DataEvent de) {
      _all[de.key] = new EncapsulatedData(de.key, de.data);
@@ -22,6 +20,11 @@ class ViewCollection implements Iterable {
   void update(id, value) {
    this.cargo.setItem(id, value);
    this._changeable.update(_collection, id, value);
+  }
+  
+  void remove(id) {
+    this.cargo.removeItem(id);
+    this._changeable.remove(_collection, id, {});
   }
   
   Iterator get iterator => _all.values.iterator;
