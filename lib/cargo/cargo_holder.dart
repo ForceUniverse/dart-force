@@ -24,4 +24,6 @@ abstract class CargoHolder {
   
   bool set(String collection, data);
   
+  bool remove(String collection, id);
+  
 }

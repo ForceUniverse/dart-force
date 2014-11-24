@@ -24,7 +24,7 @@ class ViewCollection implements Iterable {
   
   void remove(id) {
     this.cargo.removeItem(id);
-    this._changeable.remove(_collection, id, {});
+    this._changeable.remove(_collection, id);
   }
   
   Iterator get iterator => _all.values.iterator;

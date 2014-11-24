@@ -42,7 +42,7 @@ class ForceMessageDispatcher {
     } else if (fme.messageType.type == ForceMessageType.UPDATE) {
       cargoHolder.update(fme.messageType.collection, fme.request, fme.json);
     } else if (fme.messageType.type == ForceMessageType.REMOVE) {
-      cargoHolder.update(fme.messageType.collection, fme.request, fme.json);
+      cargoHolder.remove(fme.messageType.collection, fme.request);
     } else if (fme.messageType.type == ForceMessageType.SET) {
       cargoHolder.set(fme.messageType.collection, fme.json);
     } else {

@@ -71,6 +71,14 @@ class CargoHolderServer implements CargoHolder {
       return colExist;
   }
   
+  bool remove(String collection, key) {
+      bool colExist = exist(collection);
+      if (colExist) { 
+         _cargos[collection].removeItem(key);
+      }
+      return colExist;
+    }
+  
   bool set(String collection, data) {
     bool colExist = exist(collection);
     if (colExist) { 

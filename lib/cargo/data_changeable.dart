@@ -6,6 +6,6 @@ abstract class DataChangeable {
   
   void update(collection, key, data, {id});
   
-  void remove(collection, key, data, {id});
+  void remove(collection, key, {id});
 
 }

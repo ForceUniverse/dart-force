@@ -35,14 +35,20 @@ class CargoHolderClient implements CargoHolder {
   }
   
   bool update(String collection, key, data) {
-    print("update collection: $collection");
     bool colExist = exist(collection);
     if (colExist) { 
-      print("with $key - $data");
       _cargos[collection].setItem(key, data);
     }
     return colExist;
   }
+  
+  bool remove(String collection, key) {
+     bool colExist = exist(collection);
+     if (colExist) { 
+       _cargos[collection].removeItem(key);
+     }
+     return colExist;
+   }
   
   bool set(String collection, data) {
     throw new UnsupportedError('Is not supported on the client!');

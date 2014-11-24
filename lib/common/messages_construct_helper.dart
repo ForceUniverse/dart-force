@@ -41,8 +41,8 @@ class MessagesConstructHelper {
   }
   
   // broadcast it directly to all the clients
-  dynamic remove(collection, key, value) {
-    return _collection(ForceMessageType.REMOVE, collection, key, value);
+  dynamic remove(collection, key) {
+    return _collection(ForceMessageType.REMOVE, collection, key, {});
   }
   
   // broadcast it directly to all the clients
