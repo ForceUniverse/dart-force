@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.5.7 ####
+
+- adapting the start method so it is compliant with the latest ForceMVC release!
+Future start({FallbackStart fallback})
+
 #### Pub version 0.5.6+1 ####
 
 - exporting underlying packages!

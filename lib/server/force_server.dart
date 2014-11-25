@@ -37,11 +37,12 @@ class ForceServer extends Force with Serveable {
   
   /**
    * This method will start the server.
+   * @param FallbackStart when a start fails, you can implement what the application needs todo to restart randomPortFallback is an example.
    * 
    * @return a future when the server is been started.
    */
-  Future start() {
-    return _basicServer.start(this._socketsHandler);
+  Future start({FallbackStart fallback}) {
+    return _basicServer.start(handleWs: this._socketsHandler, fallback: fallback);
   }
   
   void _socketsHandler(WebSocket ws, HttpRequest req) {
