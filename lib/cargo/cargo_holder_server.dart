@@ -19,7 +19,11 @@ class CargoHolderServer implements CargoHolder {
     
     cargoBase.onAll((de) {
       // inform all subscribers for this change!
-      _sendTo(collection, de.key, de.data);
+      if (de.type==DataType.CHANGED) {
+        _sendTo(collection, de.key, de.data);
+      } else {
+        _removePush(collection, de.key, de.data);
+      }
     });
   }
   
@@ -31,6 +35,15 @@ class CargoHolderServer implements CargoHolder {
       dataChangeable.update(collection, key, data, id: id);
     } 
   }
+  
+  void _removePush(collection, key, data) {
+      // inform all subscribers for this change!
+      List ids = _subscribers[collection];
+     
+      for (var id in ids) {
+        dataChangeable.remove(collection, key, id: id);
+      } 
+    }
   
   bool subscribe(String collection, String id) {
     bool colExist = exist(collection);

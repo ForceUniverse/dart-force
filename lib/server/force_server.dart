@@ -40,8 +40,8 @@ class ForceServer extends Force with Serveable {
    * 
    * @return a future when the server is been started.
    */
-  Future start() {
-    return _basicServer.start(this._socketsHandler);
+  Future start({FallbackStart fallback}) {
+    return _basicServer.start(handleWs: this._socketsHandler, fallback: fallback);
   }
   
   void _socketsHandler(WebSocket ws, HttpRequest req) {
