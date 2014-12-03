@@ -1,6 +1,6 @@
 part of dart_force_common_lib;
 
-class ForceMessageDispatcher {
+class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
   
   Sendable sendable;
   CargoHolder cargoHolder;
@@ -8,7 +8,7 @@ class ForceMessageDispatcher {
   List<MessageReceiver> beforeMapping = new List<MessageReceiver>();
   Map<String, MessageReceiver> mapping = new Map<String, MessageReceiver>();
   
-  ForceMessageDispatcher(this.sendable);
+  ForceMessageDispatcher(this.sendable, this.cargoHolder);
   
   void before(MessageReceiver messageController) {
     beforeMapping.add(messageController);
@@ -18,13 +18,13 @@ class ForceMessageDispatcher {
     mapping[request] = messageController;
   }
   
-  void onMessagesDispatch(List<ForceMessageEvent> fmes) {
+  void dispatch(List<ForceMessagePackage> fmes) {
     for (var fme in fmes) {
       this.onMessageDispatch(fme);
     }
   }
   
-  void onMessageDispatch(ForceMessageEvent fme) {
+  void onMessageDispatch(ForceMessagePackage fme) {
     var key = fme.request;
     
     for (MessageReceiver messageReceiver in beforeMapping) {
@@ -57,7 +57,7 @@ class ForceMessageDispatcher {
     }
   }
   
-  void _executeMessageReceiver(ForceMessageEvent vme, MessageReceiver messageReceiver) {
+  void _executeMessageReceiver(ForceMessagePackage vme, MessageReceiver messageReceiver) {
     if (messageReceiver!=null) {
       messageReceiver(vme, new Sender(sendable, vme.wsId));
     }

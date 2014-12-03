@@ -1,14 +1,15 @@
 part of dart_force_server_lib;
 
-class Force extends ForceBaseMessageSendReceiver with ServerSendable {
+class Force extends Object with ServerSendable {
 
   final Logger log = new Logger('Force');
 
   static SecurityContextHolder _securityContext = new SecurityContextHolder(new NoSecurityStrategy());
   
   var uuid = new Uuid();
-  ForceMessageDispatcher _messageDispatcherInternal;
-    
+  // ForceMessageDispatcher _messageDispatcherInternal;
+  
+  
   ForceMessageSecurity messageSecurity = new ForceMessageSecurity(_securityContext);
   StreamController<ForceProfileEvent> _profileController = new StreamController<ForceProfileEvent>();
   
@@ -22,6 +23,10 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
   
   /// List of special connectors
   List<Connector> connectors = new List<Connector>();
+  
+  ProtocolDispatchers _protocolDispatchers;
+  CargoHolder _cargoHolder;
+  ForceMessageDispatcher _forceMessageDispatcher;
   
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
@@ -120,14 +125,15 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
   }
     
   void handleMessages(HttpRequest req, String id, data) {
-      List<ForceMessageEvent> fmes = onInnerMessage(data, wsId: id);
+      /** List<ForceMessageEvent> fmes = onInnerMessage(data, wsId: id);
       for(ForceMessageEvent fme in fmes) {
         if (messageSecurity.checkSecurity(req, fme)) {
           _messageDispatch().onMessageDispatch(addMessage(fme));
         } else {
           sendTo(id, "unauthorized", data);
         }
-      }
+      } **/
+    protocolDispatchers().dispatch(data, wsId: id);
   } 
    
   /**
@@ -232,12 +238,27 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
         }
   }
   
-  ForceMessageDispatcher _messageDispatch() {
-    if (_messageDispatcherInternal==null) {
-      _messageDispatcherInternal = new ForceMessageDispatcher(this);
-      _messageDispatcherInternal.cargoHolder = new CargoHolderServer(this);
+  ProtocolDispatchers protocolDispatchers() {
+    if (_protocolDispatchers == null) {
+      _protocolDispatchers = new ProtocolDispatchers();
+      ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_messageDispatch());
+      _protocolDispatchers.protocols.add(forceMessageProtocol);
     }
-    return _messageDispatcherInternal;
+    return _protocolDispatchers;
+  }
+  
+  ForceMessageDispatcher _messageDispatch() {
+    if (_forceMessageDispatcher == null) {
+      _forceMessageDispatcher = new ForceMessageDispatcher(this, _innerCargoHolder());
+    }
+    return _forceMessageDispatcher;
+  }
+  
+  CargoHolder _innerCargoHolder() {
+    if (_cargoHolder == null) {
+      _cargoHolder = new CargoHolderServer(this);
+    }
+    return _cargoHolder;
   }
     
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;

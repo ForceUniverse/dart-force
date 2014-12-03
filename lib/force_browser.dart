@@ -18,9 +18,7 @@ part 'clientsocket/abstract_socket.dart';
 part 'clientsocket/websocket_wrapper.dart';
 part 'clientsocket/polling_socket.dart';
 
-part 'cargo/cargo_holder_client.dart';
 part 'cargo/view_collection.dart';
-// mixins
 
 
 

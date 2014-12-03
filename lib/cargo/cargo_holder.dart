@@ -6,8 +6,7 @@ part of dart_force_common_lib;
 abstract class CargoHolder {
   
   Map<String, CargoBase> _cargos = new Map<String, CargoBase>();
-  Map<String, List<String>> _subscribers = new Map<String, List<String>>();
-  
+
   DataChangeable dataChangeable;
   
   CargoHolder(this.dataChangeable);

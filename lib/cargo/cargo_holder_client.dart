@@ -1,4 +1,4 @@
-part of dart_force_client_lib;
+part of dart_force_common_lib;
 
 /**
 * Holds all interactions with the cargo instances on the server!
@@ -6,7 +6,7 @@ part of dart_force_client_lib;
 class CargoHolderClient implements CargoHolder {
   
   Map<String, CargoBase> _cargos = new Map<String, CargoBase>();
-
+    
   DataChangeable dataChangeable;
   
   CargoHolderClient(this.dataChangeable);

@@ -37,4 +37,18 @@ class ForceMessageType {
       type = NORMAL;
     }
   }
+  
+  Map toJson() {
+     Map json = new Map();
+     json["name"] = type;
+     if (type == ID) {
+       json['id'] = id;
+     } else if (type == PROFILE) {
+       json['key'] = key;
+       json['value'] = value;
+     } else if (type == SUBSCRIBE || type == ADD || type == UPDATE || type == REMOVE || type == SET) {
+       json['collection'] = collection;
+     }
+     return json;
+   }
 }

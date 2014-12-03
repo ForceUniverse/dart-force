@@ -15,14 +15,15 @@ class MessagesConstructHelper {
       _profileInfo = profileInfo;
   }
     
-  // send it to the server
   dynamic send(request, data) {
-      return _prepare(ForceMessageType.NORMAL, request, data);
+     ForceMessagePackage fme = new ForceMessagePackage(request,new ForceMessageType(ForceMessageType.NORMAL), data,_profileInfo);
+     return fme;
   }
-    
+      
   // broadcast it directly to all the clients
   dynamic broadcast(request, data) {
-      return _prepare(ForceMessageType.BROADCAST, request, data);
+     ForceMessagePackage fme = new ForceMessagePackage(request,new ForceMessageType(ForceMessageType.BROADCAST), data,_profileInfo);
+     return fme;
   }
   
   // broadcast it directly to all the clients
@@ -63,33 +64,16 @@ class MessagesConstructHelper {
    
   // send to a specific socket with an id
   dynamic sendTo(id, request, data) {
-       var sendingPackage =  {
-            'request': request,
-            'profile': _profileInfo,
-            'type': { 'name' : ForceMessageType.ID, 'id' : id},
-            'data': data
-       };
-       return sendingPackage;
+     ForceMessagePackage fme = new ForceMessagePackage(request,new ForceMessageType(ForceMessageType.ID), data,_profileInfo);
+     fme.messageType.id = id;
+     return fme;
   }
     
   // send to a profile with specific values
   dynamic sendToProfile(key, value, request, data) {
-      var sendingPackage =  {
-           'request': request,
-           'profile': _profileInfo,
-           'type': { 'name' : ForceMessageType.PROFILE, 'key' : key, 'value' : value},
-           'data': data
-      };
-      return sendingPackage;
-  }
-    
-  dynamic _prepare(type, request, data) {
-      var sendingPackage =  {
-              'request': request,
-              'type': { 'name' : type},
-              'profile': _profileInfo,
-              'data': data
-          };
-      return sendingPackage;
+     ForceMessagePackage fme = new ForceMessagePackage(request,new ForceMessageType(ForceMessageType.PROFILE), data,_profileInfo);
+     fme.messageType.key = key;
+     fme.messageType.value = value;
+     return fme;
   }
 }

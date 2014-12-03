@@ -1,18 +1,18 @@
 part of dart_force_client_lib;
 
-class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
+class ForceClient extends Object with ClientSendable {
   Socket socket;
-  
-  ForceMessageDispatcher _messageDispatcher;
-  
   String wsPath;
+ 
+  ProtocolDispatchers protocolDispatchers = new ProtocolDispatchers();
+  CargoHolder _cargoHolder;
+  ForceMessageDispatcher _forceMessageDispatcher;
   
   var _profileInfo = {};
   
   ForceClient({String wsPath: "/ws", String url: null, String host: null, String port: null, int heartbeat: 500, bool usePolling: false}) {
     print("create a forceclient");
-    _messageDispatcher = new ForceMessageDispatcher(this);
-    _messageDispatcher.cargoHolder= new CargoHolderClient(this); 
+    _setupProtocols(); 
     this.wsPath = wsPath;
     if (host==null) {
       host = '${Uri.base.host}';
@@ -25,12 +25,18 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
     }
     
     this.socket = new Socket('$url$wsPath', usePolling: usePolling, heartbeat: heartbeat);
-    
     this.messenger = new BrowserMessenger(socket);
   }
   
+  void _setupProtocols() {
+    _cargoHolder = new CargoHolderClient(this);
+    _forceMessageDispatcher = new ForceMessageDispatcher(this, _cargoHolder);
+    ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_forceMessageDispatcher);
+    protocolDispatchers.protocols.add(forceMessageProtocol);
+  }
+  
   ViewCollection register(String collection, CargoBase cargo) {
-    _messageDispatcher.cargoHolder.publish(collection, cargo);
+    _cargoHolder.publish(collection, cargo);
     this.subscribe(collection);
     
     return new ViewCollection(collection, cargo, this);
@@ -39,12 +45,12 @@ class ForceClient extends ForceBaseMessageSendReceiver with ClientSendable {
   void connect() {
    this.socket.connect();
    this.socket.onMessage.listen((e) {
-     _messageDispatcher.onMessagesDispatch(onInnerMessage(e.data));
+     protocolDispatchers.dispatch(e.data);
    });
   }
   
-  void on(String request, MessageReceiver vaderMessageController) {
-    _messageDispatcher.register(request, vaderMessageController);
+  void on(String request, MessageReceiver forceMessageController) {
+    _forceMessageDispatcher.register(request, forceMessageController);
   }
   
   dynamic generateId() {

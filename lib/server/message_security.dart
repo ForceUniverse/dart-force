@@ -11,7 +11,7 @@ class ForceMessageSecurity {
     requestList[request] = roles;
   }
   
-  bool checkSecurity(HttpRequest req, ForceMessageEvent fme) {
+  bool checkSecurity(HttpRequest req, ForceMessagePackage fme) {
     if (requestList[fme.request] != null && requestList[fme.request].isNotEmpty) {
       // check if you are logged in against correct credentials
       return this.securityContextHolder.checkAuthorization(req, requestList[fme.request], data: fme);
