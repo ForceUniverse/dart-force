@@ -28,38 +28,28 @@ class MessagesConstructHelper {
   
   // broadcast it directly to all the clients
   dynamic subscribe(collection) {
-    return _collection(ForceMessageType.SUBSCRIBE, collection, "", {});
+    //return _collection(ForceMessageType.SUBSCRIBE, collection, "", {});
+    return new ForceCargoPackage(collection, new CargoAction(CargoAction.SUBSCRIBE), _profileInfo);
   }
   
   // broadcast it directly to all the clients
   dynamic add(collection, key, value) {
-    return _collection(ForceMessageType.ADD, collection, key, value);
+    return new ForceCargoPackage(collection, new CargoAction(CargoAction.ADD), _profileInfo, key: key, data: value);
   }
   
   // broadcast it directly to all the clients
   dynamic update(collection, key, value) {
-    return _collection(ForceMessageType.UPDATE, collection, key, value);
+    return new ForceCargoPackage(collection, new CargoAction(CargoAction.UPDATE), _profileInfo, key: key, data: value);
   }
   
   // broadcast it directly to all the clients
   dynamic remove(collection, key) {
-    return _collection(ForceMessageType.REMOVE, collection, key, {});
+    return new ForceCargoPackage(collection, new CargoAction(CargoAction.REMOVE), _profileInfo, key: key);
   }
   
   // broadcast it directly to all the clients
   dynamic set(collection, key, value) {
-    return _collection(ForceMessageType.SET, collection, key, value);
-  }
-  
-  // send to a specific socket with an id
-  dynamic _collection(type, collection, request, data) {
-      var sendingPackage =  {
-           'request': request,
-           'profile': _profileInfo,
-           'type': { 'name' : type, 'collection' : collection},
-           'data': data
-      };
-      return sendingPackage;
+    return new ForceCargoPackage(collection, new CargoAction(CargoAction.SET), _profileInfo, key: key);
   }
    
   // send to a specific socket with an id

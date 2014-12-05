@@ -23,6 +23,9 @@ part 'common/common_typedefs.dart';
 part 'common/protocol.dart';
 part 'common/package.dart';
 
+part 'cargo/cargo_package_dispatcher.dart';
+part 'cargo/cargo_protocol.dart';
+
 part 'cargo/cargo_holder.dart';
 part 'cargo/data_changeable.dart';
 part 'cargo/cargo_holder_client.dart';

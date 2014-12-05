@@ -163,7 +163,7 @@ class Force extends Object with ServerSendable {
   
   void publish(String collection, CargoBase cargo) {
     //TODO: add security
-    _messageDispatch().cargoHolder.publish(collection, cargo);
+    _innerCargoHolder().publish(collection, cargo);
   }
     
   /**
@@ -243,13 +243,18 @@ class Force extends Object with ServerSendable {
       _protocolDispatchers = new ProtocolDispatchers();
       ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_messageDispatch());
       _protocolDispatchers.protocols.add(forceMessageProtocol);
+      
+      // add Cargo
+      CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_innerCargoHolder());
+      ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
+      _protocolDispatchers.protocols.add(forceCargoProtocol);
     }
     return _protocolDispatchers;
   }
   
   ForceMessageDispatcher _messageDispatch() {
     if (_forceMessageDispatcher == null) {
-      _forceMessageDispatcher = new ForceMessageDispatcher(this, _innerCargoHolder());
+      _forceMessageDispatcher = new ForceMessageDispatcher(this);
     }
     return _forceMessageDispatcher;
   }

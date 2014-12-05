@@ -9,7 +9,6 @@ class CargoAction {
   static const REMOVE = 'db.remove';
   
   String type; 
-  String collection;
   
   CargoAction(this.type);
   
@@ -30,17 +29,17 @@ class ForceCargoPackage extends Package {
    
   String wsId;
   String collection;
+  String key;
   dynamic profile;
   dynamic data;
   
   CargoAction action;
   
-  ForceCargoPackage(this.collection, this.action, this.data, this.profile, { wsId: "-"}) {
-    this.wsId = wsId;
-  }
+  ForceCargoPackage(this.collection, this.action, this.profile, { this.key, this.data, this.wsId: "-"});
   
   ForceCargoPackage.fromJson(json, {this.wsId}) {
      if (json!=null) {
+       this.key = json["key"];
        this.data = json["data"];
        this.profile = json["profile"];
        this.collection = json["request"];

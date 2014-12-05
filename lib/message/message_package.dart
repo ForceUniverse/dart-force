@@ -9,9 +9,7 @@ class ForceMessagePackage extends Package {
   
   ForceMessageType messageType;
   
-  ForceMessagePackage(this.request, this.messageType, this.json, this.profile, { wsId: "-"}) {
-    this.wsId = wsId;
-  }
+  ForceMessagePackage(this.request, this.messageType, this.json, this.profile, { this.wsId: "-"});
   
   ForceMessagePackage.fromJson(json, {this.wsId}) {
      if (json!=null) {

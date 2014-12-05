@@ -30,9 +30,13 @@ class ForceClient extends Object with ClientSendable {
   
   void _setupProtocols() {
     _cargoHolder = new CargoHolderClient(this);
-    _forceMessageDispatcher = new ForceMessageDispatcher(this, _cargoHolder);
+    _forceMessageDispatcher = new ForceMessageDispatcher(this);
     ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_forceMessageDispatcher);
     protocolDispatchers.protocols.add(forceMessageProtocol);
+    // add Cargo
+    CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_cargoHolder);
+    ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
+    protocolDispatchers.protocols.add(forceCargoProtocol);
   }
   
   ViewCollection register(String collection, CargoBase cargo) {

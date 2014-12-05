@@ -3,12 +3,11 @@ part of dart_force_common_lib;
 class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
   
   Sendable sendable;
-  CargoHolder cargoHolder;
   
   List<MessageReceiver> beforeMapping = new List<MessageReceiver>();
   Map<String, MessageReceiver> mapping = new Map<String, MessageReceiver>();
   
-  ForceMessageDispatcher(this.sendable, this.cargoHolder);
+  ForceMessageDispatcher(this.sendable);
   
   void before(MessageReceiver messageController) {
     beforeMapping.add(messageController);
@@ -35,16 +34,6 @@ class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
     } else if (fme.messageType.type == ForceMessageType.BROADCAST) {
       sendable.send(fme.request, fme.json);  
       _executeMessageReceiver(fme, mapping[key]);
-    } else if (fme.messageType.type == ForceMessageType.SUBSCRIBE) {
-      cargoHolder.subscribe(fme.messageType.collection, fme.wsId);
-    } else if (fme.messageType.type == ForceMessageType.ADD) {
-      cargoHolder.add(fme.messageType.collection, fme.request, fme.json);
-    } else if (fme.messageType.type == ForceMessageType.UPDATE) {
-      cargoHolder.update(fme.messageType.collection, fme.request, fme.json);
-    } else if (fme.messageType.type == ForceMessageType.REMOVE) {
-      cargoHolder.remove(fme.messageType.collection, fme.request);
-    } else if (fme.messageType.type == ForceMessageType.SET) {
-      cargoHolder.set(fme.messageType.collection, fme.json);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
       if (fme.messageType.type == ForceMessageType.ID) {

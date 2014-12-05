@@ -9,34 +9,24 @@ class ForceMessageProtocol extends Protocol<ForceMessagePackage> {
     _controller = new StreamController<ForceMessagePackage>();
   }
   
-  bool shouldDispatch(message) {
-    return true;
+  bool shouldDispatch(data) {
+      // Test what is typical for this protocol
+      return data.toString().contains("request");
   }
   
-  List<ForceMessagePackage> onConvert(messages, {wsId: "-"}) {
+  List<ForceMessagePackage> onConvert(data, {wsId: "-"}) {
     List<ForceMessagePackage> fmes = new List<ForceMessagePackage>();
-    List<String> message_lines = removeEmptyLines(messages.split("\n"));
-    for (var message in message_lines) {
-      ForceMessagePackage fme = new ForceMessagePackage.fromJson(JSON.decode(message), wsId: wsId);
-      fmes.add(fme);
-      addMessage(fme);
-    }
+    ForceMessagePackage fme = new ForceMessagePackage.fromJson(JSON.decode(data), wsId: wsId);
+      
+    fmes.add(fme);
+    addMessage(fme);
+    
     return fmes;
   }
   
   ForceMessagePackage addMessage(ForceMessagePackage vme) {
     _controller.add(vme);
     return vme;
-  }
-  
-  List<String> removeEmptyLines(List<String> lines) {
-    List<String> notEmptyLines = new List<String>();
-    for (String line in lines) {
-      if (!line.trim().isEmpty) {
-        notEmptyLines.add(line);
-      }
-    }
-    return notEmptyLines;
   }
   
   Stream<ForceMessagePackage> get onMessage => _controller.stream;
