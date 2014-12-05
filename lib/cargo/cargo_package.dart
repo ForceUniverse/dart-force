@@ -50,6 +50,7 @@ class ForceCargoPackage extends Package {
   
   Map toJson() {
     Map json = new Map();
+    json["key"] = this.key;
     json["data"] = this.data;
     json["profile"] = this.profile;
     json["collection"] = this.collection;
