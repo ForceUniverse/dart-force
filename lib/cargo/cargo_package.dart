@@ -42,7 +42,7 @@ class ForceCargoPackage extends Package {
        this.key = json["key"];
        this.data = json["data"];
        this.profile = json["profile"];
-       this.collection = json["request"];
+       this.collection = json["collection"];
        
        this.action = new CargoAction.fromJson(json["type"]);
      } 
