@@ -123,17 +123,19 @@ class Force extends Object with ServerSendable {
     // send a first message to the newly connected socket
     this.sendTo(socketId, "ack", "ack");
   }
-    
+  
+  /**
+   * Handles the messages that are coming into the server, regulator.
+   */
   void handleMessages(HttpRequest req, String id, data) {
-      /** List<ForceMessageEvent> fmes = onInnerMessage(data, wsId: id);
-      for(ForceMessageEvent fme in fmes) {
-        if (messageSecurity.checkSecurity(req, fme)) {
-          _messageDispatch().onMessageDispatch(addMessage(fme));
-        } else {
-          sendTo(id, "unauthorized", data);
-        }
-      } **/
-    protocolDispatchers().dispatch(data, wsId: id);
+    List packages = protocolDispatchers().convertPackages(data, wsId: id); 
+    for(var package in packages) {
+      if (messageSecurity.isAuthorized(req, package)) {
+        protocolDispatchers().dispatch(package);
+      } else {
+        sendTo(id, "unauthorized", data);
+      }
+    }
   } 
    
   /**

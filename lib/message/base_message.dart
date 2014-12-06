@@ -14,14 +14,12 @@ class ForceMessageProtocol extends Protocol<ForceMessagePackage> {
       return data.toString().contains("request");
   }
   
-  List<ForceMessagePackage> onConvert(data, {wsId: "-"}) {
-    List<ForceMessagePackage> fmes = new List<ForceMessagePackage>();
+  ForceMessagePackage onConvert(data, {wsId: "-"}) {
     ForceMessagePackage fme = new ForceMessagePackage.fromJson(JSON.decode(data), wsId: wsId);
       
-    fmes.add(fme);
     addMessage(fme);
     
-    return fmes;
+    return fme;
   }
   
   ForceMessagePackage addMessage(ForceMessagePackage vme) {

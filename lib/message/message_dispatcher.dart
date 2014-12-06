@@ -17,13 +17,7 @@ class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
     mapping[request] = messageController;
   }
   
-  void dispatch(List<ForceMessagePackage> fmes) {
-    for (var fme in fmes) {
-      this.onMessageDispatch(fme);
-    }
-  }
-  
-  void onMessageDispatch(ForceMessagePackage fme) {
+  void dispatch(ForceMessagePackage fme) {
     var key = fme.request;
     
     for (MessageReceiver messageReceiver in beforeMapping) {

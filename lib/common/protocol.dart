@@ -8,17 +8,30 @@ abstract class Protocol<T> {
   
   ProtocolDispatch<T> dispatcher;
   
-  List<T> onConvert(messages, {wsId: "-"});
+  T onConvert(data, {wsId: "-"});
   
   bool shouldDispatch(data);
   
-  void dispatch(data, {wsId: "-"}) {
+  List<T> convertPackages(data, {wsId: "-"}) {
+    List<T> packages = new List<T>();
+    List<String> data_lines = removeEmptyLines(data.split("\n"));
+    for (var line in data_lines) {
+         packages.add(onConvert(line, wsId: wsId));
+    }
+    return packages;
+  }
+  
+  void dispatchRaw(data, {wsId: "-"}) {
     if (shouldDispatch(data)) {
       List<String> data_lines = removeEmptyLines(data.split("\n"));
       for (var line in data_lines) {
            dispatcher.dispatch(onConvert(line, wsId: wsId));
       }
     }
+  }
+  
+  void dispatch(T data) {
+    dispatcher.dispatch(data);
   }
   
   List<String> removeEmptyLines(List<String> lines) {
@@ -37,7 +50,7 @@ abstract class Protocol<T> {
  */
 abstract class ProtocolDispatch<T> {
   
-  void dispatch(List<T> protocolMessages);
+  void dispatch(T protocolMessages);
   
 }
 
@@ -48,9 +61,23 @@ class ProtocolDispatchers {
   
   List<Protocol> protocols = new List<Protocol>();
   
-  void dispatch(data, {wsId: "-"}) {
+  List convertPackages(data, {wsId: "-"}) {
+    List packages = new List();
     for (var protocol in protocols) {
-      protocol.dispatch(data, wsId: wsId);
+         packages.addAll(protocol.convertPackages(data, wsId: wsId));
+    }
+    return packages;
+  }
+  
+  void dispatch_raw(data, {wsId: "-"}) {
+      for (var protocol in protocols) {
+        protocol.dispatchRaw(data, wsId: wsId);
+      }
+  }
+  
+  void dispatch(data) {
+    for (var protocol in protocols) {
+      protocol.dispatch(data);
     }
   }
   

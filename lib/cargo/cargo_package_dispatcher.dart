@@ -12,13 +12,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
     cargoHolder.publish(collection, cargo);
   }
   
-  void dispatch(List<ForceCargoPackage> fcps) {
-    for (var fcp in fcps) {
-      this.onDispatch(fcp);
-    }
-  }
-  
-  void onDispatch(ForceCargoPackage fcp) {
+  void dispatch(ForceCargoPackage fcp) {
     var collection = fcp.collection;
     
     if (fcp.action.type == CargoAction.SUBSCRIBE) {

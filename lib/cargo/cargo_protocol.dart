@@ -13,20 +13,17 @@ class ForceCargoProtocol extends Protocol<ForceCargoPackage> {
     return data.toString().contains("collection");
   }
   
-  List<ForceCargoPackage> onConvert(data, {wsId: "-"}) {
-    List<ForceCargoPackage> fcps = new List<ForceCargoPackage>();
+  ForceCargoPackage onConvert(data, {wsId: "-"}) {
     ForceCargoPackage fcp = new ForceCargoPackage.fromJson(JSON.decode(data), wsId: wsId);
-      
-    fcps.add(fcp);
-    addMessage(fcp);
+    addPackage(fcp);
  
-    return fcps;
+    return fcp;
   }
   
-  ForceCargoPackage addMessage(ForceCargoPackage fcp) {
+  ForceCargoPackage addPackage(ForceCargoPackage fcp) {
     _controller.add(fcp);
     return fcp;
   }
   
-  Stream<ForceCargoPackage> get onMessage => _controller.stream;
+  Stream<ForceCargoPackage> get onPackage => _controller.stream;
 }

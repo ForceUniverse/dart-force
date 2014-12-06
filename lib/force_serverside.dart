@@ -26,7 +26,7 @@ part 'server/force_typedefs.dart';
 part 'server/profile_event.dart';
 part 'server/polling_server.dart';
 
-part 'server/message_security.dart';
+part 'message/message_security.dart';
 
 part 'serversocket/abstract_socket.dart';
 part 'serversocket/websocket_wrapper.dart';

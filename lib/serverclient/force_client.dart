@@ -37,7 +37,7 @@ class ForceClient extends Object with ClientSendable {
      this.messenger = new ServerMessenger(socket);
      
      socket.onMessage.listen((e) {
-       protocolDispatchers.dispatch(e.data);
+       protocolDispatchers.dispatch_raw(e.data);
      });
      
      if (!completer.isCompleted) completer.complete();

@@ -49,7 +49,7 @@ class ForceClient extends Object with ClientSendable {
   void connect() {
    this.socket.connect();
    this.socket.onMessage.listen((e) {
-     protocolDispatchers.dispatch(e.data);
+     protocolDispatchers.dispatch_raw(e.data);
    });
   }
   
