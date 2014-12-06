@@ -32,6 +32,9 @@ abstract class Protocol<T> {
     }
 }
 
+/**
+ * It dispatches the protocol and handles the protocol by doing something with his commands.
+ */
 abstract class ProtocolDispatch<T> {
   
   void dispatch(List<T> protocolMessages);
