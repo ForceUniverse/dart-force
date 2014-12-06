@@ -8,18 +8,23 @@ class CargoHolderServer implements CargoHolder {
   Map<String, CargoBase> _cargos = new Map<String, CargoBase>();
   Map<String, List<String>> _subscribers = new Map<String, List<String>>();
   
+  Map<String, Map> _parameters = new Map<String, Map>();
+  Map<String, PublishReceiver> _publishReceivers = new Map<String, PublishReceiver>();
+  
   DataChangeable dataChangeable;
   
   var _uuid = new Uuid();
   
   CargoHolderServer(this.dataChangeable);
   
-  void publish(String collection, CargoBase cargoBase) {
+  void publish(String collection, CargoBase cargoBase, {PublishReceiver publishReceiver}) {
     _cargos[collection] = cargoBase;
+    _publishReceivers[collection] = publishReceiver; 
     
     cargoBase.onAll((de) {
       // inform all subscribers for this change!
       if (de.type==DataType.CHANGED) {
+        //before that 
         _sendTo(collection, de.key, de.data);
       } else {
         _removePush(collection, de.key, de.data);
@@ -30,10 +35,17 @@ class CargoHolderServer implements CargoHolder {
   void _sendTo(collection, key, data) {
     // inform all subscribers for this change!
     List ids = _subscribers[collection];
-   
+    
     for (var id in ids) {
-      dataChangeable.update(collection, key, data, id: id);
+      _sendToId(collection, key, data, id);
     } 
+  }
+  
+  void _sendToId(collection, key, data, id) {
+    PublishReceiver publishReceiver = _publishReceivers[collection];
+    if (publishReceiver(data, _parameters[collection], id)) {
+        dataChangeable.update(collection, key, data, id: id);
+    }
   }
   
   void _removePush(collection, key, data) {
@@ -45,7 +57,7 @@ class CargoHolderServer implements CargoHolder {
       } 
     }
   
-  bool subscribe(String collection, String id) {
+  bool subscribe(String collection, params, String id) {
     bool colExist = exist(collection);
     if (colExist) { 
       List ids = new List();
@@ -55,10 +67,11 @@ class CargoHolderServer implements CargoHolder {
       ids.add(id);
       // send data if necessary
       _subscribers[collection] = ids;
+      _parameters[collection] = params;
       
       // send the collection to the clients
       _cargos[collection].export().then((Map values) {
-        values.forEach((key, value) => _sendTo(collection, key, value));
+        values.forEach((key, value) => _sendToId(collection, key, value, id));
       });
     }
     return colExist;

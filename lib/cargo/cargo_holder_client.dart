@@ -11,12 +11,12 @@ class CargoHolderClient implements CargoHolder {
   
   CargoHolderClient(this.dataChangeable);
   
-  void publish(String collection, CargoBase cargoBase) {
+  void publish(String collection, CargoBase cargoBase, {PublishReceiver publishReceiver}) {
     print("publish cargo $collection");
     _cargos[collection] = cargoBase;
   }
   
-  bool subscribe(String collection, String id) {
+  bool subscribe(String collection, params, String id) {
     bool colExist = exist(collection);
     // Don't need todo anything on the client
     return colExist;

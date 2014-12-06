@@ -39,9 +39,9 @@ class ForceClient extends Object with ClientSendable {
     protocolDispatchers.protocols.add(forceCargoProtocol);
   }
   
-  ViewCollection register(String collection, CargoBase cargo) {
+  ViewCollection register(String collection, CargoBase cargo, {Map params}) {
     _cargoHolder.publish(collection, cargo);
-    this.subscribe(collection);
+    this.subscribe(collection, params: params);
     
     return new ViewCollection(collection, cargo, this);
   }

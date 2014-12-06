@@ -23,10 +23,10 @@ class ForceMessagePackage extends Package {
   
   Map toJson() {
     Map json = new Map();
-    json["data"] = this.json;
-    json["profile"] = this.profile;
-    json["request"] = this.request;
-    json["type"] = this.messageType.toJson();
+    if (json != null) json["data"] = this.json;
+    if (json != null) json["profile"] = this.profile;
+    if (json != null) json["request"] = this.request;
+    if (json != null) json["type"] = this.messageType.toJson();
     return json;
   }
 }

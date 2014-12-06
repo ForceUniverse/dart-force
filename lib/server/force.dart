@@ -163,7 +163,7 @@ class Force extends Object with ServerSendable {
       _messageDispatch().register(request, messageController);
   }
   
-  void publish(String collection, CargoBase cargo) {
+  void publish(String collection, CargoBase cargo, PublishReceiver publishReceiver) {
     //TODO: add security
     _innerCargoHolder().publish(collection, cargo);
   }

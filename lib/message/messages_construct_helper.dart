@@ -27,9 +27,9 @@ class MessagesConstructHelper {
   }
   
   // broadcast it directly to all the clients
-  dynamic subscribe(collection) {
+  dynamic subscribe(collection, {params}) {
     //return _collection(ForceMessageType.SUBSCRIBE, collection, "", {});
-    return new ForceCargoPackage(collection, new CargoAction(CargoAction.SUBSCRIBE), _profileInfo);
+    return new ForceCargoPackage(collection, new CargoAction(CargoAction.SUBSCRIBE), _profileInfo, params: params);
   }
   
   // broadcast it directly to all the clients

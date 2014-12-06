@@ -32,10 +32,11 @@ class ForceCargoPackage extends Package {
   String key;
   dynamic profile;
   dynamic data;
+  dynamic params;
   
   CargoAction action;
   
-  ForceCargoPackage(this.collection, this.action, this.profile, { this.key, this.data, this.wsId: "-"});
+  ForceCargoPackage(this.collection, this.action, this.profile, { this.key, this.data, this.params, this.wsId: "-"});
   
   ForceCargoPackage.fromJson(json, {this.wsId}) {
      if (json!=null) {
@@ -44,17 +45,18 @@ class ForceCargoPackage extends Package {
        this.profile = json["profile"];
        this.collection = json["collection"];
        
-       this.action = new CargoAction.fromJson(json["type"]);
+       this.action = new CargoAction.fromJson(json["action"]);
      } 
    }
   
   Map toJson() {
     Map json = new Map();
-    json["key"] = this.key;
-    json["data"] = this.data;
-    json["profile"] = this.profile;
-    json["collection"] = this.collection;
-    json["type"] = this.action.toJson();
+    if (this.key != null) json["key"] = this.key;
+    if (this.data!= null) json["data"] = this.data;
+    if (this.params != null) json["params"] = this.params;
+    if (this.profile!= null) json["profile"] = this.profile;
+    if (this.collection != null) json["collection"] = this.collection;
+    if (this.action != null) json["action"] = this.action.toJson();
     return json;
   }
 }

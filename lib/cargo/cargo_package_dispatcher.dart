@@ -16,7 +16,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
     var collection = fcp.collection;
     
     if (fcp.action.type == CargoAction.SUBSCRIBE) {
-      cargoHolder.subscribe(fcp.collection, fcp.wsId);
+      cargoHolder.subscribe(fcp.collection, fcp.params, fcp.wsId);
     } else if (fcp.action.type == ForceMessageType.ADD) {
       cargoHolder.add(fcp.collection, fcp.collection, fcp.data);
     } else if (fcp.action.type == ForceMessageType.UPDATE) {
