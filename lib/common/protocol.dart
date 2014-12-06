@@ -30,8 +30,10 @@ abstract class Protocol<T> {
     }
   }
   
-  void dispatch(T data) {
-    dispatcher.dispatch(data);
+  void dispatch(data) {
+    if (data is T) {
+      dispatcher.dispatch(data);
+    }
   }
   
   List<String> removeEmptyLines(List<String> lines) {
