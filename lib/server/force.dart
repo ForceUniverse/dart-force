@@ -165,7 +165,7 @@ class Force extends Object with ServerSendable {
   
   void publish(String collection, CargoBase cargo, PublishReceiver publishReceiver) {
     //TODO: add security
-    _innerCargoHolder().publish(collection, cargo);
+    _innerCargoHolder().publish(collection, cargo, publishReceiver: publishReceiver);
   }
     
   /**
