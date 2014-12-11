@@ -32,6 +32,10 @@ class ViewCollection implements Iterable {
     this._changeable.remove(_collection, id);
   }
   
+  void set(value) {
+    this._changeable.set(_collection, value);
+  }
+  
   Iterator get iterator => _all.values.iterator;
 
   Iterable map(f(EncapsulatedData element)) => _all.values.map(f);
