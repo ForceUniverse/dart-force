@@ -7,12 +7,11 @@ part 'receivers/justareceiver.dart';
 void main() {
   
   ForceServer fs = new ForceServer(port: 3030, 
-                                   clientFiles: "../build/web/");
+                                   clientFiles: "../build/web/", 
+                                   startPage: "dartforcetodo.html");
   
   fs.setupConsoleLog();
   
-  fs.server.use("/", (req, model) => "dartforcetodo");
-
   fs.start().then((_) {
     fs.on("add", (vme, sender) {
           fs.send("update", vme.json);

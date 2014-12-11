@@ -48,8 +48,8 @@ class MessagesConstructHelper {
   }
   
   // broadcast it directly to all the clients
-  dynamic set(collection, value) {
-    return new ForceCargoPackage(collection, new CargoAction(CargoAction.SET), _profileInfo);
+  dynamic set(collection, key, value) {
+    return new ForceCargoPackage(collection, new CargoAction(CargoAction.SET), _profileInfo, key: key);
   }
    
   // send to a specific socket with an id

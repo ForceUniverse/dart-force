@@ -50,8 +50,8 @@ class ClientSendable implements Sendable, DataChangeable {
       this._send(_messagesConstructHelper.remove(collection, key));
   }
   
-  void set(collection, value, {id}) {
-      this._send(_messagesConstructHelper.set(collection, value));
+  void set(collection, key, value, {id}) {
+      this._send(_messagesConstructHelper.set(collection, key, value));
   }
   
   void _send(sendingPackage) {
