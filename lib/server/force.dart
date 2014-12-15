@@ -162,10 +162,12 @@ class Force extends Object with ServerSendable {
       _messageDispatch().register(request, messageController);
   }
   
-  void publish(String collection, CargoBase cargo, PublishReceiver publishReceiver) {
+  void publish(String collection, CargoBase cargo, {FilterReceiver filter}) {
     //TODO: add security and this.profiles.containsKey(wsId)
+    if (filter==null) filter = basisFilterReceiver;
+    
     CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
-    _innerCargoHolder().publish(collection, cargoWithCollection, publishReceiver: publishReceiver);
+    _innerCargoHolder().publish(collection, cargoWithCollection, publishReceiver: filter);
   }
     
   /**

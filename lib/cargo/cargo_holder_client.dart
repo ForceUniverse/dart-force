@@ -11,7 +11,7 @@ class CargoHolderClient implements CargoHolder {
   
   CargoHolderClient(this.dataChangeable);
   
-  void publish(String collection, CargoBase cargoBase, {PublishReceiver publishReceiver}) {
+  void publish(String collection, CargoBase cargoBase, {FilterReceiver publishReceiver}) {
     print("publish cargo $collection");
     _cargos[collection] = cargoBase;
   }

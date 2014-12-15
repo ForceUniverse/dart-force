@@ -11,7 +11,7 @@ abstract class CargoHolder {
   
   CargoHolder(this.dataChangeable);
   
-  void publish(String collection, CargoBase cargoBase, {PublishReceiver publishReceiver});
+  void publish(String collection, CargoBase cargoBase, {FilterReceiver publishReceiver});
   
   bool subscribe(String collection, params, String id);
   

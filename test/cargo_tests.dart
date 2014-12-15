@@ -16,9 +16,7 @@ void main() {
   test('force cargo package test', () {  
     ForceServer fs = new ForceServer();
     Cargo cargo = new Cargo();
-    fs.publish(collection, cargo, (data, params, id) {
-      return true;
-    });
+    fs.publish(collection, cargo);
     
     var sendingPackage = new ForceCargoPackage(collection, new CargoAction(CargoAction.ADD), profileInfo, data: data);
 

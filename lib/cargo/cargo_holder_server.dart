@@ -9,7 +9,7 @@ class CargoHolderServer implements CargoHolder {
   Map<String, List<String>> _subscribers = new Map<String, List<String>>();
   
   Map<String, Map> _parameters = new Map<String, Map>();
-  Map<String, PublishReceiver> _publishReceivers = new Map<String, PublishReceiver>();
+  Map<String, FilterReceiver> _filterReceivers = new Map<String, FilterReceiver>();
   
   DataChangeable dataChangeable;
   
@@ -17,9 +17,9 @@ class CargoHolderServer implements CargoHolder {
   
   CargoHolderServer(this.dataChangeable);
   
-  void publish(String collection, CargoBase cargoBase, {PublishReceiver publishReceiver}) {
+  void publish(String collection, CargoBase cargoBase, {FilterReceiver publishReceiver}) {
     _cargos[collection] = cargoBase;
-    _publishReceivers[collection] = publishReceiver; 
+    _filterReceivers[collection] = publishReceiver; 
     
     cargoBase.onAll((de) {
       // inform all subscribers for this change!
@@ -44,8 +44,8 @@ class CargoHolderServer implements CargoHolder {
   }
   
   void _sendToId(collection, key, data, id) {
-    PublishReceiver publishReceiver = _publishReceivers[collection];
-    if (publishReceiver(data, _parameters[collection], id)) {
+    FilterReceiver filterReceiver = _filterReceivers[collection];
+    if (filterReceiver(data, _parameters[collection], id)) {
         dataChangeable.update(collection, key, data, id: id);
     }
   }
