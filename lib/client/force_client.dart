@@ -44,7 +44,7 @@ class ForceClient extends Object with ClientSendable {
     _cargoHolder.publish(collection, cargoWithCollection);
     this.subscribe(collection, params: params);
     
-    return new ViewCollection(collection, cargo, this);
+    return new ViewCollection(collection, cargoWithCollection, this);
   }
   
   void connect() {
