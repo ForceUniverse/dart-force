@@ -9,7 +9,6 @@ class Force extends Object with ServerSendable {
   var uuid = new Uuid();
   // ForceMessageDispatcher _messageDispatcherInternal;
   
-  
   ForceMessageSecurity messageSecurity = new ForceMessageSecurity(_securityContext);
   StreamController<ForceProfileEvent> _profileController = new StreamController<ForceProfileEvent>();
   
@@ -164,8 +163,9 @@ class Force extends Object with ServerSendable {
   }
   
   void publish(String collection, CargoBase cargo, PublishReceiver publishReceiver) {
-    //TODO: add security
-    _innerCargoHolder().publish(collection, cargo, publishReceiver: publishReceiver);
+    //TODO: add security and this.profiles.containsKey(wsId)
+    CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
+    _innerCargoHolder().publish(collection, cargoWithCollection, publishReceiver: publishReceiver);
   }
     
   /**

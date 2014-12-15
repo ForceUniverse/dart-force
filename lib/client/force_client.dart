@@ -40,7 +40,8 @@ class ForceClient extends Object with ClientSendable {
   }
   
   ViewCollection register(String collection, CargoBase cargo, {Map params}) {
-    _cargoHolder.publish(collection, cargo);
+    CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
+    _cargoHolder.publish(collection, cargoWithCollection);
     this.subscribe(collection, params: params);
     
     return new ViewCollection(collection, cargo, this);
