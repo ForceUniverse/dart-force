@@ -22,7 +22,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
     } else if (fcp.action.type == ForceMessageType.UPDATE) {
       cargoHolder.update(fcp.collection, fcp.key, fcp.data);
     } else if (fcp.action.type == ForceMessageType.REMOVE) {
-      cargoHolder.remove(fcp.collection, fcp.data);
+      cargoHolder.remove(fcp.collection, fcp.key);
     } else if (fcp.action.type == ForceMessageType.SET) {
       cargoHolder.set(fcp.collection, fcp.data);
     }

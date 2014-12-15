@@ -36,9 +36,11 @@ class CargoHolderServer implements CargoHolder {
     // inform all subscribers for this change!
     List ids = _subscribers[collection];
     
-    for (var id in ids) {
-      _sendToId(collection, key, data, id);
-    } 
+    if (ids != null) {
+      for (var id in ids) {
+        _sendToId(collection, key, data, id);
+      } 
+    }
   }
   
   void _sendToId(collection, key, data, id) {

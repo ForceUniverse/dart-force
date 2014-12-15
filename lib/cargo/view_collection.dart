@@ -14,7 +14,7 @@ class ViewCollection implements Iterable {
   ViewCollection(this._collection, this.cargo, this._changeable) {
    this.cargo.onAll((DataEvent de) {
      if (de.type==DataType.CHANGED) {
-        _all[de.key] = new EncapsulatedData(de.key, de.data);
+       _all[de.key] = new EncapsulatedData(de.key, de.data);
      }
      if (de.type==DataType.REMOVED) {
        _all.remove(de.key);
