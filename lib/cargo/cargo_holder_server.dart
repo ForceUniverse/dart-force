@@ -44,10 +44,12 @@ class CargoHolderServer implements CargoHolder {
   }
   
   void _sendToId(collection, key, data, id) {
+       dataChangeable.update(collection, key, data, id: id);
+  }
+  
+  bool _testFilter(collection, data, id) {
     FilterReceiver filterReceiver = _filterReceivers[collection];
-    if (filterReceiver(data, _parameters[collection], id)) {
-        dataChangeable.update(collection, key, data, id: id);
-    }
+    return (filterReceiver(data, _parameters[collection], id));
   }
   
   void _removePush(collection, key, data) {
@@ -83,23 +85,23 @@ class CargoHolderServer implements CargoHolder {
     return _cargos[collection]!=null;
   }
   
-  bool add(String collection, key, data) {
+  bool add(String collection, key, data, id) {
     bool colExist = exist(collection);
-    if (colExist) { 
+    if (colExist && _testFilter(collection, data, id)) { 
       _cargos[collection].add(key, data);
     }
     return colExist;
   }
   
-  bool update(String collection, key, data) {
+  bool update(String collection, key, data, id) {
       bool colExist = exist(collection);
-      if (colExist) { 
+      if (colExist && _testFilter(collection, data, id)) { 
         _cargos[collection].setItem(key, data);
       }
       return colExist;
   }
   
-  bool remove(String collection, key) {
+  bool remove(String collection, key, id) {
       bool colExist = exist(collection);
       if (colExist) { 
          _cargos[collection].removeItem(key);
@@ -107,9 +109,9 @@ class CargoHolderServer implements CargoHolder {
       return colExist;
     }
   
-  bool set(String collection, data) {
+  bool set(String collection, data, id) {
     bool colExist = exist(collection);
-    if (colExist) { 
+    if (colExist && _testFilter(collection, data, id)) { 
        _cargos[collection].setItem(_uuid.v4(), data);
     }
     return colExist;
