@@ -1,23 +1,23 @@
 part of dart_force_common_lib;
 
-class ForceMessagePackage extends Package {
+class MessagePackage extends Package {
   
   String wsId;
   String request;
   dynamic profile;
   dynamic json;
   
-  ForceMessageType messageType;
+  MessageType messageType;
   
-  ForceMessagePackage(this.request, this.messageType, this.json, this.profile, { this.wsId: "-"});
+  MessagePackage(this.request, this.messageType, this.json, this.profile, { this.wsId: "-"});
   
-  ForceMessagePackage.fromJson(json, {this.wsId}) {
+  MessagePackage.fromJson(json, {this.wsId}) {
      if (json!=null) {
        this.json = json["data"];
        this.profile = json["profile"];
        this.request = json["request"];
        
-       this.messageType = new ForceMessageType.fromJson(json["type"]);
+       this.messageType = new MessageType.fromJson(json["type"]);
      } 
    }
   

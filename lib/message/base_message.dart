@@ -1,12 +1,12 @@
 part of dart_force_common_lib;
 
-class ForceMessageProtocol extends Protocol<ForceMessagePackage> {
+class ForceMessageProtocol extends Protocol<MessagePackage> {
   
-  StreamController<ForceMessagePackage> _controller;
-  ProtocolDispatch<ForceMessagePackage> dispatcher;
+  StreamController<MessagePackage> _controller;
+  ProtocolDispatch<MessagePackage> dispatcher;
   
   ForceMessageProtocol(this.dispatcher) {
-    _controller = new StreamController<ForceMessagePackage>();
+    _controller = new StreamController<MessagePackage>();
   }
   
   bool shouldDispatch(data) {
@@ -14,18 +14,18 @@ class ForceMessageProtocol extends Protocol<ForceMessagePackage> {
       return data.toString().contains("request");
   }
   
-  ForceMessagePackage onConvert(data, {wsId: "-"}) {
-    ForceMessagePackage fme = new ForceMessagePackage.fromJson(JSON.decode(data), wsId: wsId);
+  MessagePackage onConvert(data, {wsId: "-"}) {
+    MessagePackage fme = new MessagePackage.fromJson(JSON.decode(data), wsId: wsId);
       
     addMessage(fme);
     
     return fme;
   }
   
-  ForceMessagePackage addMessage(ForceMessagePackage vme) {
+  MessagePackage addMessage(MessagePackage vme) {
     _controller.add(vme);
     return vme;
   }
   
-  Stream<ForceMessagePackage> get onMessage => _controller.stream;
+  Stream<MessagePackage> get onMessage => _controller.stream;
 }

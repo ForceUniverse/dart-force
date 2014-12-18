@@ -1,6 +1,6 @@
 part of dart_force_common_lib;
 
-class ForceMessageType {
+class MessageType {
   
   static const NORMAL = 'normal';
   static const BROADCAST = 'broadcast';
@@ -13,9 +13,9 @@ class ForceMessageType {
   String value;
   String collection;
   
-  ForceMessageType(this.type);
+  MessageType(this.type);
   
-  ForceMessageType.fromJson(json) {
+  MessageType.fromJson(json) {
       if (json!=null) {
         type = json["name"];
         if (type == ID) {

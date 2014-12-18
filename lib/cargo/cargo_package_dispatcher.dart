@@ -1,8 +1,8 @@
 part of dart_force_common_lib;
 
-typedef ValidateCargoPackage(ForceCargoPackage fcp, Sender sender);
+typedef ValidateCargoPackage(CargoPackage fcp, Sender sender);
 
-class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
+class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
   
   CargoHolder cargoHolder;
   Sendable sendable;
@@ -16,7 +16,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
     cargoHolder.publish(collection, cargo);
   }
   
-  void dispatch(ForceCargoPackage fcp) {
+  void dispatch(CargoPackage fcp) {
     var collection = fcp.collection;
     
     // before dispatch evaluate ...
@@ -28,13 +28,13 @@ class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
     if (fcp.action.type == CargoAction.SUBSCRIBE) {
       cargoHolder.subscribe(fcp.collection, fcp.params, fcp.wsId);
     } else if (fcp.action.type == CargoAction.ADD) {
-      cargoHolder.add(fcp.collection, fcp.collection, fcp.data, fcp.wsId);
+      cargoHolder.add(fcp.collection, fcp.collection, fcp.json, fcp.wsId);
     } else if (fcp.action.type == CargoAction.UPDATE) {
-      cargoHolder.update(fcp.collection, fcp.key, fcp.data, fcp.wsId);
+      cargoHolder.update(fcp.collection, fcp.key, fcp.json, fcp.wsId);
     } else if (fcp.action.type == CargoAction.REMOVE) {
       cargoHolder.remove(fcp.collection, fcp.key, fcp.wsId);
     } else if (fcp.action.type == CargoAction.SET) {
-      cargoHolder.set(fcp.collection, fcp.data, fcp.wsId);
+      cargoHolder.set(fcp.collection, fcp.json, fcp.wsId);
     }
   }
   

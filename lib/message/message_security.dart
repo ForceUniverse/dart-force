@@ -15,8 +15,8 @@ class ForceMessageSecurity {
    * This method is doing security checks on top of ForceMessagePackage protocol
    */
   bool isAuthorized(HttpRequest req, package) {
-    if (package is ForceMessagePackage) {
-      ForceMessagePackage fmp = package;
+    if (package is MessagePackage) {
+      MessagePackage fmp = package;
       if (requestList[fmp.request] != null && requestList[fmp.request].isNotEmpty) {
         // check if you are logged in against correct credentials
         return this.securityContextHolder.checkAuthorization(req, requestList[fmp.request], data: fmp);

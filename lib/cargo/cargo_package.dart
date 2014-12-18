@@ -7,6 +7,7 @@ class CargoAction {
   static const SET = 'db.set';
   static const UPDATE = 'db.update';
   static const REMOVE = 'db.remove';
+  static const CANCEL = 'db.cancel';
   
   String type; 
   
@@ -25,23 +26,23 @@ class CargoAction {
    }
 }
 
-class ForceCargoPackage extends Package {
+class CargoPackage extends Package {
    
   String wsId;
   String collection;
   String key;
   dynamic profile;
-  dynamic data;
+  dynamic json;
   dynamic params;
   
   CargoAction action;
   
-  ForceCargoPackage(this.collection, this.action, this.profile, { this.key, this.data, this.params, this.wsId: "-"});
+  CargoPackage(this.collection, this.action, this.profile, { this.key, this.json, this.params, this.wsId: "-"});
   
-  ForceCargoPackage.fromJson(json, {this.wsId}) {
+  CargoPackage.fromJson(json, {this.wsId}) {
      if (json!=null) {
        this.key = json["key"];
-       this.data = json["data"];
+       this.json = json["data"];
        this.profile = json["profile"];
        this.collection = json["collection"];
        
@@ -52,11 +53,15 @@ class ForceCargoPackage extends Package {
   Map toJson() {
     Map json = new Map();
     if (this.key != null) json["key"] = this.key;
-    if (this.data!= null) json["data"] = this.data;
+    if (this.json!= null) json["data"] = this.json;
     if (this.params != null) json["params"] = this.params;
     if (this.profile!= null) json["profile"] = this.profile;
     if (this.collection != null) json["collection"] = this.collection;
     if (this.action != null) json["action"] = this.action.toJson();
     return json;
+  }
+  
+  void cancel() {
+    this.action = new CargoAction(CargoAction.CANCEL);
   }
 }

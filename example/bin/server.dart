@@ -13,8 +13,8 @@ void main() {
   fs.setupConsoleLog();
   
   fs.start().then((_) {
-    fs.on("add", (vme, sender) {
-          fs.send("update", vme.json);
+    fs.on("add", (message, sender) {
+          fs.send("update", message.json);
       });
   });
   

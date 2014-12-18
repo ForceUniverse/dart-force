@@ -1,8 +1,8 @@
 part of dart_force_common_lib;
 
-typedef MessageReceiver(ForceMessagePackage fme, Sender sender);
+typedef MessageReceiver(MessagePackage fme, Sender sender);
 
-class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
+class ForceMessageDispatcher implements ProtocolDispatch<MessagePackage> {
   
   Sendable sendable;
   
@@ -19,30 +19,30 @@ class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
     mapping[request] = messageController;
   }
   
-  void dispatch(ForceMessagePackage fme) {
+  void dispatch(MessagePackage fme) {
     var key = fme.request;
     
     for (MessageReceiver messageReceiver in beforeMapping) {
       _executeMessageReceiver(fme, messageReceiver);
     }
-    if (fme.messageType.type == ForceMessageType.NORMAL) {
+    if (fme.messageType.type == MessageType.NORMAL) {
       _executeMessageReceiver(fme, mapping[key]);
-    } else if (fme.messageType.type == ForceMessageType.BROADCAST) {
+    } else if (fme.messageType.type == MessageType.BROADCAST) {
       sendable.send(fme.request, fme.json);  
       _executeMessageReceiver(fme, mapping[key]);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
-      if (fme.messageType.type == ForceMessageType.ID) {
+      if (fme.messageType.type == MessageType.ID) {
         sendable.sendTo(fme.messageType.id, fme.request, fme.json);
       }
-      if (fme.messageType.type == ForceMessageType.PROFILE) {
+      if (fme.messageType.type == MessageType.PROFILE) {
         sendable.sendToProfile(fme.messageType.key, fme.messageType.value, fme.request, fme.json);
       }
       
     }
   }
   
-  void _executeMessageReceiver(ForceMessagePackage fme, MessageReceiver messageReceiver) {
+  void _executeMessageReceiver(MessagePackage fme, MessageReceiver messageReceiver) {
     if (messageReceiver!=null) {
       messageReceiver(fme, new Sender(sendable, fme.wsId));
     }

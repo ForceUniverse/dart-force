@@ -1,29 +1,29 @@
 part of dart_force_common_lib;
 
-class ForceCargoProtocol extends Protocol<ForceCargoPackage> {
+class ForceCargoProtocol extends Protocol<CargoPackage> {
   
-  StreamController<ForceCargoPackage> _controller;
-  ProtocolDispatch<ForceCargoPackage> dispatcher;
+  StreamController<CargoPackage> _controller;
+  ProtocolDispatch<CargoPackage> dispatcher;
   
   ForceCargoProtocol(this.dispatcher) {
-    _controller = new StreamController<ForceCargoPackage>();
+    _controller = new StreamController<CargoPackage>();
   }
   
   bool shouldDispatch(data) {
     return data.toString().contains("collection");
   }
   
-  ForceCargoPackage onConvert(data, {wsId: "-"}) {
-    ForceCargoPackage fcp = new ForceCargoPackage.fromJson(JSON.decode(data), wsId: wsId);
+  CargoPackage onConvert(data, {wsId: "-"}) {
+    CargoPackage fcp = new CargoPackage.fromJson(JSON.decode(data), wsId: wsId);
     addPackage(fcp);
  
     return fcp;
   }
   
-  ForceCargoPackage addPackage(ForceCargoPackage fcp) {
+  CargoPackage addPackage(CargoPackage fcp) {
     _controller.add(fcp);
     return fcp;
   }
   
-  Stream<ForceCargoPackage> get onPackage => _controller.stream;
+  Stream<CargoPackage> get onPackage => _controller.stream;
 }
