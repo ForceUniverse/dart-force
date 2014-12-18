@@ -23,10 +23,7 @@ class Force extends Object with ServerSendable {
   /// List of special connectors
   List<Connector> connectors = new List<Connector>();
   
-  ProtocolDispatchers _protocolDispatchers;
-  CargoHolder _cargoHolder;
-  ForceMessageDispatcher _forceMessageDispatcher;
-  CargoPackageDispatcher _cargoPackageDispatcher;
+  ForceContext _forceContext;
   
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
@@ -128,10 +125,10 @@ class Force extends Object with ServerSendable {
    * Handles the messages that are coming into the server, regulator.
    */
   void handleMessages(HttpRequest req, String id, data) {
-    List packages = protocolDispatchers().convertPackages(data, wsId: id); 
+    List packages = _lazyContext().protocolDispatchers().convertPackages(data, wsId: id); 
     for(var package in packages) {
       if (messageSecurity.isAuthorized(req, package)) {
-        protocolDispatchers().dispatch(package);
+        _lazyContext().protocolDispatchers().dispatch(package);
       } else {
         sendTo(id, "unauthorized", data);
       }
@@ -145,7 +142,7 @@ class Force extends Object with ServerSendable {
    *  
    **/
   void before(MessageReceiver messageController) {
-      _messageDispatch().before(messageController); 
+    _lazyContext().messageDispatch().before(messageController); 
   }
     
   /**
@@ -160,7 +157,7 @@ class Force extends Object with ServerSendable {
    **/
   void on(String request, MessageReceiver messageController, {List<String> roles}) {
       messageSecurity.register(request, roles);
-      _messageDispatch().register(request, messageController);
+      _lazyContext().messageDispatch().register(request, messageController);
   }
   
   /**
@@ -176,7 +173,7 @@ class Force extends Object with ServerSendable {
    */
   CargoBase publish(String collection, CargoBase cargo, {ValidateCargoPackage validate}) {    
     CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
-    _innerCargoPacakgeDispatcher().publish(collection, cargoWithCollection, filter: validate);
+    _lazyContext().cargoPacakgeDispatcher().publish(collection, cargoWithCollection, filter: validate);
     return cargoWithCollection;
     
   }
@@ -253,39 +250,14 @@ class Force extends Object with ServerSendable {
         }
   }
   
-  ProtocolDispatchers protocolDispatchers() {
-    if (_protocolDispatchers == null) {
-      _protocolDispatchers = new ProtocolDispatchers();
-      ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_messageDispatch());
-      _protocolDispatchers.protocols.add(forceMessageProtocol);
-      
-      // add Cargo
-      ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(_innerCargoPacakgeDispatcher());
-      _protocolDispatchers.protocols.add(forceCargoProtocol);
+  ForceContext _lazyContext() {
+    if (_forceContext==null) {
+      _forceContext = new ForceContext(this);
     }
-    return _protocolDispatchers;
+    return _forceContext;
   }
   
-  ForceMessageDispatcher _messageDispatch() {
-    if (_forceMessageDispatcher == null) {
-      _forceMessageDispatcher = new ForceMessageDispatcher(this);
-    }
-    return _forceMessageDispatcher;
-  }
   
-  CargoHolder _innerCargoHolder() {
-    if (_cargoHolder == null) {
-      _cargoHolder = new CargoHolderServer(this);
-    }
-    return _cargoHolder;
-  }
-  
-  CargoPackageDispatcher _innerCargoPacakgeDispatcher() {
-    if (_cargoPackageDispatcher==null) {
-        _cargoPackageDispatcher = new CargoPackageDispatcher(_innerCargoHolder(), this);
-    }
-    return _cargoPackageDispatcher;
-  }
     
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
   
