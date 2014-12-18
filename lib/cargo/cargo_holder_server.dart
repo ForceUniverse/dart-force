@@ -9,17 +9,15 @@ class CargoHolderServer implements CargoHolder {
   Map<String, List<String>> _subscribers = new Map<String, List<String>>();
   
   Map<String, Map> _parameters = new Map<String, Map>();
-  Map<String, FilterReceiver> _filterReceivers = new Map<String, FilterReceiver>();
-  
+
   DataChangeable dataChangeable;
   
   var _uuid = new Uuid();
   
   CargoHolderServer(this.dataChangeable);
   
-  void publish(String collection, CargoBase cargoBase, {FilterReceiver publishReceiver}) {
+  void publish(String collection, CargoBase cargoBase) {
     _cargos[collection] = cargoBase;
-    _filterReceivers[collection] = publishReceiver; 
     
     cargoBase.onAll((de) {
       // inform all subscribers for this change!
@@ -45,11 +43,6 @@ class CargoHolderServer implements CargoHolder {
   
   void _sendToId(collection, key, data, id) {
        dataChangeable.update(collection, key, data, id: id);
-  }
-  
-  bool _testFilter(collection, data, id) {
-    FilterReceiver filterReceiver = _filterReceivers[collection];
-    return (filterReceiver(data, _parameters[collection], id));
   }
   
   void _removePush(collection, key, data) {
@@ -87,7 +80,7 @@ class CargoHolderServer implements CargoHolder {
   
   bool add(String collection, key, data, id) {
     bool colExist = exist(collection);
-    if (colExist && _testFilter(collection, data, id)) { 
+    if (colExist) { 
       _cargos[collection].add(key, data);
     }
     return colExist;
@@ -95,7 +88,7 @@ class CargoHolderServer implements CargoHolder {
   
   bool update(String collection, key, data, id) {
       bool colExist = exist(collection);
-      if (colExist && _testFilter(collection, data, id)) { 
+      if (colExist) { 
         _cargos[collection].setItem(key, data);
       }
       return colExist;
@@ -111,7 +104,7 @@ class CargoHolderServer implements CargoHolder {
   
   bool set(String collection, data, id) {
     bool colExist = exist(collection);
-    if (colExist && _testFilter(collection, data, id)) { 
+    if (colExist) { 
        _cargos[collection].setItem(_uuid.v4(), data);
     }
     return colExist;

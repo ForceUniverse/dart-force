@@ -25,7 +25,7 @@ class ForceClient extends Object with ClientSendable {
       ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_forceMessageDispatcher);
       protocolDispatchers.protocols.add(forceMessageProtocol);
       // add Cargo
-      CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_cargoHolder);
+      CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_cargoHolder, this);
       ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
       protocolDispatchers.protocols.add(forceCargoProtocol);
   }

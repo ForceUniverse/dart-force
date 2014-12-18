@@ -18,8 +18,6 @@ part 'common/client_sendable.dart';
 
 part 'message/messages_construct_helper.dart';
 
-part 'common/common_typedefs.dart';
-
 part 'common/protocol.dart';
 part 'common/package.dart';
 

@@ -1,5 +1,7 @@
 part of dart_force_common_lib;
 
+typedef MessageReceiver(ForceMessagePackage fme, Sender sender);
+
 class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
   
   Sendable sendable;
@@ -40,9 +42,9 @@ class ForceMessageDispatcher implements ProtocolDispatch<ForceMessagePackage> {
     }
   }
   
-  void _executeMessageReceiver(ForceMessagePackage vme, MessageReceiver messageReceiver) {
+  void _executeMessageReceiver(ForceMessagePackage fme, MessageReceiver messageReceiver) {
     if (messageReceiver!=null) {
-      messageReceiver(vme, new Sender(sendable, vme.wsId));
+      messageReceiver(fme, new Sender(sendable, fme.wsId));
     }
   }
 }

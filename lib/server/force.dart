@@ -26,6 +26,7 @@ class Force extends Object with ServerSendable {
   ProtocolDispatchers _protocolDispatchers;
   CargoHolder _cargoHolder;
   ForceMessageDispatcher _forceMessageDispatcher;
+  CargoPackageDispatcher _cargoPackageDispatcher;
   
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
@@ -162,12 +163,21 @@ class Force extends Object with ServerSendable {
       _messageDispatch().register(request, messageController);
   }
   
-  void publish(String collection, CargoBase cargo, {FilterReceiver filter}) {
-    //TODO: add security and this.profiles.containsKey(wsId)
-    if (filter==null) filter = basisFilterReceiver;
-    
+  /**
+   * You can publish a collection so it is been know in the system and also filter CargoPackages before it gets dispatched
+   * 
+   * So when bad data comes in you can anticipate before adding it into the Cargo Persistent Store (Mongo, Memory, File, ...)
+   * 
+   * publish('todos', cargoInstance, (ForceCargoPackage fcp) {
+   *    if (fcp.action = ActionType.ADD) {
+   *      
+   *    }
+   * });
+   */
+  void publish(String collection, CargoBase cargo, {FilterCargoPackage filter}) {    
     CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
-    _innerCargoHolder().publish(collection, cargoWithCollection, publishReceiver: filter);
+    _innerCargoPacakgeDispatcher().publish(collection, cargoWithCollection, filter: filter);
+    
   }
     
   /**
@@ -249,8 +259,7 @@ class Force extends Object with ServerSendable {
       _protocolDispatchers.protocols.add(forceMessageProtocol);
       
       // add Cargo
-      CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_innerCargoHolder());
-      ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
+      ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(_innerCargoPacakgeDispatcher());
       _protocolDispatchers.protocols.add(forceCargoProtocol);
     }
     return _protocolDispatchers;
@@ -268,6 +277,13 @@ class Force extends Object with ServerSendable {
       _cargoHolder = new CargoHolderServer(this);
     }
     return _cargoHolder;
+  }
+  
+  CargoPackageDispatcher _innerCargoPacakgeDispatcher() {
+    if (_cargoPackageDispatcher==null) {
+        _cargoPackageDispatcher = new CargoPackageDispatcher(_innerCargoHolder(), this);
+    }
+    return _cargoPackageDispatcher;
   }
     
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
