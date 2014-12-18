@@ -13,7 +13,7 @@ void main() {
   
   test('force basic messageDispatcher test', () {  
     ForceServer fs = new ForceServer();
-    var sendingPackage = new ForceMessagePackage(request, new ForceMessageType(ForceMessageType.NORMAL), data, profileInfo);
+    var sendingPackage = new MessagePackage(request, new MessageType(MessageType.NORMAL), data, profileInfo);
 
     fs.on(request, expectAsync((e, sendable) {
         expect(e.profile['name'], profileName);
@@ -26,10 +26,10 @@ void main() {
   
   test('force id messageDispatcher test', () {
     ForceServer fs = new ForceServer();
-    ForceMessageType fmt = new ForceMessageType(ForceMessageType.ID);
+    MessageType fmt = new MessageType(MessageType.ID);
     fmt.id = 'aefed';
     
-    var sendingPackage = new ForceMessagePackage(request, fmt, data, profileInfo);
+    var sendingPackage = new MessagePackage(request, fmt, data, profileInfo);
 
     fs.on(request, expectAsync((e, sendable) {
         print('Should not be reached'); }, count: 0));
@@ -41,10 +41,10 @@ void main() {
   test('force profile messageDispatcher test', () {
     ForceServer fs = new ForceServer();
     
-    ForceMessageType fmt = new ForceMessageType(ForceMessageType.PROFILE);
+    MessageType fmt = new MessageType(MessageType.PROFILE);
     fmt.key = 'key';
     fmt.value = 'value';
-    var sendingPackage = new ForceMessagePackage(request, fmt, data, profileInfo); 
+    var sendingPackage = new MessagePackage(request, fmt, data, profileInfo); 
 
     fs.on(request, expectAsync((e, sendable) {
             print('Should not be reached'); }, count: 0));
@@ -55,8 +55,8 @@ void main() {
   test('force profile changing test', () {
     ForceServer fs = new ForceServer();
     
-    ForceMessageType fmt = new ForceMessageType(ForceMessageType.NORMAL);
-    var sendingPackage = new ForceMessagePackage(request, fmt, data, profileInfo); 
+    MessageType fmt = new MessageType(MessageType.NORMAL);
+    var sendingPackage = new MessagePackage(request, fmt, data, profileInfo); 
 
     fs.onProfileChanged.listen(expectAsync((e) {
       String name = e.profileInfo['name'];

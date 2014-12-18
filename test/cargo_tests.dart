@@ -18,7 +18,7 @@ void main() {
     Cargo cargo = new Cargo();
     fs.publish(collection, cargo);
     
-    var sendingPackage = new ForceCargoPackage(collection, new CargoAction(CargoAction.ADD), profileInfo, data: data);
+    var sendingPackage = new CargoPackage(collection, new CargoAction(CargoAction.ADD), profileInfo, json: data);
 
     cargo.onAll((DataEvent de) {
       expect(data, de.data[0]);

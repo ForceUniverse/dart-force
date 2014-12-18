@@ -174,9 +174,10 @@ class Force extends Object with ServerSendable {
    *    }
    * });
    */
-  void publish(String collection, CargoBase cargo, {ValidateCargoPackage validate}) {    
+  CargoBase publish(String collection, CargoBase cargo, {ValidateCargoPackage validate}) {    
     CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
     _innerCargoPacakgeDispatcher().publish(collection, cargoWithCollection, filter: validate);
+    return cargoWithCollection;
     
   }
     
