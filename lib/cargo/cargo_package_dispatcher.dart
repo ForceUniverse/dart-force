@@ -1,18 +1,18 @@
 part of dart_force_common_lib;
 
-typedef FilterCargoPackage(ForceCargoPackage fcp, Sender sender);
+typedef ValidateCargoPackage(ForceCargoPackage fcp, Sender sender);
 
 class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
   
   CargoHolder cargoHolder;
   Sendable sendable;
   
-  Map<String, FilterCargoPackage> _filterReceivers = new Map<String, FilterCargoPackage>();
+  Map<String, ValidateCargoPackage> _validators = new Map<String, ValidateCargoPackage>();
   
   CargoPackageDispatcher(this.cargoHolder, this.sendable);
   
-  void publish(String collection, CargoBase cargo, {FilterCargoPackage filter}) {
-    _filterReceivers[collection] = filter;
+  void publish(String collection, CargoBase cargo, {ValidateCargoPackage filter}) {
+    _validators[collection] = filter;
     cargoHolder.publish(collection, cargo);
   }
   
@@ -20,9 +20,9 @@ class CargoPackageDispatcher implements ProtocolDispatch<ForceCargoPackage> {
     var collection = fcp.collection;
     
     // before dispatch evaluate ...
-    FilterCargoPackage filterReceiver = _filterReceivers[collection];
-    if (filterReceiver != null) {
-      filterReceiver(fcp, new Sender(sendable, fcp.wsId));
+    ValidateCargoPackage validator = _validators[collection];
+    if (validator != null) {
+      validator(fcp, new Sender(sendable, fcp.wsId));
     }
     
     if (fcp.action.type == CargoAction.SUBSCRIBE) {
