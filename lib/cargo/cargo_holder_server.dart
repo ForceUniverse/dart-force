@@ -19,13 +19,19 @@ class CargoHolderServer implements CargoHolder {
   void publish(String collection, CargoBase cargoBase) {
     _cargos[collection] = cargoBase;
     
+    Map params = _parameters[collection];
+    
     cargoBase.onAll((de) {
       // inform all subscribers for this change!
       if (de.type==DataType.CHANGED) {
         //before that 
-        _sendTo(collection, de.key, de.data);
+        if (containsByOverlay(de.data, params)) {
+           _sendTo(collection, de.key, de.data);
+        }
       } else {
-        _removePush(collection, de.key, de.data);
+        if (containsByOverlay(de.data, params)) {
+           _removePush(collection, de.key, de.data);
+        }
       }
     });
   }
@@ -67,7 +73,7 @@ class CargoHolderServer implements CargoHolder {
       _parameters[collection] = params;
       
       // send the collection to the clients
-      _cargos[collection].export().then((Map values) {
+      _cargos[collection].export(params: params).then((Map values) {
         values.forEach((key, value) => _sendToId(collection, key, value, id));
       });
     }

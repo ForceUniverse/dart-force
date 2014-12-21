@@ -1,5 +1,5 @@
 name: force
-version: 0.6.0
+version: 0.6.0+1
 author: Joris Hermans <hermansj@gmail.com>
 description: A real time web framework for dart, embracing websockets, making communication even better
 homepage: https://github.com/ForceUniverse/dart-force
@@ -7,7 +7,7 @@ dependencies:
   logging: '>=0.9.0 <0.10.0'
   uuid: '>=0.4.1 <0.5.0'
   forcemvc: '>=0.6.0 <0.7.0'
-  cargo: '>=0.5.0 <0.6.0'
+  cargo: '>=0.5.1 <0.6.0'
 dev_dependencies:
   unittest: '>=0.11.0 <0.11.1'
   mock: '>=0.11.0 <0.11.1'
