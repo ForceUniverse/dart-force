@@ -26,7 +26,7 @@ class CargoHolderClient implements CargoHolder {
     return _cargos[collection]!=null;
   }
   
-  bool add(String collection, key, data, id) {
+  bool add(String collection, key, data) {
     bool colExist = exist(collection);
     if (colExist) { 
       _cargos[collection].add(key, data);
@@ -34,7 +34,7 @@ class CargoHolderClient implements CargoHolder {
     return colExist;
   }
   
-  bool update(String collection, key, data, id) {
+  bool update(String collection, key, data) {
     bool colExist = exist(collection);
     if (colExist) { 
       _cargos[collection].setItem(key, data);
@@ -42,7 +42,7 @@ class CargoHolderClient implements CargoHolder {
     return colExist;
   }
   
-  bool remove(String collection, key, id) {
+  bool remove(String collection, key) {
      bool colExist = exist(collection);
      if (colExist) { 
        _cargos[collection].removeItem(key);
@@ -50,9 +50,8 @@ class CargoHolderClient implements CargoHolder {
      return colExist;
    }
   
-  bool set(String collection, data, id) {
+  bool set(String collection, data) {
     throw new UnsupportedError('Is not supported on the client!');
   }
-  
   
 }

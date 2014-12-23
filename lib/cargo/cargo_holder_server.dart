@@ -19,19 +19,13 @@ class CargoHolderServer implements CargoHolder {
   void publish(String collection, CargoBase cargoBase) {
     _cargos[collection] = cargoBase;
     
-    Map params = _parameters[collection];
-    
     cargoBase.onAll((de) {
       // inform all subscribers for this change!
       if (de.type==DataType.CHANGED) {
         //before that 
-        if (containsByOverlay(de.data, params)) {
-           _sendTo(collection, de.key, de.data);
-        }
+        _sendTo(collection, de.key, de.data);
       } else {
-        if (containsByOverlay(de.data, params)) {
-           _removePush(collection, de.key, de.data);
-        }
+        _removePush(collection, de.key, de.data);
       }
     });
   }
@@ -42,7 +36,10 @@ class CargoHolderServer implements CargoHolder {
     
     if (ids != null) {
       for (var id in ids) {
-        _sendToId(collection, key, data, id);
+        Map params = _parameters["${collection}_${id}"];
+        if (containsByOverlay(data, params)) {
+            _sendToId(collection, key, data, id);
+        }
       } 
     }
   }
@@ -56,7 +53,10 @@ class CargoHolderServer implements CargoHolder {
       List ids = _subscribers[collection];
      
       for (var id in ids) {
-        dataChangeable.remove(collection, key, id: id);
+        Map params = _parameters["${collection}_${id}"];
+        if (containsByOverlay(data, params)) {
+            dataChangeable.remove(collection, key, id: id);
+        }
       } 
     }
   
@@ -70,7 +70,7 @@ class CargoHolderServer implements CargoHolder {
       ids.add(id);
       // send data if necessary
       _subscribers[collection] = ids;
-      _parameters[collection] = params;
+      _parameters["${collection}_${id}"] = params;
       
       // send the collection to the clients
       _cargos[collection].export(params: params).then((Map values) {
@@ -84,7 +84,7 @@ class CargoHolderServer implements CargoHolder {
     return _cargos[collection]!=null;
   }
   
-  bool add(String collection, key, data, id) {
+  bool add(String collection, key, data) {
     bool colExist = exist(collection);
     if (colExist) { 
       _cargos[collection].add(key, data);
@@ -92,7 +92,7 @@ class CargoHolderServer implements CargoHolder {
     return colExist;
   }
   
-  bool update(String collection, key, data, id) {
+  bool update(String collection, key, data) {
       bool colExist = exist(collection);
       if (colExist) { 
         _cargos[collection].setItem(key, data);
@@ -100,7 +100,7 @@ class CargoHolderServer implements CargoHolder {
       return colExist;
   }
   
-  bool remove(String collection, key, id) {
+  bool remove(String collection, key) {
       bool colExist = exist(collection);
       if (colExist) { 
          _cargos[collection].removeItem(key);
@@ -108,7 +108,7 @@ class CargoHolderServer implements CargoHolder {
       return colExist;
     }
   
-  bool set(String collection, data, id) {
+  bool set(String collection, data) {
     bool colExist = exist(collection);
     if (colExist) { 
        _cargos[collection].setItem(_uuid.v4(), data);

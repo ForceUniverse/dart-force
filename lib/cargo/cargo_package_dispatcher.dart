@@ -28,13 +28,13 @@ class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
     if (fcp.action.type == CargoAction.SUBSCRIBE) {
       cargoHolder.subscribe(fcp.collection, fcp.params, fcp.wsId);
     } else if (fcp.action.type == CargoAction.ADD) {
-      cargoHolder.add(fcp.collection, fcp.collection, fcp.json, fcp.wsId);
+      cargoHolder.add(fcp.collection, fcp.collection, fcp.json);
     } else if (fcp.action.type == CargoAction.UPDATE) {
-      cargoHolder.update(fcp.collection, fcp.key, fcp.json, fcp.wsId);
+      cargoHolder.update(fcp.collection, fcp.key, fcp.json);
     } else if (fcp.action.type == CargoAction.REMOVE) {
-      cargoHolder.remove(fcp.collection, fcp.key, fcp.wsId);
+      cargoHolder.remove(fcp.collection, fcp.key);
     } else if (fcp.action.type == CargoAction.SET) {
-      cargoHolder.set(fcp.collection, fcp.json, fcp.wsId);
+      cargoHolder.set(fcp.collection, fcp.json);
     }
   }
   

@@ -17,12 +17,12 @@ abstract class CargoHolder {
   
   bool exist(String collection);
   
-  bool add(String collection, key, data, id);
+  bool add(String collection, key, data);
   
-  bool update(String collection, key, data, id);
+  bool update(String collection, key, data);
   
-  bool set(String collection, data, id);
+  bool set(String collection, data);
   
-  bool remove(String collection, key, id);
+  bool remove(String collection, key);
   
 }
