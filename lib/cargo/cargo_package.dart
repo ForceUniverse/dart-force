@@ -45,6 +45,7 @@ class CargoPackage extends Package {
        this.json = json["data"];
        this.profile = json["profile"];
        this.collection = json["collection"];
+       this.params = json["params"];
        
        this.action = new CargoAction.fromJson(json["action"]);
      } 
