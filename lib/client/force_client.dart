@@ -7,6 +7,7 @@ class ForceClient extends Object with ClientSendable {
   ProtocolDispatchers protocolDispatchers = new ProtocolDispatchers();
   CargoHolder _cargoHolder;
   ForceMessageDispatcher _forceMessageDispatcher;
+  ForceMessageProtocol _forceMessageProtocol;
   
   var _profileInfo = {};
   
@@ -31,13 +32,15 @@ class ForceClient extends Object with ClientSendable {
   void _setupProtocols() {
     _cargoHolder = new CargoHolderClient(this);
     _forceMessageDispatcher = new ForceMessageDispatcher(this);
-    ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_forceMessageDispatcher);
-    protocolDispatchers.protocols.add(forceMessageProtocol);
+    _forceMessageProtocol = new ForceMessageProtocol(_forceMessageDispatcher);
+    protocolDispatchers.protocols.add(_forceMessageProtocol);
     // add Cargo
     CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_cargoHolder, this);
     ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
     protocolDispatchers.protocols.add(forceCargoProtocol);
   }
+  
+  Stream<MessagePackage> get onMessage => _forceMessageProtocol.onMessage;
   
   ViewCollection register(String collection, CargoBase cargo, {Map params}) {
     CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
@@ -62,7 +65,7 @@ class ForceClient extends Object with ClientSendable {
     var rng = new Random();
     return rng.nextInt(10000000);
   }
-   
+  
   Stream<ConnectEvent> get onConnected =>  this.socket.onConnecting;
   Stream<ConnectEvent> get onDisconnected =>  this.socket.onDisconnecting;
 }
