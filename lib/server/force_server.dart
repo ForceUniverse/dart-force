@@ -11,11 +11,12 @@ class ForceServer extends Force with Serveable {
                wsPath: "/ws",
                clientFiles: '../build/web/', 
                clientServe: true,
-               startPage: ""}) {
+               startPage: 'index.html'}) {
     _basicServer = new WebApplication(host: host,
                                  port: port,
                                  wsPath: wsPath, 
                                  clientFiles: clientFiles,
+                                 startPage: startPage,
                                  clientServe: clientServe); 
     messageSecurity = new ForceMessageSecurity(_basicServer.securityContext);
     
@@ -32,8 +33,6 @@ class ForceServer extends Force with Serveable {
     this.server.use('$wsPath/uuid/', pollingServer.retrieveUuid, method: "GET");
     this.server.use(PollingServer.pollingPath(wsPath), pollingServer.polling, method: "GET");
     this.server.use(PollingServer.pollingPath(wsPath), pollingServer.sendedData, method: "POST");
-    
-    if (startPage != "") this.server.static("/", startPage);
   }
   
   /**
