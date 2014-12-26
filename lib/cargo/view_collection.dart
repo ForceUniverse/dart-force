@@ -9,12 +9,12 @@ class ViewCollection implements Iterable {
   DataChangeable _changeable;
   String _collection;
   
-  Map<String, EncapsulatedData> _all = new Map<String, EncapsulatedData>();
+  Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
   ViewCollection(this._collection, this.cargo, this._changeable) {
    this.cargo.onAll((DataEvent de) {
      if (de.type==DataType.CHANGED) {
-       _all[de.key] = new EncapsulatedData(de.key, de.data);
+       _all[de.key] = new EncapsulatedValue(de.key, de.data);
      }
      if (de.type==DataType.REMOVED) {
        _all.remove(de.key);
@@ -38,28 +38,28 @@ class ViewCollection implements Iterable {
   
   Iterator get iterator => _all.values.iterator;
 
-  Iterable map(f(EncapsulatedData element)) => _all.values.map(f);
+  Iterable map(f(EncapsulatedValue element)) => _all.values.map(f);
   
-  Iterable where(bool test(EncapsulatedData element)) => _all.values.where(test);
+  Iterable where(bool test(EncapsulatedValue element)) => _all.values.where(test);
 
-  Iterable expand(Iterable f(EncapsulatedData element)) => _all.values.expand(f);
+  Iterable expand(Iterable f(EncapsulatedValue element)) => _all.values.expand(f);
 
   bool contains(Object element) => _all.values.contains(element);
 
-  void forEach(void f(EncapsulatedData element)) => _all.values.forEach(f);
+  void forEach(void f(EncapsulatedValue element)) => _all.values.forEach(f);
 
-  EncapsulatedData reduce(EncapsulatedData combine(EncapsulatedData value, EncapsulatedData element)) => _all.values.reduce(combine);
+  EncapsulatedValue reduce(EncapsulatedValue combine(EncapsulatedValue value, EncapsulatedValue element)) => _all.values.reduce(combine);
   
   dynamic fold(var initialValue,
-                 dynamic combine(var previousValue, EncapsulatedData element)) => _all.values.fold(initialValue, combine);
+                 dynamic combine(var previousValue, EncapsulatedValue element)) => _all.values.fold(initialValue, combine);
 
-  bool every(bool test(EncapsulatedData element)) => _all.values.every(test);
+  bool every(bool test(EncapsulatedValue element)) => _all.values.every(test);
 
-  bool any(bool test(EncapsulatedData element)) => _all.values.any(test);
+  bool any(bool test(EncapsulatedValue element)) => _all.values.any(test);
 
-  List<EncapsulatedData> toList({ bool growable: true }) => _all.values.toList(growable: growable);
+  List<EncapsulatedValue> toList({ bool growable: true }) => _all.values.toList(growable: growable);
 
-  Set<EncapsulatedData> toSet() => _all.values.toSet();
+  Set<EncapsulatedValue> toSet() => _all.values.toSet();
 
   int get length => _all.values.length;
 
@@ -67,27 +67,27 @@ class ViewCollection implements Iterable {
 
   bool get isNotEmpty => _all.values.isNotEmpty;
 
-  Iterable<EncapsulatedData> take(int n) => _all.values.take(n);
+  Iterable<EncapsulatedValue> take(int n) => _all.values.take(n);
 
-  Iterable<EncapsulatedData> takeWhile(bool test(EncapsulatedData value)) => _all.values.takeWhile(test);
+  Iterable<EncapsulatedValue> takeWhile(bool test(EncapsulatedValue value)) => _all.values.takeWhile(test);
 
-  Iterable<EncapsulatedData> skip(int n) => _all.values.skip(n);
+  Iterable<EncapsulatedValue> skip(int n) => _all.values.skip(n);
 
-  Iterable<EncapsulatedData> skipWhile(bool test(EncapsulatedData value)) => _all.values.skipWhile(test);
+  Iterable<EncapsulatedValue> skipWhile(bool test(EncapsulatedValue value)) => _all.values.skipWhile(test);
   
-  EncapsulatedData get first => _all.values.first;
+  EncapsulatedValue get first => _all.values.first;
 
-  EncapsulatedData get last => _all.values.last;
+  EncapsulatedValue get last => _all.values.last;
   
-  EncapsulatedData get single => _all.values.single;
+  EncapsulatedValue get single => _all.values.single;
 
-  EncapsulatedData firstWhere(bool test(EncapsulatedData element), { EncapsulatedData orElse() }) => _all.values.firstWhere(test);
+  EncapsulatedValue firstWhere(bool test(EncapsulatedValue element), { EncapsulatedValue orElse() }) => _all.values.firstWhere(test);
 
-  EncapsulatedData lastWhere(bool test(EncapsulatedData element), {EncapsulatedData orElse()}) => _all.values.lastWhere(test);
+  EncapsulatedValue lastWhere(bool test(EncapsulatedValue element), {EncapsulatedValue orElse()}) => _all.values.lastWhere(test);
 
-  EncapsulatedData singleWhere(bool test(EncapsulatedData element)) => _all.values.singleWhere(test);
+  EncapsulatedValue singleWhere(bool test(EncapsulatedValue element)) => _all.values.singleWhere(test);
   
-  EncapsulatedData elementAt(int index) => _all.values.elementAt(index);
+  EncapsulatedValue elementAt(int index) => _all.values.elementAt(index);
   
   String join([String separator = ""]) {
       StringBuffer buffer = new StringBuffer();
@@ -96,9 +96,9 @@ class ViewCollection implements Iterable {
   }
 }
 
-class EncapsulatedData {
-  String id;
-  var data;
+class EncapsulatedValue {
+  String key;
+  var value;
   
-  EncapsulatedData(this.id, this.data);
+  EncapsulatedValue(this.key, this.value);
 }
