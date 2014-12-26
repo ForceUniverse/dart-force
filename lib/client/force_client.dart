@@ -42,7 +42,7 @@ class ForceClient extends Object with ClientSendable {
   
   Stream<MessagePackage> get onMessage => _forceMessageProtocol.onMessage;
   
-  ViewCollection register(String collection, CargoBase cargo, {Map params}) {
+  ViewCollection subscribing(String collection, CargoBase cargo, {Map params}) {
     CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
     _cargoHolder.publish(collection, cargoWithCollection);
     this.subscribe(collection, params: params);
