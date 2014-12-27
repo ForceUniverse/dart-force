@@ -17,7 +17,7 @@ class ForceProfileEvent {
 class ForceProperty {
   
   String key;
-  String value;
+  var value;
   
   ForceProperty(this.key, this.value);
   
