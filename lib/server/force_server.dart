@@ -11,13 +11,13 @@ class ForceServer extends Force with Serveable {
                wsPath: "/ws",
                clientFiles: '../build/web/', 
                clientServe: true,
-               startPage: "index.html"}) {
+               startPage: 'index.html'}) {
     _basicServer = new WebApplication(host: host,
                                  port: port,
                                  wsPath: wsPath, 
                                  clientFiles: clientFiles,
-                                 clientServe: clientServe,
-                                 startPage: startPage); 
+                                 startPage: startPage,
+                                 clientServe: clientServe); 
     messageSecurity = new ForceMessageSecurity(_basicServer.securityContext);
     
     scan();
@@ -30,9 +30,9 @@ class ForceServer extends Force with Serveable {
       handle(socket);
     });
     
-    this.server.on('$wsPath/uuid/', pollingServer.retrieveUuid, method: "GET");
-    this.server.on(PollingServer.pollingPath(wsPath), pollingServer.polling, method: "GET");
-    this.server.on(PollingServer.pollingPath(wsPath), pollingServer.sendedData, method: "POST");
+    this.server.use('$wsPath/uuid/', pollingServer.retrieveUuid, method: "GET");
+    this.server.use(PollingServer.pollingPath(wsPath), pollingServer.polling, method: "GET");
+    this.server.use(PollingServer.pollingPath(wsPath), pollingServer.sendedData, method: "POST");
   }
   
   /**

@@ -8,12 +8,12 @@ void main() {
   var profileName = 'chatName';
   HttpRequest req;
   
+  var data = { 'key' : 'value', 'key2' : 'value2' };
+  var profileInfo = {'name' : profileName};
+  
   test('force basic messageDispatcher test', () {  
     ForceServer fs = new ForceServer();
-    var sendingPackage =  {'request': request,
-                           'type': { 'name' : 'normal'},
-                           'profile': {'name' : profileName},
-                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+    var sendingPackage = new MessagePackage(request, new MessageType(MessageType.NORMAL), data, profileInfo);
 
     fs.on(request, expectAsync((e, sendable) {
         expect(e.profile['name'], profileName);
@@ -26,10 +26,10 @@ void main() {
   
   test('force id messageDispatcher test', () {
     ForceServer fs = new ForceServer();
-    var sendingPackage =  {'request': request,
-                           'type': { 'name' : 'id', 'id' : 'aefed'},
-                           'profile': {'name' : profileName},
-                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+    MessageType fmt = new MessageType(MessageType.ID);
+    fmt.id = 'aefed';
+    
+    var sendingPackage = new MessagePackage(request, fmt, data, profileInfo);
 
     fs.on(request, expectAsync((e, sendable) {
         print('Should not be reached'); }, count: 0));
@@ -40,10 +40,11 @@ void main() {
   
   test('force profile messageDispatcher test', () {
     ForceServer fs = new ForceServer();
-    var sendingPackage =  {'request': request,
-                           'type': { 'name' : 'profile', 'key' : 'key', 'value' : 'value'},
-                           'profile': {'name' : profileName},
-                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+    
+    MessageType fmt = new MessageType(MessageType.PROFILE);
+    fmt.key = 'key';
+    fmt.value = 'value';
+    var sendingPackage = new MessagePackage(request, fmt, data, profileInfo); 
 
     fs.on(request, expectAsync((e, sendable) {
             print('Should not be reached'); }, count: 0));
@@ -53,10 +54,9 @@ void main() {
   
   test('force profile changing test', () {
     ForceServer fs = new ForceServer();
-    var sendingPackage =  {'request': request,
-                           'type': { 'name' : 'normal'},
-                           'profile': {'name' : profileName},
-                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+    
+    MessageType fmt = new MessageType(MessageType.NORMAL);
+    var sendingPackage = new MessagePackage(request, fmt, data, profileInfo); 
 
     fs.onProfileChanged.listen(expectAsync((e) {
       String name = e.profileInfo['name'];
@@ -74,7 +74,7 @@ void main() {
                            'type': { 'name' : 'normal'},
                            'profile': {'name' : profileName},
                            'data': { 'key' : 'value', 'key2' : 'value2' }};
-
+    
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
     
     fs.onProfileChanged.listen(expectAsync((e) {

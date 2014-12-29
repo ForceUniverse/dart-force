@@ -1,14 +1,14 @@
 part of dart_force_server_lib;
 
-class Force extends ForceBaseMessageSendReceiver with ServerSendable {
+class Force extends Object with ServerSendable {
 
   final Logger log = new Logger('Force');
 
   static SecurityContextHolder _securityContext = new SecurityContextHolder(new NoSecurityStrategy());
   
   var uuid = new Uuid();
-  ForceMessageDispatcher _messageDispatcherInternal;
-    
+  // ForceMessageDispatcher _messageDispatcherInternal;
+  
   ForceMessageSecurity messageSecurity = new ForceMessageSecurity(_securityContext);
   StreamController<ForceProfileEvent> _profileController = new StreamController<ForceProfileEvent>();
   
@@ -22,6 +22,8 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
   
   /// List of special connectors
   List<Connector> connectors = new List<Connector>();
+  
+  ForceContext _forceContext;
   
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
@@ -118,16 +120,19 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
     // send a first message to the newly connected socket
     this.sendTo(socketId, "ack", "ack");
   }
-    
+  
+  /**
+   * Handles the messages that are coming into the server, regulator.
+   */
   void handleMessages(HttpRequest req, String id, data) {
-      List<ForceMessageEvent> fmes = onInnerMessage(data, wsId: id);
-      for(ForceMessageEvent fme in fmes) {
-        if (messageSecurity.checkSecurity(req, fme)) {
-          _messageDispatch().onMessageDispatch(addMessage(fme));
-        } else {
-          sendTo(id, "unauthorized", data);
-        }
+    List packages = _lazyContext().protocolDispatchers().convertPackages(data, wsId: id); 
+    for(var package in packages) {
+      if (messageSecurity.isAuthorized(req, package)) {
+        _lazyContext().protocolDispatchers().dispatch(package);
+      } else {
+        sendTo(id, "unauthorized", data);
       }
+    }
   } 
    
   /**
@@ -137,7 +142,7 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
    *  
    **/
   void before(MessageReceiver messageController) {
-      _messageDispatch().before(messageController); 
+    _lazyContext().messageDispatch().before(messageController); 
   }
     
   /**
@@ -152,7 +157,25 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
    **/
   void on(String request, MessageReceiver messageController, {List<String> roles}) {
       messageSecurity.register(request, roles);
-      _messageDispatch().register(request, messageController);
+      _lazyContext().messageDispatch().register(request, messageController);
+  }
+  
+  /**
+   * You can publish a collection so it is been know in the system and also filter CargoPackages before it gets dispatched
+   * 
+   * So when bad data comes in you can anticipate before adding it into the Cargo Persistent Store (Mongo, Memory, File, ...)
+   * 
+   * publish('todos', cargoInstance, (ForceCargoPackage fcp) {
+   *    if (fcp.action = ActionType.ADD) {
+   *      
+   *    }
+   * });
+   */
+  CargoBase publish(String collection, CargoBase cargo, {ValidateCargoPackage validate}) {    
+    CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
+    _lazyContext().cargoPacakgeDispatcher().publish(collection, cargoWithCollection, filter: validate);
+    return cargoWithCollection;
+    
   }
     
   /**
@@ -227,12 +250,14 @@ class Force extends ForceBaseMessageSendReceiver with ServerSendable {
         }
   }
   
-  ForceMessageDispatcher _messageDispatch() {
-    if (_messageDispatcherInternal==null) {
-      _messageDispatcherInternal = new ForceMessageDispatcher(this); 
+  ForceContext _lazyContext() {
+    if (_forceContext==null) {
+      _forceContext = new ForceContext(this);
     }
-    return _messageDispatcherInternal;
+    return _forceContext;
   }
+  
+  
     
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
   
