@@ -2,6 +2,12 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.0 ####
+
+- designing clientside db api
+- ForceClient: BC BREAK - port should be int instead of String 
+- adding protocols wiring into force, having 2 clean api's next to eachother, db & communication api.
+
 #### Pub version 0.5.7 ####
 
 - adapting the start method so it is compliant with the latest ForceMVC release!
