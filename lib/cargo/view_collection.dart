@@ -1,4 +1,4 @@
-part of dart_force_client_lib;
+part of dart_force_common_lib;
 
 /**
 * Is a memory wrapper arround cargo, so we can add this to our view!

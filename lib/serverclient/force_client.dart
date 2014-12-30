@@ -3,9 +3,7 @@ part of dart_force_server_lib;
 class ForceClient extends Object with ClientSendable {
   ForceSocket socket;
   
-  ProtocolDispatchers protocolDispatchers = new ProtocolDispatchers();
-  CargoHolder _cargoHolder;
-  ForceMessageDispatcher _forceMessageDispatcher;
+  ForceClientContext clientContext;
   
   String host;
   int port;
@@ -14,21 +12,16 @@ class ForceClient extends Object with ClientSendable {
   var _profileInfo = {};
   
   ForceClient({this.host: '127.0.0.1', this.port: 4041, this.url: null}) {
-    _setupProtocols();
+    clientContext = new ForceClientContext(this);  
     
     this.messenger = new ServerMessenger(socket);
   }
   
-  void _setupProtocols() {
-      _cargoHolder = new CargoHolderClient(this);
-      _forceMessageDispatcher = new ForceMessageDispatcher(this);
-      ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(_forceMessageDispatcher);
-      protocolDispatchers.protocols.add(forceMessageProtocol);
-      // add Cargo
-      CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_cargoHolder, this);
-      ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
-      protocolDispatchers.protocols.add(forceCargoProtocol);
-  }
+  Stream<MessagePackage> get onMessage => clientContext.onMessage;
+    
+  ViewCollection register(String collection, CargoBase cargo, {Map params}) 
+                          => clientContext.register(collection, cargo, params: params);
+    
   
   Future connect() {
     Completer completer = new Completer();
@@ -37,7 +30,7 @@ class ForceClient extends Object with ClientSendable {
      this.messenger = new ServerMessenger(socket);
      
      socket.onMessage.listen((e) {
-       protocolDispatchers.dispatch_raw(e.data);
+       clientContext.protocolDispatchers.dispatch_raw(e.data);
      });
      
      if (!completer.isCompleted) completer.complete();
@@ -46,7 +39,7 @@ class ForceClient extends Object with ClientSendable {
   }
   
   void on(String request, MessageReceiver forceMessageController) {
-      _forceMessageDispatcher.register(request, forceMessageController);
+      clientContext.on(request, forceMessageController);
   }
   
 }

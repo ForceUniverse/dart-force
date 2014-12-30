@@ -20,6 +20,7 @@ part 'message/messages_construct_helper.dart';
 
 part 'common/protocol.dart';
 part 'common/package.dart';
+part 'common/client_context.dart';
 
 part 'cargo/cargo_package_dispatcher.dart';
 part 'cargo/cargo_protocol.dart';
@@ -29,3 +30,4 @@ part 'cargo/data_changeable.dart';
 part 'cargo/cargo_holder_client.dart';
 
 part 'cargo/cargo_package.dart';
+part 'cargo/view_collection.dart';
