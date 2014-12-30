@@ -1,7 +1,7 @@
 part of dart_force_common_lib;
 
 /**
-* Holds all interactions with the cargo instances on the server!
+* Holds all interactions with the cargo instances on the client!
 */
 class CargoHolderClient implements CargoHolder {
   
@@ -11,11 +11,12 @@ class CargoHolderClient implements CargoHolder {
   
   CargoHolderClient(this.dataChangeable);
   
+  // publish a cargo collection
   void publish(String collection, CargoBase cargoBase) {
-    print("publish cargo $collection");
     _cargos[collection] = cargoBase;
   }
   
+  // subscribe to changes of a cargo collection
   bool subscribe(String collection, params, String id) {
     bool colExist = exist(collection);
     // Don't need todo anything on the client

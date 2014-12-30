@@ -2,6 +2,7 @@ part of dart_force_common_lib;
 
 /**
 * Is a memory wrapper arround cargo, so we can add this to our view!
+* Ideal class to use it in Angular or Polymer.
 */
 class ViewCollection implements Iterable {
   

@@ -1,7 +1,7 @@
 part of dart_force_common_lib;
 
 /**
-* Holds all interactions with the cargo instances on the server!
+* Holds all interactions with the cargo instances, abstraction for the implementations on the server and on the client
 */
 abstract class CargoHolder {
   

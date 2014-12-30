@@ -1,5 +1,8 @@
 part of dart_force_common_lib;
 
+/**
+ * A db, cargo action that needs to happen
+ */
 class CargoAction {
   
   static const SUBSCRIBE = 'db.subscribe';
@@ -26,6 +29,9 @@ class CargoAction {
    }
 }
 
+/**
+ * Cargo package exists out of info what we will do with the data in Cargo
+ */
 class CargoPackage extends Package {
    
   String wsId;
@@ -62,6 +68,9 @@ class CargoPackage extends Package {
     return json;
   }
   
+  /**
+   * Cancel a cargo interaction
+   */
   void cancel() {
     this.action = new CargoAction(CargoAction.CANCEL);
   }

@@ -2,6 +2,10 @@ part of dart_force_common_lib;
 
 typedef ValidateCargoPackage(CargoPackage fcp, Sender sender);
 
+/**
+ * Dispatch all the cargo packages to the correct methods in the cargo holder class
+ * Before dispatching it he will execute the validator method corresponding a collection 
+ */
 class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
   
   CargoHolder cargoHolder;
@@ -16,6 +20,9 @@ class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
     cargoHolder.publish(collection, cargo);
   }
   
+  /**
+   * Dispatch a CargoPackage
+   */
   void dispatch(CargoPackage fcp) {
     var collection = fcp.collection;
     
