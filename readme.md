@@ -6,6 +6,8 @@ A realtime web framework for dart.
 
 With this framework communication between client and server becomes easy, without any boilerplate code.
 
+Look at our wiki for more [info](https://github.com/ForceUniverse/dart-force/wiki)
+
 #### Walkthrough ####
 
 ##### Client side #####
