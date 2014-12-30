@@ -7,6 +7,7 @@ This file contains highlights of what changes on each version of the force packa
 - designing clientside db api
 - ForceClient: BC BREAK - port should be int instead of String 
 - adding protocols wiring into force, having 2 clean api's next to eachother, db & communication api.
+- improvements on forceclient
 
 #### Pub version 0.5.7 ####
 
