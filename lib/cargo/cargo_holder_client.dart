@@ -51,7 +51,7 @@ class CargoHolderClient implements CargoHolder {
      return colExist;
    }
   
-  bool set(String collection, key, data) {
+  bool set(String collection, data) {
     throw new UnsupportedError('Is not supported on the client!');
   }
   

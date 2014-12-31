@@ -108,13 +108,10 @@ class CargoHolderServer implements CargoHolder {
       return colExist;
     }
   
-  bool set(String collection, key, data) {
+  bool set(String collection, data) {
     bool colExist = exist(collection);
     if (colExist) { 
-       if (key!=null) {
-         key = _uuid.v4();
-       }
-       _cargos[collection].setItem(key, data);
+       _cargos[collection].setItem(_uuid.v4(), data);
     }
     return colExist;
   }
