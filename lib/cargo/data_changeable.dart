@@ -4,7 +4,7 @@ abstract class DataChangeable {
 
   void add(collection, key, data, {id});
   
-  void set(collection, data, {id});
+  void set(collection, data, {key, id});
   
   void update(collection, key, data, {id});
   

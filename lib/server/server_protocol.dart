@@ -50,8 +50,8 @@ class ServerSendable implements Sendable, DataChangeable {
         _sendPackageToId(id, sendingPackage);
     }
     
-    void set(collection, data, {id}) {
-        var sendingPackage = _messagesConstructHelper.set(collection, data);
+    void set(collection, data, {key, id}) {
+        var sendingPackage = _messagesConstructHelper.set(collection, key, data);
         _sendPackageToId(id, sendingPackage);
     }
     

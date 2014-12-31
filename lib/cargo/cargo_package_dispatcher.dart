@@ -41,7 +41,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
     } else if (fcp.action.type == CargoAction.REMOVE) {
       cargoHolder.remove(fcp.collection, fcp.key);
     } else if (fcp.action.type == CargoAction.SET) {
-      cargoHolder.set(fcp.collection, fcp.json);
+      cargoHolder.set(fcp.collection, fcp.key, fcp.json);
     }
   }
   

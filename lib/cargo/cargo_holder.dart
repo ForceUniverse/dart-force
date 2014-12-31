@@ -21,7 +21,7 @@ abstract class CargoHolder {
   
   bool update(String collection, key, data);
   
-  bool set(String collection, data);
+  bool set(String collection, key, data);
   
   bool remove(String collection, key);
   
