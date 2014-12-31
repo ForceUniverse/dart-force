@@ -23,9 +23,9 @@ class ViewCollection implements Iterable {
    }); 
   }
   
-  void update(id, value) {
-   this.cargo.setItem(id, value);
-   this._changeable.update(_collection, id, value);
+  void update(key, value) {
+   this.cargo.setItem(key, value);
+   this._changeable.update(_collection, key, value);
   }
   
   void remove(id) {
@@ -33,8 +33,8 @@ class ViewCollection implements Iterable {
     this._changeable.remove(_collection, id);
   }
   
-  void set(value) {
-    this._changeable.set(_collection, value);
+  void set(value, {key}) {
+    this._changeable.set(_collection, value, key: key);
   }
   
   Iterator get iterator => _all.values.iterator;
