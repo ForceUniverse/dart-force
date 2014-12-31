@@ -33,8 +33,8 @@ class ViewCollection implements Iterable {
     this._changeable.remove(_collection, id);
   }
   
-  void set(value, {key}) {
-    this._changeable.set(_collection, value, key: key);
+  void set(value) {
+    this._changeable.set(_collection, value);
   }
   
   Iterator get iterator => _all.values.iterator;
