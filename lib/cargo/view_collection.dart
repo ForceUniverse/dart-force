@@ -1,5 +1,10 @@
 part of dart_force_common_lib;
 
+/** transform json objects into real objects by the user 
+ * until better ways in dart this will be the way to transform our data
+ **/
+typedef Object transformData(Map json);
+
 /**
 * Is a memory wrapper arround cargo, so we can add this to our view!
 * Ideal class to use it in Angular or Polymer.
@@ -10,17 +15,30 @@ class ViewCollection implements Iterable {
   DataChangeable _changeable;
   String _collection;
   
+  transformData _td;
+  
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
   ViewCollection(this._collection, this.cargo, this._changeable) {
    this.cargo.onAll((DataEvent de) {
      if (de.type==DataType.CHANGED) {
-       _all[de.key] = new EncapsulatedValue(de.key, de.data);
+       var data = de.data;
+       if (data is Map && _td != null) {
+         data = _td(data);
+       }
+       _all[de.key] = new EncapsulatedValue(de.key, data);
      }
      if (de.type==DataType.REMOVED) {
        _all.remove(de.key);
      }
    }); 
+  }
+  
+  /**
+   * When data is been changed the transformData will be called
+   */
+  void onChangedData(transformData td) {
+    _td = td;
   }
   
   void update(key, value) {
