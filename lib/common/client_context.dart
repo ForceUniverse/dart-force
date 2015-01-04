@@ -26,12 +26,12 @@ class ForceClientContext {
     
   Stream<MessagePackage> get onMessage => _forceMessageProtocol.onMessage;
     
-  ViewCollection register(String collection, CargoBase cargo, {Map params}) {
+  ViewCollection register(String collection, CargoBase cargo, {Map params, serializeData onChangedData}) {
       CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
       _cargoHolder.publish(collection, cargoWithCollection);
       this.clientSendable.subscribe(collection, params: params);
       
-      return new ViewCollection(collection, cargoWithCollection, this.clientSendable);
+      return new ViewCollection(collection, cargoWithCollection, this.clientSendable, onChangedData: onChangedData);
   }
     
   void on(String request, MessageReceiver forceMessageController) {
