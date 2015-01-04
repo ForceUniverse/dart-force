@@ -3,7 +3,7 @@ part of dart_force_common_lib;
 /** transform json objects into real objects by the user 
  * until better ways in dart this will be the way to transform our data
  **/
-typedef Object serializeData(Map json);
+typedef Object deserializeData(Map json);
 
 /**
 * Is a memory wrapper arround cargo, so we can add this to our view!
@@ -15,16 +15,16 @@ class ViewCollection implements Iterable {
   DataChangeable _changeable;
   String _collection;
   
-  serializeData onChangedData;
+  deserializeData deserialize;
   
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
-  ViewCollection(this._collection, this.cargo, this._changeable, {this.onChangedData}) {
+  ViewCollection(this._collection, this.cargo, this._changeable, {this.deserialize}) {
    this.cargo.onAll((DataEvent de) {
      if (de.type==DataType.CHANGED) {
        var data = de.data;
-       if (data is Map && onChangedData != null) {
-         data = onChangedData(data);
+       if (data is Map && deserialize != null) {
+         data = deserialize(data);
        }
        _all[de.key] = new EncapsulatedValue(de.key, data);
      }

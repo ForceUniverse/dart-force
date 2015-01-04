@@ -31,8 +31,8 @@ class ForceClient extends Object with ClientSendable {
   
   Stream<MessagePackage> get onMessage => clientContext.onMessage;
   
-  ViewCollection register(String collection, CargoBase cargo, {Map params, serializeData onChangedData}) 
-                          => clientContext.register(collection, cargo, params: params, onChangedData: onChangedData);
+  ViewCollection register(String collection, CargoBase cargo, {Map params, deserializeData deserialize}) 
+                          => clientContext.register(collection, cargo, params: params, deserialize: deserialize);
   
   void connect() {
    this.socket.connect();
