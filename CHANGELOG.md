@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.1 ####
+
+- easier transform your clientside objects with serialize function
+- upgrade to forcemvc 0.7.0 and wired 0.4.3
+
 #### Pub version 0.6.0 ####
 
 - designing clientside db api

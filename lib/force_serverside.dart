@@ -13,7 +13,7 @@ import 'package:wired/wired.dart';
 export 'package:forcemvc/force_mvc.dart';
 export 'package:wired/wired.dart';
 
-import 'package:forcemirrors/force_mirrors.dart';
+import 'package:mirrorme/mirrorme.dart';
 
 import 'force_common.dart';
 export 'force_common.dart';
