@@ -13,7 +13,7 @@ abstract class CargoHolder {
   
   void publish(String collection, CargoBase cargoBase);
   
-  bool subscribe(String collection, params, String id);
+  bool subscribe(String collection, params, Options options, String id);
   
   bool exist(String collection);
   

@@ -17,7 +17,7 @@ class CargoHolderClient implements CargoHolder {
   }
   
   // subscribe to changes of a cargo collection
-  bool subscribe(String collection, params, String id) {
+  bool subscribe(String collection, params, Options options, String id) {
     bool colExist = exist(collection);
     // Don't need todo anything on the client
     return colExist;

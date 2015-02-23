@@ -33,7 +33,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
     }
     
     if (fcp.action.type == CargoAction.SUBSCRIBE) {
-      cargoHolder.subscribe(fcp.collection, fcp.params, fcp.wsId);
+      cargoHolder.subscribe(fcp.collection, fcp.params, fcp.options, fcp.wsId);
     } else if (fcp.action.type == CargoAction.ADD) {
       cargoHolder.add(fcp.collection, fcp.collection, fcp.json);
     } else if (fcp.action.type == CargoAction.UPDATE) {

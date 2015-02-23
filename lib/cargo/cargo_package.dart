@@ -41,9 +41,10 @@ class CargoPackage extends Package {
   dynamic json;
   dynamic params;
   
+  Options options;
   CargoAction action;
   
-  CargoPackage(this.collection, this.action, this.profile, { this.key, this.json, this.params, this.wsId: "-"});
+  CargoPackage(this.collection, this.action, this.profile, { this.key, this.json, this.params, this.options, this.wsId: "-"});
   
   CargoPackage.fromJson(json, {this.wsId}) {
      if (json!=null) {
@@ -52,6 +53,7 @@ class CargoPackage extends Package {
        this.profile = json["profile"];
        this.collection = json["collection"];
        this.params = json["params"];
+       this.options = new Options(limit: json["options"]["limit"], revert: json["options"]["revert"]);
        
        this.action = new CargoAction.fromJson(json["action"]);
      } 
@@ -65,6 +67,9 @@ class CargoPackage extends Package {
     if (this.profile!= null) json["profile"] = this.profile;
     if (this.collection != null) json["collection"] = this.collection;
     if (this.action != null) json["action"] = this.action.toJson();
+    if (this.options != null) {
+      json["options"] = { "limit" : options.limit, "revert" : options.revert };
+    }
     return json;
   }
   

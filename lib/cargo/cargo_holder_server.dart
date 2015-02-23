@@ -60,7 +60,7 @@ class CargoHolderServer implements CargoHolder {
       } 
     }
   
-  bool subscribe(String collection, params, String id) {
+  bool subscribe(String collection, params, Options options, String id) {
     bool colExist = exist(collection);
     if (colExist) { 
       List ids = new List();
@@ -73,7 +73,7 @@ class CargoHolderServer implements CargoHolder {
       _parameters["${collection}_${id}"] = params;
       
       // send the collection to the clients
-      _cargos[collection].export(params: params).then((Map values) {
+      _cargos[collection].export(params: params, options: options).then((Map values) {
         values.forEach((key, value) => _sendToId(collection, key, value, id));
       });
     }

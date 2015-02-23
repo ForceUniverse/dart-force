@@ -26,10 +26,10 @@ class ForceClientContext {
     
   Stream<MessagePackage> get onMessage => _forceMessageProtocol.onMessage;
     
-  ViewCollection register(String collection, CargoBase cargo, {Map params, deserializeData deserialize}) {
+  ViewCollection register(String collection, CargoBase cargo, {Map params, Options options, deserializeData deserialize}) {
       CargoBase cargoWithCollection = cargo.instanceWithCollection(collection);
       _cargoHolder.publish(collection, cargoWithCollection);
-      this.clientSendable.subscribe(collection, params: params);
+      this.clientSendable.subscribe(collection, params: params, options: options);
       
       return new ViewCollection(collection, cargoWithCollection, this.clientSendable, deserialize: deserialize);
   }
