@@ -53,7 +53,12 @@ class CargoPackage extends Package {
        this.profile = json["profile"];
        this.collection = json["collection"];
        this.params = json["params"];
-       this.options = new Options(limit: json["options"]["limit"], revert: json["options"]["revert"]);
+       
+       if (json["limit"] != null) {
+          this.options = new Options(limit: json["options"]["limit"], revert: json["options"]["revert"]);
+       } else {
+         this.options = new Options();
+       }
        
        this.action = new CargoAction.fromJson(json["action"]);
      } 

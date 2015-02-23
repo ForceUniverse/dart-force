@@ -34,8 +34,8 @@ class ClientSendable implements Sendable, DataChangeable {
   }
   
   // DB SENDABLE METHODS
-  void subscribe(collection, {params}) {
-    this._send(_messagesConstructHelper.subscribe(collection, params: params));
+  void subscribe(collection, {params, Options options}) {
+    this._send(_messagesConstructHelper.subscribe(collection, params: params, options: options));
   }
   
   void add(collection, key, value, {id}) {
