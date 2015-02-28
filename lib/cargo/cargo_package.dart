@@ -54,7 +54,7 @@ class CargoPackage extends Package {
        this.collection = json["collection"];
        this.params = json["params"];
        
-       if (json["limit"] != null) {
+       if (json["options"] != null) {
           this.options = new Options(limit: json["options"]["limit"], revert: json["options"]["revert"]);
        } else {
          this.options = new Options();
