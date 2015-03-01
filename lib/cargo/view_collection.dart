@@ -28,12 +28,30 @@ class ViewCollection implements Iterable {
        if (data is Map && deserialize != null) {
          data = deserialize(data);
        }
-       _all[de.key] = new EncapsulatedValue(de.key, data);
+       
+       _addNewValue(de.key, data);
      }
      if (de.type==DataType.REMOVED) {
        _all.remove(de.key);
      }
    }); 
+  }
+  
+  void _addNewValue(key, data) {
+    if (options != null) {
+      if (options.hasLimit()) {
+        if (options.limit == _all.length) {
+          var key;
+          if(options.revert) {
+            key = _all.keys.elementAt(0);
+          } else {
+            key = _all.keys.elementAt(_all.keys.length-1);
+          }
+          _all.remove(key);
+        }
+      }
+    } 
+    _all[key] = new EncapsulatedValue(key, data); 
   }
   
   void update(key, value) {
