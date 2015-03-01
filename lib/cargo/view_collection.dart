@@ -51,13 +51,13 @@ class ViewCollection implements Iterable {
         }
       }
     }
-    if (options.revert) {
-      Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
-      
-      tempMap[key] = new EncapsulatedValue(key, data);
-      tempMap.addAll(_all);
-      
-      _all = tempMap;
+    if (options.revert && !_all.containsKey(key)) {
+        Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
+        
+        tempMap[key] = new EncapsulatedValue(key, data);
+        tempMap.addAll(_all);
+        
+        _all = tempMap;
     } else {
       _all[key] = new EncapsulatedValue(key, data);
     }
