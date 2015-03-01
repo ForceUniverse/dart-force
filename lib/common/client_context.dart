@@ -31,7 +31,7 @@ class ForceClientContext {
       _cargoHolder.publish(collection, cargoWithCollection);
       this.clientSendable.subscribe(collection, params: params, options: options);
       
-      return new ViewCollection(collection, cargoWithCollection, this.clientSendable, deserialize: deserialize);
+      return new ViewCollection(collection, cargoWithCollection, options, this.clientSendable, deserialize: deserialize);
   }
     
   void on(String request, MessageReceiver forceMessageController) {

@@ -15,11 +15,13 @@ class ViewCollection implements Iterable {
   DataChangeable _changeable;
   String _collection;
   
+  Options options;
+  
   deserializeData deserialize;
   
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
-  ViewCollection(this._collection, this.cargo, this._changeable, {this.deserialize}) {
+  ViewCollection(this._collection, this.cargo, this.options, this._changeable, {this.deserialize}) {
    this.cargo.onAll((DataEvent de) {
      if (de.type==DataType.CHANGED) {
        var data = de.data;
