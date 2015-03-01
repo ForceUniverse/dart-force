@@ -43,15 +43,24 @@ class ViewCollection implements Iterable {
         if (options.limit == _all.length) {
           var key;
           if(options.revert) {
-            key = _all.keys.elementAt(0);
-          } else {
             key = _all.keys.elementAt(_all.keys.length-1);
+          } else {
+            key = _all.keys.elementAt(0);
           }
           _all.remove(key);
         }
       }
-    } 
-    _all[key] = new EncapsulatedValue(key, data); 
+    }
+    if (options.revert) {
+      Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
+      
+      tempMap[key] = new EncapsulatedValue(key, data);
+      tempMap.addAll(_all);
+      
+      _all = tempMap;
+    } else {
+      _all[key] = new EncapsulatedValue(key, data);
+    }
   }
   
   void update(key, value) {
