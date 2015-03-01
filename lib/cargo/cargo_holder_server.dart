@@ -74,6 +74,9 @@ class CargoHolderServer implements CargoHolder {
       
       // send the collection to the clients
       _cargos[collection].export(params: params, options: options).then((Map values) {
+        // if revert send it revert to the client
+        if (options.revert) values = revertMap(values);
+        
         values.forEach((key, value) => _sendToId(collection, key, value, id));
       });
     }
