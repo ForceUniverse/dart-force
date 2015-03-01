@@ -38,9 +38,8 @@ class ViewCollection implements Iterable {
   }
   
   void _addNewValue(key, data) {
-    if (options != null) {
-      if (options.hasLimit()) {
-        if (options.limit == _all.length) {
+    if (options != null && options.hasLimit() && !_all.containsKey(key)) {
+       if (options.limit == _all.length) {
           var key;
           if(options.revert) {
             key = _all.keys.elementAt(_all.keys.length-1);
@@ -48,10 +47,9 @@ class ViewCollection implements Iterable {
             key = _all.keys.elementAt(0);
           }
           _all.remove(key);
-        }
-      }
+       }
     }
-    if (options.revert && !_all.containsKey(key)) {
+    if (options != null && options.revert && !_all.containsKey(key)) {
         Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
         
         tempMap[key] = new EncapsulatedValue(key, data);
