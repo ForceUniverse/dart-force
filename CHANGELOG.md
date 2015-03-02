@@ -4,6 +4,7 @@ This file contains highlights of what changes on each version of the force packa
 
 #### Pub version 0.6.1 ####
 
+- add options possibility of cargo into the db client api of force
 - easier transform your clientside objects with serialize function
 - upgrade to forcemvc 0.7.0 and wired 0.4.3
 
