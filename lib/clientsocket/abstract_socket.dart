@@ -25,13 +25,25 @@ abstract class Socket {
   StreamController<ConnectEvent> _disconnectController;
   StreamController<SocketEvent> _messageController;
   
+  Stream<SocketEvent> _onMessage;
+  Stream<ConnectEvent> _onConnecting;
+  Stream<ConnectEvent> _onDisconnecting;
+
+  
   void connect();
   
   void send(data);
   
   bool isOpen();
   
-  Stream<SocketEvent> get onMessage => _messageController.stream.asBroadcastStream();
-  Stream<ConnectEvent> get onConnecting => _connectController.stream.asBroadcastStream();
-  Stream<ConnectEvent> get onDisconnecting => _disconnectController.stream.asBroadcastStream();
+  Stream<SocketEvent> get onMessage => _stream_resolving(_messageController, _onMessage);
+  Stream<ConnectEvent> get onConnecting => _stream_resolving(_connectController, _onConnecting);
+  Stream<ConnectEvent> get onDisconnecting => _stream_resolving(_disconnectController, _onDisconnecting);
+  
+  Stream _stream_resolving(StreamController controller, Stream stream) {
+     if (stream==null) {
+         stream = controller.stream.asBroadcastStream();
+     }
+     return stream;
+  }
 }
