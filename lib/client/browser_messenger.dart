@@ -14,9 +14,5 @@ class BrowserMessenger extends Messenger {
     }
   }
   
-  void online() {
-    for (var package in notSendedPackages) {
-      socket.send(JSON.encode(package));
-    }
-  }
+
 }

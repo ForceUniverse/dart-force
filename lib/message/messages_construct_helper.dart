@@ -10,7 +10,15 @@ abstract class Messenger {
       notSendedPackages.add(sendingPackage);
   }
   
-  void online();
+  void online() {
+    List packages = new List();
+    packages.addAll(notSendedPackages);
+    for (var package in notSendedPackages) {
+      notSendedPackages.remove(package);
+      
+      send(JSON.encode(package));
+    }
+  }
 }
 
 
