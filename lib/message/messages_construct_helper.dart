@@ -1,9 +1,16 @@
 part of dart_force_common_lib;
 
 abstract class Messenger {
+  List notSendedPackages = new List();
+  
   void send(sendingPackage);
   
-  void offline(sendingPackage);
+  void offline(sendingPackage) {
+      print('WebSocket not connected, message $sendingPackage not sent');
+      notSendedPackages.add(sendingPackage);
+  }
+  
+  void online();
 }
 
 

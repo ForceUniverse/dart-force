@@ -27,6 +27,10 @@ class ForceClient extends Object with ClientSendable {
 
     this.socket = new Socket('$url$wsPath', usePolling: usePolling, heartbeat: heartbeat);
     this.messenger = new BrowserMessenger(socket);
+    
+    onConnected.listen((ConnectEvent) {
+      this.messenger.online();
+    });
   }
   
   Stream<MessagePackage> get onMessage => clientContext.onMessage;

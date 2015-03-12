@@ -14,7 +14,9 @@ class BrowserMessenger extends Messenger {
     }
   }
   
-  void offline(sendingPackage) {
-    print('WebSocket not connected, message $sendingPackage not sent');
+  void online() {
+    for (var package in notSendedPackages) {
+      socket.send(JSON.encode(package));
+    }
   }
 }

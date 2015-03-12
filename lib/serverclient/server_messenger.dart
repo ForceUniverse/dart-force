@@ -17,7 +17,11 @@ class ServerMessenger extends Messenger {
     }
   }
   
-  void offline(sendingPackage) {
-    log.warning('WebSocket not connected, message $sendingPackage not sent');
+  void online() {
+      for (var package in notSendedPackages) {
+        socket.add(JSON.encode(package));
+      }
   }
+  
+  
 }

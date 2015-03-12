@@ -31,7 +31,7 @@ abstract class Socket {
   
   bool isOpen();
   
-  Stream<SocketEvent> get onMessage => _messageController.stream;
-  Stream<ConnectEvent> get onConnecting => _connectController.stream;
-  Stream<ConnectEvent> get onDisconnecting => _disconnectController.stream;
+  Stream<SocketEvent> get onMessage => _messageController.stream.asBroadcastStream();
+  Stream<ConnectEvent> get onConnecting => _connectController.stream.asBroadcastStream();
+  Stream<ConnectEvent> get onDisconnecting => _disconnectController.stream.asBroadcastStream();
 }
