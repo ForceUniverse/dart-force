@@ -36,9 +36,9 @@ abstract class Socket {
   
   bool isOpen();
   
-  Stream<SocketEvent> get onMessage => _stream_resolving(_messageController, _onMessage);
-  Stream<ConnectEvent> get onConnecting => _stream_resolving(_connectController, _onConnecting);
-  Stream<ConnectEvent> get onDisconnecting => _stream_resolving(_disconnectController, _onDisconnecting);
+  Stream<SocketEvent> get onMessage => _onMessage = _stream_resolving(_messageController, _onMessage);
+  Stream<ConnectEvent> get onConnecting => _onConnecting = _stream_resolving(_connectController, _onConnecting);
+  Stream<ConnectEvent> get onDisconnecting => _onDisconnecting = _stream_resolving(_disconnectController, _onDisconnecting);
   
   Stream _stream_resolving(StreamController controller, Stream stream) {
      if (stream==null) {
