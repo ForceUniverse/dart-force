@@ -1,6 +1,6 @@
 part of dart_force_server_lib;
 
-class ServerSendable implements Sendable, DataChangeable {
+class ServerSendable implements Sendable, DataChangeable, SendablePackage {
 
     final Logger log = new Logger('Sendable');
   
@@ -13,14 +13,14 @@ class ServerSendable implements Sendable, DataChangeable {
       printAmountOfConnections();
       
       var sendingPackage = _messagesConstructHelper.send(request, data);
-      _sendPackage(sendingPackage);
+      sendPackage(sendingPackage);
     }
   
     void broadcast(request, data) {
         printAmountOfConnections();
         
         var sendingPackage = _messagesConstructHelper.broadcast(request, data);
-        _sendPackage(sendingPackage);
+        sendPackage(sendingPackage);
     }
     
     void sendTo(id, request, data) {
@@ -66,7 +66,7 @@ class ServerSendable implements Sendable, DataChangeable {
     }
     
     // OVERALL METHODS
-    void _sendPackage(sendingPackage) {
+    void sendPackage(sendingPackage) {
       webSockets.forEach((String key, ForceSocket ws) {
               log.info("sending package ... to $key");
               ws.add(JSON.encode(sendingPackage));
