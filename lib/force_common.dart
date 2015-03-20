@@ -31,3 +31,8 @@ part 'cargo/cargo_holder_client.dart';
 
 part 'cargo/cargo_package.dart';
 part 'cargo/view_collection.dart';
+
+// ping pong protocol
+part 'pingpong/pingpong_dispatcher.dart';
+part 'pingpong/pingpong_package.dart';
+part 'pingpong/pingpong_protocol.dart';

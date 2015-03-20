@@ -43,7 +43,7 @@ class Force extends Object with ServerSendable {
   /**
    * Add a keep alive to the Socket lifecycle with the help of the ping pong protocol
    */
-  void addKeepAlive({int seconds: 40}) {
+  void activateKeepAlive({int seconds: 40}) {
     Duration timeout = new Duration(seconds: seconds);
     var self = this;
     new Timer.periodic(timeout, (Timer t) {
