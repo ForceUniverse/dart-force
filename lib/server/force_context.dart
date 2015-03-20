@@ -20,10 +20,15 @@ class ForceContext {
         // add Cargo
         ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher());
         _protocolDispatchers.protocols.add(forceCargoProtocol);
+        
+        // add Ping Pong
+        PingPongDispatcher pingpongDispatcher = new PingPongDispatcher(this.force);
+        PingPongProtocol pingPongProtocol = new PingPongProtocol(pingpongDispatcher);
+        _protocolDispatchers.protocols.add(pingPongProtocol);
       }
       return _protocolDispatchers;
-  }
-    
+  } 
+  
   ForceMessageDispatcher messageDispatch() {
       if (_forceMessageDispatcher == null) {
         _forceMessageDispatcher = new ForceMessageDispatcher(this.force);
