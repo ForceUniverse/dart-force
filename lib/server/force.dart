@@ -39,6 +39,17 @@ class Force extends Object with ServerSendable {
         this.register(obj);
       }
   }
+  
+  /**
+   * Add a keep alive to the Socket lifecycle with the help of the ping pong protocol
+   */
+  void addKeepAlive({int seconds: 40}) {
+    Duration timeout = new Duration(seconds: seconds);
+    var self = this;
+    new Timer.periodic(timeout, (Timer t) {
+        self.sendPackage(new PingPongPackage(PingPongPackage.PING));
+      });
+  }
    
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
