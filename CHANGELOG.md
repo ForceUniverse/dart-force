@@ -2,6 +2,12 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.2 ####
+
+- keep a state of message when the client is offline, when it is back online we send these messages to the server
+- add a ping / pong protocol 
+- add a keep alive timer, that send every x seconds ping signals to the clients
+
 #### Pub version 0.6.1 ####
 
 - add options possibility of cargo into the db client api of force

@@ -11,6 +11,7 @@ class ForceServer extends Force with Serveable {
                wsPath: "/ws",
                clientFiles: '../build/web/', 
                clientServe: true,
+               keepAlive: false,
                startPage: 'index.html'}) {
     _basicServer = new WebApplication(host: host,
                                  port: port,
@@ -29,6 +30,9 @@ class ForceServer extends Force with Serveable {
     pollingServer.onConnection.listen((PollingSocket socket) {
       handle(socket);
     });
+    
+    // look at keep alive 
+    if (keepAlive) this.activateKeepAlive();
     
     this.server.use('$wsPath/uuid/', pollingServer.retrieveUuid, method: "GET");
     this.server.use(PollingServer.pollingPath(wsPath), pollingServer.polling, method: "GET");
