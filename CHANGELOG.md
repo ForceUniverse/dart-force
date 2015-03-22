@@ -2,7 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
-#### Pub version 0.6.2 ####
+#### Pub version 0.6.2+2 ####
+
+- add some logging about the keep alive
+
+#### Pub version 0.6.2 & 0.6.2+1 ####
 
 - keep a state of message when the client is offline, when it is back online we send these messages to the server
 - add a ping / pong protocol 

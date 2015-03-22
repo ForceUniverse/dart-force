@@ -49,6 +49,8 @@ class Force extends Object with ServerSendable {
     new Timer.periodic(timeout, (Timer t) {
         self.sendPackage(new PingPongPackage(PingPongPackage.PING));
       });
+    
+    log.info("Keep alive is been activated with a ping pong at ${seconds} seconds.");
   }
    
   /**

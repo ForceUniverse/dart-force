@@ -70,10 +70,10 @@ void main() {
   test('force new property profile changing test', () {
     ForceServer fs = new ForceServer();
     var channelName = "chnnl";
-    var sendingPackage =  {'request': request,
-                           'type': { 'name' : 'normal'},
-                           'profile': {'name' : profileName},
-                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+    var sendingPackage = new MessagePackage(request, 
+        new MessageType(MessageType.NORMAL), 
+        { 'key' : 'value', 'key2' : 'value2' }, 
+        {'name' : profileName}).toJson();
     
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
     
