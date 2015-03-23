@@ -4,7 +4,7 @@ class ServerSendable implements Sendable, DataChangeable, SendablePackage {
 
     final Logger log = new Logger('Sendable');
   
-    Map<String, ForceSocket> webSockets = new Map<String, ForceSocket>();
+    Map<String, ForceSocket> forceSockets = new Map<String, ForceSocket>();
     Map<String, dynamic> profiles = new Map<String, dynamic>();
     
     MessagesConstructHelper _messagesConstructHelper = new MessagesConstructHelper();
@@ -67,21 +67,21 @@ class ServerSendable implements Sendable, DataChangeable, SendablePackage {
     
     // OVERALL METHODS
     void sendPackage(sendingPackage) {
-      webSockets.forEach((String key, ForceSocket ws) {
+      forceSockets.forEach((String key, ForceSocket ws) {
               log.info("sending package ... to $key");
               ws.add(JSON.encode(sendingPackage));
             });
     }
     
     void _sendPackageToId(id, sendingPackage) {
-      ForceSocket ws = webSockets[id];
+      ForceSocket ws = forceSockets[id];
             if (ws != null) {
               ws.add(JSON.encode(sendingPackage));
             }
     }
   
   void printAmountOfConnections() {
-    int size = this.webSockets.length;
+    int size = this.forceSockets.length;
     log.info("*** total amount of sockets: $size");
   }
 

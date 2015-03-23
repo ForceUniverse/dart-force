@@ -116,11 +116,11 @@ class Force extends Object with ServerSendable {
       String id = uuid.v4();
       log.info("register id $id");
       
-      this.webSockets[id] = socket;
-      this.webSockets[id].onMessage.listen((e) {
+      this.forceSockets[id] = socket;
+      this.forceSockets[id].onMessage.listen((e) {
         handleMessages(e.request, id, e.data);
       });
-      this.webSockets[id].done().then((e) {
+      this.forceSockets[id].done().then((e) {
         log.info("socket ended");
         checkConnections();
       });
@@ -196,8 +196,8 @@ class Force extends Object with ServerSendable {
    * 
    **/
   void close(String id) {
-      if (webSockets.containsKey(id)) {
-        this.webSockets[id].close();
+      if (forceSockets.containsKey(id)) {
+        this.forceSockets[id].close();
       }
       checkConnections();
   }
@@ -208,7 +208,7 @@ class Force extends Object with ServerSendable {
    **/
   void checkConnections() {
       List<String> removeWs = new List<String>();
-      this.webSockets.forEach((String key, ForceSocket ws) {
+      this.forceSockets.forEach((String key, ForceSocket ws) {
         if (ws.isClosed()) {
           removeWs.add(key);
         }
@@ -221,8 +221,8 @@ class Force extends Object with ServerSendable {
       printAmountOfConnections();
       
       for (String wsId in removeWs) {
-        _onSocketClosed.add(new SocketEvent(wsId, this.webSockets[wsId]));
-        this.webSockets.remove(wsId);
+        _onSocketClosed.add(new SocketEvent(wsId, this.forceSockets[wsId]));
+        this.forceSockets.remove(wsId);
         if (this.profiles.containsKey(wsId)) {
           _profileController.add(new ForceProfileEvent(ForceProfileType.Removed, wsId, this.profiles[wsId]));
           
@@ -269,8 +269,6 @@ class Force extends Object with ServerSendable {
     }
     return _forceContext;
   }
-  
-  
     
   Stream<ForceProfileEvent> get onProfileChanged => _profileController.stream;
   
