@@ -37,10 +37,12 @@ class CargoHolderServer implements CargoHolder {
     if (ids != null) {
       for (var id in ids) {
         Map params = _parameters["${collection}_${id}"];
-        if (containsByOverlay(data, params)) {
-            _sendToId(collection, key, data, id);
+        
+        bool sendIt = (data is Map ? containsByOverlay(data, params) : true);
+        if (sendIt) {
+          this._sendToId(collection, key, data, id);
         }
-      } 
+      }
     }
   }
   
