@@ -20,6 +20,7 @@ class ViewCollection implements Iterable {
   deserializeData deserialize;
   
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
+  DataChangeListener _cargoDataChange;
   
   ViewCollection(this._collection, this.cargo, this.options, this._changeable, {this.deserialize}) {
    this.cargo.onAll((DataEvent de) {
@@ -30,12 +31,16 @@ class ViewCollection implements Iterable {
        }
        
        _addNewValue(de.key, data);
+       if (_cargoDataChange!=null) _cargoDataChange(new DataEvent(de.key, data, de.type));
      }
      if (de.type==DataType.REMOVED) {
        _all.remove(de.key);
+       if (_cargoDataChange!=null) _cargoDataChange(de);
      }
    }); 
   }
+  
+  onChange(DataChangeListener cargoDataChange) => this._cargoDataChange = cargoDataChange;
   
   void _addNewValue(key, data) {
     if (options != null && options.hasLimit() && !_all.containsKey(key)) {
