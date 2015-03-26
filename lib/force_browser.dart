@@ -1,7 +1,7 @@
 library dart_force_client_lib;
 
 import 'dart:async';
-import 'dart:convert';
+import 'dart:convert' show JSON;
 import 'dart:html';
 
 import 'dart:math';

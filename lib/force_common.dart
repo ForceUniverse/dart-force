@@ -1,7 +1,9 @@
 library dart_force_common_lib;
 
 import 'dart:async';
-import 'dart:convert';
+import 'dart:convert' show JSON;
+
+import 'dart:collection' show IterableMixin;
 
 import 'package:cargo/cargo_base.dart';
 export 'package:cargo/cargo_base.dart';
