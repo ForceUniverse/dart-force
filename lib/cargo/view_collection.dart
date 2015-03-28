@@ -20,6 +20,11 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
   deserializeData deserialize;
   
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
+  
+  /// put the data raw in a map, make the map only available as a getter
+  Map<String, dynamic> _raw = new Map<String, EncapsulatedValue>();
+  Map<String, dynamic> get data => _raw;
+  
   DataChangeListener _cargoDataChange;
   
   ViewCollection(this._collection, this.cargo, this.options, this._changeable, {this.deserialize}) {
@@ -35,6 +40,7 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
      }
      if (de.type==DataType.REMOVED) {
        _all.remove(de.key);
+       _raw.remove(de.key);
        if (_cargoDataChange!=null) _cargoDataChange(de);
      }
    }); 
@@ -52,18 +58,24 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
             removableKey = _all.keys.elementAt(0);
           }
           _all.remove(removableKey);
+          if (!_raw.containsKey(key)) _raw.remove(removableKey);
        }
     }
     if (options != null && options.revert && !_all.containsKey(key)) {
-        Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
-        
-        tempMap[key] = new EncapsulatedValue(key, data);
-        tempMap.addAll(_all);
-        
-        _all = tempMap;
+        _all = insertFirstInMap(_all, key, new EncapsulatedValue(key, data)); 
+        _raw = insertFirstInMap(_raw, key, data);
     } else {
       _all[key] = new EncapsulatedValue(key, data);
+      _raw[key] = data;
     }
+  }
+  
+  Map insertFirstInMap(Map map, key, value) {
+    Map tempMap = new Map();
+    
+    tempMap[key] = value;
+    tempMap.addAll(map);
+    return map;
   }
   
   void update(key, value) {
