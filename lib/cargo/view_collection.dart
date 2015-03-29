@@ -22,7 +22,7 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
   /// put the data raw in a map, make the map only available as a getter
-  Map<String, dynamic> _raw = new Map<String, EncapsulatedValue>();
+  Map<String, dynamic> _raw = new Map<String, dynamic>();
   Map<String, dynamic> get data => _raw;
   
   DataChangeListener _cargoDataChange;
