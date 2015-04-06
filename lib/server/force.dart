@@ -25,6 +25,8 @@ class Force extends Object with ServerSendable {
   
   ForceContext _forceContext;
   
+  Duration _keepAliveTime;
+  
   /**
    * The register method provides a way to add objects that contain the [Receiver] annotation, 
    * these methods are then executed when the request value match an incoming message. 
@@ -41,15 +43,10 @@ class Force extends Object with ServerSendable {
   }
   
   /**
-   * Add a keep alive to the Socket lifecycle with the help of the ping pong protocol
+   * Add a keep alive to the Socket lifecycle of a websocket
    */
   void activateKeepAlive({int seconds: 40}) {
-    Duration timeout = new Duration(seconds: seconds);
-    var self = this;
-    new Timer.periodic(timeout, (Timer t) {
-        self.sendPackage(new PingPongPackage(PingPongPackage.PING));
-      });
-    
+    _keepAliveTime = new Duration(seconds: seconds);
     log.info("Keep alive is been activated with a ping pong at ${seconds} seconds.");
   }
    

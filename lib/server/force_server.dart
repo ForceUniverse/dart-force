@@ -6,14 +6,12 @@ class ForceServer extends Force with Serveable {
 
   WebApplication _basicServer;
   
-  bool keepAlive = false;
-  
   ForceServer({host: "127.0.0.1",          
                port: 8080,
                wsPath: "/ws",
                clientFiles: '../build/web/', 
                clientServe: true,
-               this.keepAlive: false,
+               keepAlive: false,
                startPage: 'index.html'}) {
     _basicServer = new WebApplication(host: host,
                                  port: port,
@@ -33,6 +31,8 @@ class ForceServer extends Force with Serveable {
       handle(socket);
     });
     
+    if (keepAlive) _keepAliveTime = new Duration(seconds: 40);
+    
     this.server.use('$wsPath/uuid/', pollingServer.retrieveUuid, method: "GET");
     this.server.use(PollingServer.pollingPath(wsPath), pollingServer.polling, method: "GET");
     this.server.use(PollingServer.pollingPath(wsPath), pollingServer.sendedData, method: "POST");
@@ -49,7 +49,7 @@ class ForceServer extends Force with Serveable {
   }
   
   void _socketsHandler(WebSocket ws, HttpRequest req) {
-      if (this.keepAlive) ws.pingInterval = new Duration(seconds: 45);
+      if (this._keepAliveTime!=null) ws.pingInterval = new Duration(seconds: 45);
       handle(new WebSocketWrapper(ws, req)); 
   } 
   
