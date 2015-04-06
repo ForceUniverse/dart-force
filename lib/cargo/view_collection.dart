@@ -9,7 +9,7 @@ typedef Object deserializeData(Map json);
 * Is a memory wrapper arround cargo, so we can add this to our view!
 * Ideal class to use it in Angular or Polymer.
 */
-class ViewCollection implements Iterable {
+class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
   
   CargoBase cargo;
   DataChangeable _changeable;
@@ -21,12 +21,6 @@ class ViewCollection implements Iterable {
   
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
-  /// put the data raw in a map, make the map only available as a getter
-  Map<String, dynamic> _raw = new Map<String, dynamic>();
-  Map<String, dynamic> get data => _raw;
-  
-  DataChangeListener _cargoDataChange;
-  
   ViewCollection(this._collection, this.cargo, this.options, this._changeable, {this.deserialize}) {
    this.cargo.onAll((DataEvent de) {
      if (de.type==DataType.CHANGED) {
@@ -36,17 +30,12 @@ class ViewCollection implements Iterable {
        }
        
        _addNewValue(de.key, data);
-       if (_cargoDataChange!=null) _cargoDataChange(new DataEvent(de.key, data, de.type));
      }
      if (de.type==DataType.REMOVED) {
        _all.remove(de.key);
-       _raw.remove(de.key);
-       if (_cargoDataChange!=null) _cargoDataChange(de);
      }
    }); 
   }
-  
-  onChange(DataChangeListener cargoDataChange) => this._cargoDataChange = cargoDataChange;
   
   void _addNewValue(key, data) {
     if (options != null && options.hasLimit() && !_all.containsKey(key)) {
@@ -58,24 +47,18 @@ class ViewCollection implements Iterable {
             removableKey = _all.keys.elementAt(0);
           }
           _all.remove(removableKey);
-          if (!_raw.containsKey(key)) _raw.remove(removableKey);
        }
     }
     if (options != null && options.revert && !_all.containsKey(key)) {
-        _all = insertFirstInMap(_all, key, new EncapsulatedValue(key, data)); 
-        _raw = insertFirstInMap(_raw, key, data);
+        Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
+        
+        tempMap[key] = new EncapsulatedValue(key, data);
+        tempMap.addAll(_all);
+        
+        _all = tempMap;
     } else {
       _all[key] = new EncapsulatedValue(key, data);
-      _raw[key] = data;
     }
-  }
-  
-  Map insertFirstInMap(Map map, key, value) {
-    Map tempMap = new Map();
-    
-    tempMap[key] = value;
-    tempMap.addAll(map);
-    return map;
   }
   
   void update(key, value) {
@@ -93,63 +76,7 @@ class ViewCollection implements Iterable {
   }
   
   Iterator get iterator => _all.values.iterator;
-
-  Iterable map(f(EncapsulatedValue element)) => _all.values.map(f);
-    
-  Iterable where(bool test(EncapsulatedValue element)) => _all.values.where(test);
-
-  Iterable expand(Iterable f(EncapsulatedValue element)) => _all.values.expand(f);
-
-  bool contains(Object element) => _all.values.contains(element);
-
-  void forEach(void f(EncapsulatedValue element)) => _all.values.forEach(f);
-
-  EncapsulatedValue reduce(EncapsulatedValue combine(EncapsulatedValue value, EncapsulatedValue element)) => _all.values.reduce(combine);
-    
-  dynamic fold(var initialValue,
-                   dynamic combine(var previousValue, EncapsulatedValue element)) => _all.values.fold(initialValue, combine);
-
-  bool every(bool test(EncapsulatedValue element)) => _all.values.every(test);
-
-  bool any(bool test(EncapsulatedValue element)) => _all.values.any(test);
-
-  List<EncapsulatedValue> toList({ bool growable: true }) => _all.values.toList(growable: growable);
-
-  Set<EncapsulatedValue> toSet() => _all.values.toSet();
-
-  int get length => _all.values.length;
-
-  bool get isEmpty => _all.values.isEmpty;
-
-  bool get isNotEmpty => _all.values.isNotEmpty;
-
-  Iterable<EncapsulatedValue> take(int n) => _all.values.take(n);
-
-  Iterable<EncapsulatedValue> takeWhile(bool test(EncapsulatedValue value)) => _all.values.takeWhile(test);
-
-  Iterable<EncapsulatedValue> skip(int n) => _all.values.skip(n);
-
-  Iterable<EncapsulatedValue> skipWhile(bool test(EncapsulatedValue value)) => _all.values.skipWhile(test);
-    
-  EncapsulatedValue get first => _all.values.first;
-
-  EncapsulatedValue get last => _all.values.last;
-    
-  EncapsulatedValue get single => _all.values.single;
-
-  EncapsulatedValue firstWhere(bool test(EncapsulatedValue element), { EncapsulatedValue orElse() }) => _all.values.firstWhere(test);
-
-  EncapsulatedValue lastWhere(bool test(EncapsulatedValue element), {EncapsulatedValue orElse()}) => _all.values.lastWhere(test);
-
-  EncapsulatedValue singleWhere(bool test(EncapsulatedValue element)) => _all.values.singleWhere(test);
-    
-  EncapsulatedValue elementAt(int index) => _all.values.elementAt(index);
-    
-  String join([String separator = ""]) {
-        StringBuffer buffer = new StringBuffer();
-        buffer.writeAll(this, separator);
-        return buffer.toString();
-    }
+  
 }
 
 class EncapsulatedValue {
