@@ -21,18 +21,25 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
   
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
+  /// Follow changes in view collection
+  DataChangeListener _cargoDataChange;
+  onChange(DataChangeListener cargoDataChange) => this._cargoDataChange = cargoDataChange;
+  
   ViewCollection(this._collection, this.cargo, this.options, this._changeable, {this.deserialize}) {
    this.cargo.onAll((DataEvent de) {
      if (de.type==DataType.CHANGED) {
-       var data = de.data;
-       if (data is Map && deserialize != null) {
-         data = deserialize(data);
-       }
-       
-       _addNewValue(de.key, data);
+         var data = de.data;
+         if (data is Map && deserialize != null) {
+             data = deserialize(data);
+         }
+            
+         _addNewValue(de.key, data);
+         if (_cargoDataChange!=null) _cargoDataChange(new DataEvent(de.key, data, de.type));
      }
      if (de.type==DataType.REMOVED) {
-       _all.remove(de.key);
+         _all.remove(de.key);
+         //_raw.remove(de.key);
+         if (_cargoDataChange!=null) _cargoDataChange(de);
      }
    }); 
   }
