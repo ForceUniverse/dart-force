@@ -49,7 +49,7 @@ class ForceServer extends Force with Serveable {
   }
   
   void _socketsHandler(WebSocket ws, HttpRequest req) {
-      if (this.keepAlive) ws.pingInterval = new Duration(seconds: 50);
+      if (this.keepAlive) ws.pingInterval = new Duration(seconds: 45);
       handle(new WebSocketWrapper(ws, req)); 
   } 
   
