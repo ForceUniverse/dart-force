@@ -33,7 +33,7 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
              data = deserialize(data);
          }
             
-         _addNewValue(de.key, data);
+         _all = _addNewValue(_all, de.key, data);
          if (_cargoDataChange!=null) _cargoDataChange(new DataEvent(de.key, data, de.type));
      }
      if (de.type==DataType.REMOVED) {
@@ -44,28 +44,29 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
    }); 
   }
   
-  void _addNewValue(key, data) {
-    if (options != null && options.hasLimit() && !_all.containsKey(key)) {
-       if (options.limit == _all.length) {
+  Map _addNewValue(Map values, key, data) {
+    if (options != null && options.hasLimit() && !values.containsKey(key)) {
+       if (options.limit == values.length) {
           var removableKey;
           if(options.revert) {
-            removableKey = _all.keys.elementAt(_all.keys.length-1);
+            removableKey = values.keys.elementAt(values.keys.length-1);
           } else {
-            removableKey = _all.keys.elementAt(0);
+            removableKey = values.keys.elementAt(0);
           }
-          _all.remove(removableKey);
+          values.remove(removableKey);
        }
     }
-    if (options != null && options.revert && !_all.containsKey(key)) {
+    if (options != null && options.revert && !values.containsKey(key)) {
         Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
         
-        tempMap[key] = new EncapsulatedValue(key, data);
-        tempMap.addAll(_all);
+        tempMap[key] = data;
+        tempMap.addAll(values);
         
-        _all = tempMap;
+        values = tempMap;
     } else {
-      _all[key] = new EncapsulatedValue(key, data);
+      values[key] = data;
     }
+    return values;
   }
   
   void update(key, value) {
