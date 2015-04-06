@@ -9,7 +9,7 @@ typedef Object deserializeData(Map json);
 * Is a memory wrapper arround cargo, so we can add this to our view!
 * Ideal class to use it in Angular or Polymer.
 */
-class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
+class ViewCollection extends IterableBase<EncapsulatedValue> {
   
   CargoBase cargo;
   DataChangeable _changeable;
