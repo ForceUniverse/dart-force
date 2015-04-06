@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.3 ####
+
+- add onChange listener on viewCollection
+-
+
 #### Pub version 0.6.2+2 ####
 
 - add some logging about the keep alive
