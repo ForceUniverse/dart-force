@@ -38,12 +38,12 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
          }
             
          _all = _addNewValue(_all, de.key, new EncapsulatedValue(de.key, data));
-         // _raw = _addNewValue(_raw, de.key, data);
+         _raw = _addNewValue(_raw, de.key, data);
          if (_cargoDataChange!=null) _cargoDataChange(new DataEvent(de.key, data, de.type));
      }
      if (de.type==DataType.REMOVED) {
          _all.remove(de.key);
-         //_raw.remove(de.key);
+         _raw.remove(de.key);
          if (_cargoDataChange!=null) _cargoDataChange(de);
      }
    }); 
