@@ -21,6 +21,10 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
   
   Map<String, EncapsulatedValue> _all = new Map<String, EncapsulatedValue>();
   
+  /// put the data raw in a map, make the map only available as a getter
+  Map<String, dynamic> _raw = new Map<String, dynamic>();
+  Map<String, dynamic> get data => _raw;
+  
   /// Follow changes in view collection
   DataChangeListener _cargoDataChange;
   onChange(DataChangeListener cargoDataChange) => this._cargoDataChange = cargoDataChange;
@@ -33,7 +37,8 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
              data = deserialize(data);
          }
             
-         _all = _addNewValue(_all, de.key, data);
+         _all = _addNewValue(_all, de.key, new EncapsulatedValue(de.key, data));
+         // _raw = _addNewValue(_raw, de.key, data);
          if (_cargoDataChange!=null) _cargoDataChange(new DataEvent(de.key, data, de.type));
      }
      if (de.type==DataType.REMOVED) {
