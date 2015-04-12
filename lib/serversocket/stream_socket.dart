@@ -15,7 +15,7 @@ class StreamSocket extends ForceSocket {
     
     _messageController = new StreamController<MessageEvent>();
     
-    subscription = this.stream.transform(UTF8.decoder).listen((data) {
+    subscription = this.stream.listen((data) {
       _messageController.add(new MessageEvent(request, data));
     });
     subscription.onDone(() {
