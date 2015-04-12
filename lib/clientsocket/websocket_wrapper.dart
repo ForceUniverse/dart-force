@@ -36,10 +36,17 @@ class WebSocketWrapper extends Socket {
       print("connected!");
       _connectController.add(new ConnectEvent());
       webSocket.onMessage.listen((e) {
-        print("received a new value $e");
+        print("received a new value of _ $e");
         window.console.debug(e);
-        
-        _messageController.add(new SocketEvent(e.data));
+        if (e.data is Blob) {
+          FileReader fileReader = new FileReader();
+          fileReader.onLoadEnd.listen((_) =>
+              _messageController.add(new SocketEvent(fileReader.result)));
+
+          fileReader.readAsText(e.data);
+        } else if (e.data is String) {
+          _messageController.add(new SocketEvent(e.data));
+        }
       });
     }
     

@@ -6,6 +6,7 @@ This file contains highlights of what changes on each version of the force packa
 
 - add onChange listener on viewCollection
 - change logic of keep alives to native keep alive implementation of a websocket
+- add the parsing of a Blob in a websocket that is been send by the server.
 
 #### Pub version 0.6.2+2 ####
 
