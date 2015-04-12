@@ -3,13 +3,16 @@ part of dart_force_server_lib;
 class StreamSocket extends ForceSocket {
   
   Stream stream;
-  StreamSink ioSink;
+  StreamSink sink;
   StreamSubscription subscription;
   StreamController _controller;
   
   bool closed = false;
   
-  StreamSocket(this.stream, this.ioSink) {
+  StreamSocket(stream) {
+    this.stream = stream;
+    this.sink = stream;
+    
     _messageController = new StreamController<MessageEvent>();
     
     subscription = this.stream.transform(UTF8.decoder).listen((data) {
@@ -20,17 +23,17 @@ class StreamSocket extends ForceSocket {
     });
   }
   
-  Future done() => this.ioSink.done;
+  Future done() => this.sink.done;
   
   bool isClosed() {
     return closed;
   }
   
   void close() {
-    ioSink.close();
+    sink.close();
   }
 
   void add(data) {
-    this.ioSink.add(UTF8.encode(data));
+    this.sink.add(UTF8.encode(data));
   }
 }
