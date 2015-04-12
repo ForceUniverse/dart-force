@@ -36,6 +36,9 @@ class WebSocketWrapper extends Socket {
       print("connected!");
       _connectController.add(new ConnectEvent());
       webSocket.onMessage.listen((e) {
+        print("received a new value $e");
+        window.console.debug(e);
+        
         _messageController.add(new SocketEvent(e.data));
       });
     }
