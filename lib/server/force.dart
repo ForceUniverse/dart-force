@@ -43,7 +43,7 @@ class Force extends Object with ServerSendable {
   }
   
   /**
-   * Add a keep alive to the Socket lifecycle of a websocket
+   * Add a keep alive to the Socket lifecycle of a WebSocket
    */
   void activateKeepAlive({int seconds: 40}) {
     _keepAliveTime = new Duration(seconds: seconds);

@@ -3,7 +3,7 @@ part of dart_force_server_lib;
 class StreamSocket extends ForceSocket {
   
   Stream stream;
-  IOSink ioSink;
+  StreamSink ioSink;
   StreamSubscription subscription;
   StreamController _controller;
   
