@@ -42,7 +42,7 @@ class WebSocketWrapper extends Socket {
               _messageController.add(new SocketEvent(fileReader.result)));
 
           fileReader.readAsText(e.data);
-        } else if (e.data is String) {
+        } else {
           _messageController.add(new SocketEvent(e.data));
         }
       });
