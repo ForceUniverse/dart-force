@@ -21,7 +21,9 @@ class PollingSocket extends Socket {
   }
   
   void connect() {
-    HttpRequest.getString('http://$_url/uuid/').then(procces_id);
+    HttpRequest.getString('http://$_url/uuid/').then(procces_id).catchError((error) {
+      print('no support for long polling ... available on the server');
+    });
   }
   
   void procces_id(String value) {
