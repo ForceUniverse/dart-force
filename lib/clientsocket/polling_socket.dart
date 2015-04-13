@@ -39,7 +39,9 @@ class PollingSocket extends Socket {
   void polling() {
     count++;
     print('polling to ... http://$_url/polling/?pid=$_uuid&count=$count');
-    HttpRequest.getString('http://$_url/polling/?pid=$_uuid&count=$count').then(processString);
+    HttpRequest.getString('http://$_url/polling/?pid=$_uuid&count=$count').then(processString).catchError((error) {
+      print('no support for long polling at this moment ... problems with the server???');
+    });
   }
   
   void processString(String values) {
@@ -58,14 +60,7 @@ class PollingSocket extends Socket {
     new Timer(_heartbeat, polling);
   }
   
-  String _encodeMap(Map data) {
-    return data.keys.map((k) {
-      return '${Uri.encodeComponent(k)}=${Uri.encodeComponent(data[k])}';
-    }).join('&');
-  }
-  
   void send(data) {
-    // var encodedData = _encodeMap(data);
     if (_uuid!=null) {
       var package = JSON.encode({
                      "pid" : _uuid,
