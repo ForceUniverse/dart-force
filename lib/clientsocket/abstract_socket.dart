@@ -29,7 +29,6 @@ abstract class Socket {
   Stream<ConnectEvent> _onConnecting;
   Stream<ConnectEvent> _onDisconnecting;
 
-  
   void connect();
   
   void send(data);
