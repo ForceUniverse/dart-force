@@ -6,6 +6,7 @@ This file contains highlights of what changes on each version of the force packa
 
 - add the parsing of a Blob in a websocket that is been send by the server.
 - clean up on the long polling implementation
+- change the implementation of StreamSocket to work well with shelf_web_socket
 
 #### Pub version 0.6.3 ####
 
