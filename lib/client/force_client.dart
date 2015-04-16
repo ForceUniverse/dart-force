@@ -6,8 +6,6 @@ class ForceClient extends Object with ClientSendable {
   String wsPath;
  
   ForceClientContext clientContext;
-  
-  var _profileInfo = {};
 
   ForceClient({String wsPath: "/ws", String url: null, String host: null, int port: null, int heartbeat: 500, bool usePolling: false}) {
     print("create a forceclient");

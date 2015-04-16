@@ -9,17 +9,28 @@ class StreamSocket extends ForceSocket {
   
   bool closed = false;
   
+  StreamSocket.from(StreamController streamController) {
+    this.stream = streamController.stream;
+    this.sink = streamController;
+    
+    _init();
+  }
+  
   StreamSocket(stream) {
     this.stream = stream;
     this.sink = stream;
     
+    _init();
+  }
+  
+  void _init() {
     _messageController = new StreamController<MessageEvent>();
-    
+        
     subscription = this.stream.listen((data) {
-      _messageController.add(new MessageEvent(request, data));
+       _messageController.add(new MessageEvent(request, data));
     });
     subscription.onDone(() {
-      closed = true;
+       closed = true;
     });
   }
   
@@ -34,6 +45,6 @@ class StreamSocket extends ForceSocket {
   }
 
   void add(data) {
-    this.sink.add(UTF8.encode(data));
+    this.sink.add(data);
   }
 }

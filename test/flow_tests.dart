@@ -11,10 +11,8 @@ void main() {
   
   test('force basic messageDispatcher test', () {  
     Force force = new Force();
-    var sendingPackage =  {'request': request,
-                           'type': { 'name' : 'normal'},
-                           'profile': {'name' : profileName},
-                           'data': { 'key' : 'value', 'key2' : 'value2' }};
+
+    var sendingPackage = new MessagePackage(request, new MessageType(MessageType.NORMAL), { 'key' : 'value', 'key2' : 'value2' }, {'name' : profileName});
 
     force.on(request, expectAsync((e, sendable) {
         expect(e.profile['name'], profileName);
@@ -22,9 +20,10 @@ void main() {
         expect(e.json['key2'], 'value2');
     }));
     
-    StreamController controller = new StreamController.broadcast();
-    // StreamSocket streamSocket = new StreamSocket(controller.stream);
-    // streamSocket.add(sendingPackage);
+    StreamSocket streamSocket = new StreamSocket.from(new StreamController.broadcast());
+    streamSocket.add(JSON.encode(sendingPackage));
+    
+    force.handle(streamSocket);
   });
   
   
