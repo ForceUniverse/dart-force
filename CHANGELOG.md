@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.3+3 ####
+
+- improve testing and code quality
+
 #### Pub version 0.6.3+1 & 0.6.3+2 ####
 
 - add the parsing of a Blob in a websocket that is been send by the server.
