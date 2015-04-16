@@ -20,7 +20,7 @@ void main() {
         expect(e.json['key2'], 'value2');
     }));
     
-    StreamSocket streamSocket = new StreamSocket.from(new StreamController.broadcast());
+    StreamSocket streamSocket = new StreamSocket.fromController(new StreamController.broadcast());
     streamSocket.add(JSON.encode(sendingPackage));
     
     force.handle(streamSocket);

@@ -9,7 +9,7 @@ class StreamSocket extends ForceSocket {
   
   bool closed = false;
   
-  StreamSocket.from(StreamController streamController) {
+  StreamSocket.fromController(StreamController streamController) {
     this.stream = streamController.stream;
     this.sink = streamController;
     
