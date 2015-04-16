@@ -9,8 +9,6 @@ class ForceClient extends Object with ClientSendable {
   int port;
   String url;
   
-  var _profileInfo = {};
-  
   ForceClient({this.host: '127.0.0.1', this.port: 4041, this.url: null}) {
     clientContext = new ForceClientContext(this);  
     

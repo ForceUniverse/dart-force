@@ -6,7 +6,7 @@ abstract class Messenger {
   void send(sendingPackage);
   
   void offline(sendingPackage) {
-      print('WebSocket not connected, message $sendingPackage not sent');
+      print('Socket not connected, message $sendingPackage not sent');
       notSendedPackages.add(sendingPackage);
   }
   
