@@ -5,6 +5,8 @@ This file contains highlights of what changes on each version of the force packa
 #### Pub version 0.6.3+3 ####
 
 - improve testing and code quality
+- update uuid to 0.5.0
+- fix issue with posting from IE9 to the polling server
 
 #### Pub version 0.6.3+1 & 0.6.3+2 ####
 
