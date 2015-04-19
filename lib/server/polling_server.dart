@@ -36,21 +36,16 @@ class PollingServer {
         pollingSocket.messages.clear();
   }
   
-  Future sendedData(ForceRequest req, Model model) {
-    req.getPostData().then((package) {
-      var pid = package["pid"];
+  Future sendedData(ForceRequest req, Model model) async {
+    var package = await req.getPostData();
+    var pid = package["pid"];
       
-      PollingSocket pollingSocket = retrieveSocket(pid, req.request);
-      if (pollingSocket != null) {
+    PollingSocket pollingSocket = retrieveSocket(pid, req.request);
+    if (pollingSocket != null) {
         pollingSocket.sendedData(package["data"]);
-      }
-      
-      req.async({"status" : "ok"});
-    }).catchError((err) {
-      print("$err");
-    });;
+    }
     
-    return req.asyncFuture;
+    return {"status" : "ok"};
   }
   
   PollingSocket retrieveSocket(pid, HttpRequest req) {
