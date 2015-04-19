@@ -2,20 +2,20 @@ import 'dart:html';
 import 'package:force/force_browser.dart';
 
 ForceClient fc;
-void main() {
+
+main() async {
   fc = new ForceClient();
   fc.connect();
   
-  fc.onConnected.listen((e) {
+  await fc.onConnected;
   
-    querySelector("#btn")
+  querySelector("#btn")
         ..text = "GO"
         ..onClick.listen(broadcast);
     
     fc.on("update", (fme, sender) {
       querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>");
     });
-  });
 }
 
 void  broadcast(MouseEvent event) {
