@@ -50,6 +50,7 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
   }
   
   Map _addNewValue(Map values, key, data) {
+    // check on the limit option and limit the map
     if (options != null && options.hasLimit() && !values.containsKey(key)) {
        if (options.limit == values.length) {
           var removableKey;
@@ -61,6 +62,7 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
           values.remove(removableKey);
        }
     }
+    // if we need to revert our results 
     if (options != null && options.revert && !values.containsKey(key)) {
         Map tempMap = new Map();
         
