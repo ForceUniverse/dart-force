@@ -62,7 +62,7 @@ class ViewCollection extends Object with IterableMixin<EncapsulatedValue> {
        }
     }
     if (options != null && options.revert && !values.containsKey(key)) {
-        Map<String, EncapsulatedValue> tempMap = new Map<String, EncapsulatedValue>();
+        Map tempMap = new Map();
         
         tempMap[key] = data;
         tempMap.addAll(values);

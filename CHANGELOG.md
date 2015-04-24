@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.3+4 ####
+
+- Fix a bug in view_collection.dart on the revert flow
+
 #### Pub version 0.6.3+3 ####
 
 - improve testing and code quality
