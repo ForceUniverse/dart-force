@@ -61,26 +61,30 @@ abstract class ProtocolDispatch<T> {
  */
 class ProtocolDispatchers {
   
-  List<Protocol> protocols = new List<Protocol>();
+  List<Protocol> _protocols = new List<Protocol>();
   
   List convertPackages(data, {wsId: "-"}) {
     List packages = new List();
-    for (var protocol in protocols) {
+    for (var protocol in _protocols) {
          packages.addAll(protocol.convertPackages(data, wsId: wsId));
     }
     return packages;
   }
   
   void dispatch_raw(data, {wsId: "-"}) {
-      for (var protocol in protocols) {
+      for (var protocol in _protocols) {
         protocol.dispatchRaw(data, wsId: wsId);
       }
   }
   
   void dispatch(data) {
-    for (var protocol in protocols) {
+    for (var protocol in _protocols) {
       protocol.dispatch(data);
     }
+  }
+  
+  void addProtocol(Protocol protocol) {
+      _protocols.add(protocol);
   }
   
 }

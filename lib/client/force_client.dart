@@ -43,6 +43,10 @@ class ForceClient extends Object with ClientSendable {
    });
   }
   
+  void addProtocol(Protocol protocol) {
+    clientContext.protocolDispatchers.addProtocol(protocol);
+  }
+  
   void on(String request, MessageReceiver forceMessageController) {
     clientContext.on(request, forceMessageController);
   }

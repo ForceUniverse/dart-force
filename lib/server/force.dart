@@ -237,6 +237,10 @@ class Force extends Object with ServerSendable {
       connector.complete();
     });
   }
+  
+  void addProtocol(Protocol protocol) {
+    _lazyContext().protocolDispatchers().addProtocol(protocol);
+  }
     
   void _checkProfiles(e, sendable) {
         if (e.profile != null) {

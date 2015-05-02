@@ -20,6 +20,9 @@ class ForceClient extends Object with ClientSendable {
   ViewCollection register(String collection, CargoBase cargo, {Map params}) 
                           => clientContext.register(collection, cargo, params: params);
     
+  void addProtocol(Protocol protocol) {
+    clientContext.protocolDispatchers.addProtocol(protocol);
+  }
   
   Future connect() {
     Completer completer = new Completer();
