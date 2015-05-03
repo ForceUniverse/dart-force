@@ -23,9 +23,9 @@ class ForceClientContext {
       ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
       protocolDispatchers.addProtocol(forceCargoProtocol);
       // add Ping Pong
-      PingPongDispatcher pingpongDispatcher = new PingPongDispatcher(this.clientSendable);
+      /*PingPongDispatcher pingpongDispatcher = new PingPongDispatcher(this.clientSendable);
       PingPongProtocol pingPongProtocol = new PingPongProtocol(pingpongDispatcher);
-      protocolDispatchers.addProtocol(pingPongProtocol);
+      protocolDispatchers.addProtocol(pingPongProtocol);*/
   }
     
   Stream<MessagePackage> get onMessage => _forceMessageProtocol.onMessage;
