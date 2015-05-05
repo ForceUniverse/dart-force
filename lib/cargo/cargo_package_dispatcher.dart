@@ -6,7 +6,7 @@ typedef ValidateCargoPackage(CargoPackage fcp, Sender sender);
  * Dispatch all the cargo packages to the correct methods in the cargo holder class
  * Before dispatching it he will execute the validator method corresponding a collection 
  */
-class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
+class CargoPackageDispatcher extends ProtocolDispatch<CargoPackage> {
   
   CargoHolder cargoHolder;
   
@@ -22,7 +22,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
   /**
    * Dispatch a CargoPackage
    */
-  void dispatch(CargoPackage fcp, Sendable sendable) {
+  void dispatch(CargoPackage fcp) {
     var collection = fcp.collection;
     
     // before dispatch evaluate ...

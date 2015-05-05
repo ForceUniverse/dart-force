@@ -2,7 +2,7 @@ part of dart_force_common_lib;
 
 typedef MessageReceiver(MessagePackage fme, Sender sender);
 
-class ForceMessageDispatcher implements ProtocolDispatch<MessagePackage> {
+class ForceMessageDispatcher extends ProtocolDispatch<MessagePackage> {
   
   List<MessageReceiver> beforeMapping = new List<MessageReceiver>();
   Map<String, MessageReceiver> mapping = new Map<String, MessageReceiver>();
@@ -17,7 +17,7 @@ class ForceMessageDispatcher implements ProtocolDispatch<MessagePackage> {
     mapping[request] = messageController;
   }
   
-  void dispatch(MessagePackage fme, Sendable sendable) {
+  void dispatch(MessagePackage fme) {
     var key = fme.request;
     
     for (MessageReceiver messageReceiver in beforeMapping) {
