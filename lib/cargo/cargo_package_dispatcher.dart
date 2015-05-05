@@ -9,11 +9,10 @@ typedef ValidateCargoPackage(CargoPackage fcp, Sender sender);
 class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
   
   CargoHolder cargoHolder;
-  Sendable sendable;
   
   Map<String, ValidateCargoPackage> _validators = new Map<String, ValidateCargoPackage>();
   
-  CargoPackageDispatcher(this.cargoHolder, this.sendable);
+  CargoPackageDispatcher(this.cargoHolder);
   
   void publish(String collection, CargoBase cargo, {ValidateCargoPackage filter}) {
     _validators[collection] = filter;
@@ -23,7 +22,7 @@ class CargoPackageDispatcher implements ProtocolDispatch<CargoPackage> {
   /**
    * Dispatch a CargoPackage
    */
-  void dispatch(CargoPackage fcp) {
+  void dispatch(CargoPackage fcp, Sendable sendable) {
     var collection = fcp.collection;
     
     // before dispatch evaluate ...

@@ -13,7 +13,7 @@ class ForceContext {
   
   ProtocolDispatchers protocolDispatchers() {
       if (_protocolDispatchers == null) {
-        _protocolDispatchers = new ProtocolDispatchers();
+        _protocolDispatchers = new ProtocolDispatchers(this.force);
         ForceMessageProtocol forceMessageProtocol = new ForceMessageProtocol(messageDispatch());
         _protocolDispatchers.addProtocol(forceMessageProtocol);
         
@@ -26,7 +26,7 @@ class ForceContext {
   
   ForceMessageDispatcher messageDispatch() {
       if (_forceMessageDispatcher == null) {
-        _forceMessageDispatcher = new ForceMessageDispatcher(this.force);
+        _forceMessageDispatcher = new ForceMessageDispatcher();
       }
       return _forceMessageDispatcher;
   }
@@ -40,7 +40,7 @@ class ForceContext {
     
   CargoPackageDispatcher cargoPacakgeDispatcher() {
       if (_cargoPackageDispatcher==null) {
-          _cargoPackageDispatcher = new CargoPackageDispatcher(_innerCargoHolder(), this.force);
+          _cargoPackageDispatcher = new CargoPackageDispatcher(_innerCargoHolder());
       }
       return _cargoPackageDispatcher;
   }

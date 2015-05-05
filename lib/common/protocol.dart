@@ -7,6 +7,7 @@ part of dart_force_common_lib;
 abstract class Protocol<T> {
   
   ProtocolDispatch<T> dispatcher;
+  Sendable            sendable;
   
   T onConvert(data, {wsId: "-"});
   
@@ -25,14 +26,14 @@ abstract class Protocol<T> {
     if (shouldDispatch(data)) {
       List<String> data_lines = removeEmptyLines(data.split("\n"));
       for (var line in data_lines) {
-           dispatcher.dispatch(onConvert(line, wsId: wsId));
+           dispatcher.dispatch(onConvert(line, wsId: wsId), sendable);
       }
     }
   }
   
   void dispatch(data) {
     if (data is T) {
-      dispatcher.dispatch(data);
+      dispatcher.dispatch(data, sendable);
     }
   }
   
@@ -52,7 +53,7 @@ abstract class Protocol<T> {
  */
 abstract class ProtocolDispatch<T> {
   
-  void dispatch(T protocolMessages);
+  void dispatch(T protocolMessages, Sendable sendable);
   
 }
 
@@ -60,6 +61,10 @@ abstract class ProtocolDispatch<T> {
  * It analyzes all the protocols and then dispatch it on there working half.
  */
 class ProtocolDispatchers {
+  
+  Sendable sendable;
+  
+  ProtocolDispatchers(this.sendable);
   
   List<Protocol> _protocols = new List<Protocol>();
   
@@ -84,6 +89,7 @@ class ProtocolDispatchers {
   }
   
   void addProtocol(Protocol protocol) {
+      protocol.sendable = sendable;
       _protocols.add(protocol);
   }
   

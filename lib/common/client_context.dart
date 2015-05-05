@@ -2,7 +2,7 @@ part of dart_force_common_lib;
 
 class ForceClientContext {
   
-  ProtocolDispatchers protocolDispatchers = new ProtocolDispatchers();
+  ProtocolDispatchers protocolDispatchers;
   CargoHolder _cargoHolder;
   ForceMessageDispatcher _forceMessageDispatcher;
   ForceMessageProtocol _forceMessageProtocol;
@@ -10,16 +10,17 @@ class ForceClientContext {
   ClientSendable clientSendable;
   
   ForceClientContext(this.clientSendable) {
-    _setupProtocols();
+    _setupProtocols(); 
   }
   
   void _setupProtocols() {
+      protocolDispatchers = new ProtocolDispatchers(this.clientSendable);
       _cargoHolder = new CargoHolderClient(this.clientSendable);
-      _forceMessageDispatcher = new ForceMessageDispatcher(this.clientSendable);
+      _forceMessageDispatcher = new ForceMessageDispatcher();
       _forceMessageProtocol = new ForceMessageProtocol(_forceMessageDispatcher);
       protocolDispatchers.addProtocol(_forceMessageProtocol);
       // add Cargo
-      CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_cargoHolder, this.clientSendable);
+      CargoPackageDispatcher cargoPacakgeDispatcher = new CargoPackageDispatcher(_cargoHolder);
       ForceCargoProtocol forceCargoProtocol = new ForceCargoProtocol(cargoPacakgeDispatcher);
       protocolDispatchers.addProtocol(forceCargoProtocol);
   }

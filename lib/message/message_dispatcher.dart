@@ -4,12 +4,10 @@ typedef MessageReceiver(MessagePackage fme, Sender sender);
 
 class ForceMessageDispatcher implements ProtocolDispatch<MessagePackage> {
   
-  Sendable sendable;
-  
   List<MessageReceiver> beforeMapping = new List<MessageReceiver>();
   Map<String, MessageReceiver> mapping = new Map<String, MessageReceiver>();
   
-  ForceMessageDispatcher(this.sendable);
+  ForceMessageDispatcher();
   
   void before(MessageReceiver messageController) {
     beforeMapping.add(messageController);
@@ -19,17 +17,17 @@ class ForceMessageDispatcher implements ProtocolDispatch<MessagePackage> {
     mapping[request] = messageController;
   }
   
-  void dispatch(MessagePackage fme) {
+  void dispatch(MessagePackage fme, Sendable sendable) {
     var key = fme.request;
     
     for (MessageReceiver messageReceiver in beforeMapping) {
-      _executeMessageReceiver(fme, messageReceiver);
+      _executeMessageReceiver(fme, messageReceiver, sendable);
     }
     if (fme.messageType.type == MessageType.NORMAL) {
-      _executeMessageReceiver(fme, mapping[key]);
+      _executeMessageReceiver(fme, mapping[key], sendable);
     } else if (fme.messageType.type == MessageType.BROADCAST) {
       sendable.send(fme.request, fme.json);  
-      _executeMessageReceiver(fme, mapping[key]);
+      _executeMessageReceiver(fme, mapping[key], sendable);
     } else {
       // DIRECTLY SEND THIS TO THE CORRECT CLIENT
       if (fme.messageType.type == MessageType.ID) {
@@ -42,7 +40,7 @@ class ForceMessageDispatcher implements ProtocolDispatch<MessagePackage> {
     }
   }
   
-  void _executeMessageReceiver(MessagePackage fme, MessageReceiver messageReceiver) {
+  void _executeMessageReceiver(MessagePackage fme, MessageReceiver messageReceiver, Sendable sendable) {
     if (messageReceiver!=null) {
       messageReceiver(fme, new Sender(sendable, fme.wsId));
     }
