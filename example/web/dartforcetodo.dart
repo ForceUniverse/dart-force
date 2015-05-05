@@ -9,6 +9,8 @@ main() async {
   
   await fc.onConnected;
   
+  querySelector("#input").onKeyPress.listen(handleKeyEvent); 
+  
   querySelector("#btn")
         ..text = "GO"
         ..onClick.listen(broadcast);
@@ -18,12 +20,21 @@ main() async {
     });
 }
 
+void handleKeyEvent(KeyboardEvent event) {
+  KeyEvent keyEvent = new KeyEvent.wrap(event);
+  if (keyEvent.keyCode == KeyCode.ENTER) {
+      handleInput();       
+  }   
+}
+
 void  broadcast(MouseEvent event) {
+    handleInput();
+}
+
+void handleInput() {
   InputElement input = querySelector("#input");
-  
-  var data = {"todo": input.value};
-  
-  fc.send("add", data);
-  
+    
+  fc.send("add", {"todo": input.value});
+    
   input.value = "";
 }
