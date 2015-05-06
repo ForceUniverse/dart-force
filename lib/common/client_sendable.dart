@@ -1,6 +1,6 @@
 part of dart_force_common_lib;
 
-class ClientSendable implements Sendable, DataChangeable, SendablePackage {
+class ClientSendable implements Sendable, DataChangeable {
   
   Messenger messenger;
  

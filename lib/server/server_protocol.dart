@@ -1,6 +1,6 @@
 part of dart_force_server_lib;
 
-class ServerSendable implements Sendable, DataChangeable, SendablePackage {
+class ServerSendable implements Sendable, DataChangeable {
 
     final Logger log = new Logger('Sendable');
   
