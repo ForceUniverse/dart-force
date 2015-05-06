@@ -1,6 +1,6 @@
 part of dart_force_common_lib;
 
-class Sender implements Sendable {
+class Sender {
   
   Sendable sendable;
   String _reply_id;

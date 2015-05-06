@@ -1,6 +1,6 @@
 part of dart_force_common_lib;
 
-abstract class Sendable {
+abstract class Sendable extends SendablePackage {
 
   void send(request, data);
   
