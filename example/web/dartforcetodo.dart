@@ -15,9 +15,8 @@ main() async {
         ..text = "GO"
         ..onClick.listen(broadcast);
     
-    fc.on("update", (fme, sender) {
-      querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>");
-    });
+    fc.on("update", (fme, sender) =>
+      querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>"));
 }
 
 void handleKeyEvent(KeyboardEvent event) {
