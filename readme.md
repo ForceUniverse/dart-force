@@ -6,16 +6,6 @@ A realtime web framework for dart.
 
 With this framework communication between client and server becomes easy, without any boilerplate code.
 
-Look at our wiki for more [info](https://github.com/ForceUniverse/dart-force/wiki) or this info below.
-
-
-##### Dart Force mvc access #####
-
-You have access to the force mvc webserver if you do the following:
-
-	forceServer.server.on(url, controllerHandler, method: 'GET');
-
-
 #### Introduction ####
 
 Dart Force is a Realtime web framework for [Dart](http://www.dartlang.org). We will make it easy for you to create realtime applications with it in [Dart](http://www.dartlang.org), like a chat, interactive dashboard, multiplayer games, ...
@@ -69,6 +59,12 @@ fc.send("add", data);
 
 It is a little bit inspired by [socket.io](http://socket.io) for the communication flow.
 
+##### Dart Force mvc access #####
+
+You have access to the force mvc webserver if you do the following:
+
+  forceServer.server.on(url, controllerHandler, method: 'GET');
+
 #### Quick starter guide ####
 
 This guide can help you to get you started! [Getting started](https://github.com/ForceUniverse/dart-force/wiki/Getting-started)
@@ -85,6 +81,12 @@ This guide can help you to get you started! [Getting started](https://github.com
     * [Custom protocols](https://github.com/ForceUniverse/dart-force/wiki/Custom-protocols)
     * [Clientside DB API](https://github.com/ForceUniverse/dart-force/wiki/Clientside-DB-API)
 	  * [Server 2 Server Communication](https://github.com/ForceUniverse/dart-force/wiki/server-2-server) 
+	  
+Look at our wiki for more [info](https://github.com/ForceUniverse/dart-force/wiki) or this info below.
+
+#### Examples ####
+
+You can find a lot of examples in the force examples [organisation](https://github.com/ForceExamples)
 
 #### Development trick ####
 
