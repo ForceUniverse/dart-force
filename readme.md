@@ -21,14 +21,14 @@ import "package:force/force_serverside.dart";
 
 ForceServer fs = new ForceServer();
 
-main() {
+main() async{
   fs.server.use("/", (req, model) => "dartforcetodo");
-
-  fs.start().then((_) {
-    fs.on("add", (vme, sender) {
-      fs.send("update", vme.json);
-    });
+  await fs.start();
+  
+  fs.on("add", (vme, sender) {
+     fs.send("update", vme.json);
   });
+  
 }
 ```
 
@@ -62,9 +62,9 @@ It is a little bit inspired by [socket.io](http://socket.io) for the communicati
 ##### Dart Force mvc access #####
 
 You have access to the force mvc webserver if you do the following:
-
+```dart
   forceServer.server.on(url, controllerHandler, method: 'GET');
-
+```
 #### Quick starter guide ####
 
 This guide can help you to get you started! [Getting started](https://github.com/ForceUniverse/dart-force/wiki/Getting-started)
@@ -78,9 +78,9 @@ This guide can help you to get you started! [Getting started](https://github.com
     * [Authentication](https://github.com/ForceUniverse/dart-force/wiki/Authentication)
     * [Google AppEngine](https://github.com/ForceUniverse/dart-force/wiki/Google-AppEngine)
     * [Connectors](https://github.com/ForceUniverse/dart-force/wiki/Connectors)
+    	* [Server 2 Server Communication](https://github.com/ForceUniverse/dart-force/wiki/server-2-server) 
     * [Custom protocols](https://github.com/ForceUniverse/dart-force/wiki/Custom-protocols)
     * [Clientside DB API](https://github.com/ForceUniverse/dart-force/wiki/Clientside-DB-API)
-	  * [Server 2 Server Communication](https://github.com/ForceUniverse/dart-force/wiki/server-2-server) 
 	  
 Look at our wiki for more [info](https://github.com/ForceUniverse/dart-force/wiki) or this info below.
 
