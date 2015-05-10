@@ -91,6 +91,7 @@ You can find a lot of examples in the force examples [organisation](https://gith
 Links to some examples that I made with this framework.
 
 [chat](http://forcechat.herokuapp.com/) - [source code](https://github.com/ForceExamples/dart-force-chat-example)
+
 [polymer example](http://polymerforce.herokuapp.com) - [source code](https://github.com/jorishermans/dart-force-polymer-example)
 
 #### Development trick ####
