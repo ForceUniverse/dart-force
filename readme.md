@@ -88,6 +88,11 @@ Look at our wiki for more [info](https://github.com/ForceUniverse/dart-force/wik
 
 You can find a lot of examples in the force examples [organisation](https://github.com/ForceExamples)
 
+Links to some examples that I made with this framework.
+
+[chat](http://forcechat.herokuapp.com/) - [source code](https://github.com/ForceExamples/dart-force-chat-example)
+[polymer example](http://polymerforce.herokuapp.com) - [source code](https://github.com/jorishermans/dart-force-polymer-example)
+
 #### Development trick ####
 
 Following the next steps will make it easier for you to develop, this allows you to adapt clientside files and immidiatly see results without doing a pub build.
@@ -121,11 +126,3 @@ Screencast todo tutorial about the dart force realtime functionality on [youtube
 #### Join our discussion group ####
 
 [Google group](https://groups.google.com/forum/#!forum/dart-force)
-
-#### examples ####
-
-Links to some examples that I made with this framework.
-
-[chat](http://forcechat.herokuapp.com/) - [source code](https://github.com/jorishermans/dart-force-chat-example)
-
-[polymer example](http://polymerforce.herokuapp.com) - [source code](https://github.com/jorishermans/dart-force-polymer-example)
