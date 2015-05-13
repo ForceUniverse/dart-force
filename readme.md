@@ -68,6 +68,17 @@ You have access to the force mvc webserver if you do the following:
 
 or just create a controller class. For more info go to the project page of [force mvc](https://github.com/ForceUniverse/dart-force/wiki/ForceMVC%3A-Serverside-routing)
 
+#### Shelf integration ####
+
+You can very easily use the power of Force into the shelf stack by using shelf_web_socket package and then use the following code, so that force can interpret the websocket stream of shelf.
+
+```dart
+   Force force = new Force();
+   var _handlerws = webSocketHandler((webSocket) => force.handle(new StreamSocket(webSocket)));
+```
+
+More info on the [wiki page](https://github.com/ForceUniverse/dart-force/wiki/Shelf)
+
 #### Quick starter guide ####
 
 This guide can help you to get you started! [Getting started](https://github.com/ForceUniverse/dart-force/wiki/Getting-started)
