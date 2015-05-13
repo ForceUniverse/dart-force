@@ -59,12 +59,15 @@ fc.send("add", data);
 
 It is a little bit inspired by [socket.io](http://socket.io) for the communication flow.
 
-##### Dart Force mvc access #####
+##### Dart Force mvc access (routing) #####
 
 You have access to the force mvc webserver if you do the following:
 ```dart
   forceServer.server.on(url, controllerHandler, method: 'GET');
 ```
+
+or just create a controller class. For more info go to the project page of [force mvc](https://github.com/ForceUniverse/dart-force/wiki/ForceMVC%3A-Serverside-routing)
+
 #### Quick starter guide ####
 
 This guide can help you to get you started! [Getting started](https://github.com/ForceUniverse/dart-force/wiki/Getting-started)
