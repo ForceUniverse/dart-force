@@ -5,4 +5,5 @@ packages
 *.js
 pubspec.lock
 .idea
+.pub
 build
