@@ -14,10 +14,10 @@ class WebSocketWrapper extends Socket {
       _messageController = new StreamController<SocketEvent>();
     }
     
-    void connect() {
+    Future connect() async {
       _connectPending = false;
       //print("try to connect to this url -> $_url");
-      webSocket = new WebSocket('ws://$_url');
+      webSocket = new WebSocket('ws://$_url?t=${_timeStamp()}');
       webSocket.onOpen.first.then((_) {
         _onConnected();
         webSocket.onClose.first.then((_) {
@@ -60,7 +60,7 @@ class WebSocketWrapper extends Socket {
       webSocket.send(data);
     }
     
-    bool isOpen() {
-      return webSocket.readyState == WebSocket.OPEN;
-    }
+    bool isOpen() => webSocket.readyState == WebSocket.OPEN;
+    
+    _timeStamp() => new DateTime.now().millisecondsSinceEpoch;
 }
