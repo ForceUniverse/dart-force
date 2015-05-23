@@ -7,7 +7,6 @@ class BrowserMessenger extends Messenger {
   
   void send(sendingPackage) {
     if (socket != null && socket.isOpen()) {
-        print('send package to the server $sendingPackage');
         socket.send(JSON.encode(sendingPackage));
     } else {
         this.offline(sendingPackage);
