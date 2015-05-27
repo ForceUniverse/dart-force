@@ -1,9 +1,7 @@
 part of dart_force_server_lib;
 
-class ForceClient extends Object with ClientSendable {
+class ForceClient extends BaseForceClient with ClientSendable {
   ForceSocket socket;
-  
-  ForceClientContext clientContext;
   
   String host;
   int port;
@@ -13,15 +11,6 @@ class ForceClient extends Object with ClientSendable {
     clientContext = new ForceClientContext(this);  
     
     this.messenger = new ServerMessenger(socket);
-  }
-  
-  Stream<MessagePackage> get onMessage => clientContext.onMessage;
-    
-  ViewCollection register(String collection, CargoBase cargo, {Map params}) 
-                          => clientContext.register(collection, cargo, params: params);
-    
-  void addProtocol(Protocol protocol) {
-    clientContext.protocolDispatchers.addProtocol(protocol);
   }
   
   Future connect() {
@@ -37,10 +26,6 @@ class ForceClient extends Object with ClientSendable {
      if (!completer.isCompleted) completer.complete();
    });
    return completer.future;
-  }
-  
-  void on(String request, MessageReceiver forceMessageController) {
-      clientContext.on(request, forceMessageController);
   }
   
 }

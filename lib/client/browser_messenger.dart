@@ -13,5 +13,4 @@ class BrowserMessenger extends Messenger {
     }
   }
   
-
 }

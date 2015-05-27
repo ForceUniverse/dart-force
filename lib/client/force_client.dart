@@ -1,11 +1,9 @@
 part of dart_force_client_lib;
 
-class ForceClient extends Object with ClientSendable {
+class ForceClient extends BaseForceClient with ClientSendable {
   Socket socket;
   
   String wsPath;
- 
-  ForceClientContext clientContext;
 
   ForceClient({String wsPath: "/ws", String url: null, String host: null, int port: null, int heartbeat: 500, bool usePolling: false}) {
     print("create a forceclient");
@@ -31,24 +29,11 @@ class ForceClient extends Object with ClientSendable {
     });
   }
   
-  Stream<MessagePackage> get onMessage => clientContext.onMessage;
-  
-  ViewCollection register(String collection, CargoBase cargo, {Map params, Options options, deserializeData deserialize}) 
-                          => clientContext.register(collection, cargo, params: params, options: options, deserialize: deserialize);
-  
   void connect() {
    this.socket.connect();
    this.socket.onMessage.listen((e) {
      clientContext.protocolDispatchers.dispatch_raw(e.data);
    });
-  }
-  
-  void addProtocol(Protocol protocol) {
-    clientContext.protocolDispatchers.addProtocol(protocol);
-  }
-  
-  void on(String request, MessageReceiver forceMessageController) {
-    clientContext.on(request, forceMessageController);
   }
 
   dynamic generateId() {

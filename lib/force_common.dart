@@ -23,6 +23,7 @@ part 'message/messages_construct_helper.dart';
 part 'common/protocol.dart';
 part 'common/package.dart';
 part 'common/client_context.dart';
+part 'common/base_force_client.dart';
 
 part 'cargo/cargo_package_dispatcher.dart';
 part 'cargo/cargo_protocol.dart';
