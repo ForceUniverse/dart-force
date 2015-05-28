@@ -14,7 +14,7 @@ class WebSocketWrapper extends Socket {
       _messageController = new StreamController<SocketEvent>();
     }
     
-    Future connect() async {
+    void connect() {
       _connectPending = false;
       //print("try to connect to this url -> $_url");
       webSocket = new WebSocket('ws://$_url?t=${_timeStamp()}');

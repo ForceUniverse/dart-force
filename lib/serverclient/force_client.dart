@@ -13,19 +13,14 @@ class ForceClient extends BaseForceClient with ClientSendable {
     this.messenger = new ServerMessenger(socket);
   }
   
-  Future connect() {
-    Completer completer = new Completer();
-    Socket.connect(this.host, this.port).then((Socket serverSocket) {
+  connect() async {
+     Socket serverSocket = await Socket.connect(this.host, this.port);
      this.socket = new ServerSocketWrapper(serverSocket);
      this.messenger = new ServerMessenger(socket);
      
      socket.onMessage.listen((e) {
        clientContext.protocolDispatchers.dispatch_raw(e.data);
-     });
-     
-     if (!completer.isCompleted) completer.complete();
-   });
-   return completer.future;
+     });   
   }
   
 }
