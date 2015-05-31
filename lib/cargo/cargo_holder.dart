@@ -1,4 +1,4 @@
-part of dart_force_common_lib;
+part of force.common;
 
 /**
 * Holds all interactions with the cargo instances, abstraction for the implementations on the server and on the client

@@ -1,4 +1,4 @@
-part of dart_force_common_lib;
+part of force.common;
 
 class MessageType {
   

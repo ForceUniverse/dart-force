@@ -1,4 +1,4 @@
-part of dart_force_client_lib;
+part of force.client;
 
 class WebSocketWrapper extends Socket {
     static const Duration RECONNECT_DELAY = const Duration(milliseconds: 500);

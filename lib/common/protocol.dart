@@ -1,4 +1,4 @@
-part of dart_force_common_lib;
+part of force.common;
 
 /**
  * Represents a protocol, this will be used in the communication flow and in the client db api flow

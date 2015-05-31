@@ -1,4 +1,4 @@
-part of dart_force_common_lib;
+part of force.common;
 
 /// This is the base class of all force clients with all the acces
 abstract class BaseForceClient {

@@ -1,4 +1,4 @@
-part of dart_force_server_lib;
+part of force.server;
 
 class ServerSendable implements Sendable, DataChangeable {
 

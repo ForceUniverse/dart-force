@@ -1,4 +1,4 @@
-library dart_force_client_lib;
+library force.client;
 
 import 'dart:async';
 import 'dart:convert' show JSON;

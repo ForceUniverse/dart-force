@@ -1,4 +1,4 @@
-part of dart_force_server_lib;
+part of force.server;
 
 /**
 * Holds all interactions with the cargo instances on the server!

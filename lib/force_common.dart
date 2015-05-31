@@ -1,4 +1,4 @@
-library dart_force_common_lib;
+library force.common;
 
 import 'dart:async';
 import 'dart:convert' show JSON;

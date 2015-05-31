@@ -1,4 +1,4 @@
-part of dart_force_common_lib;
+part of force.common;
 
 /** transform json objects into real objects by the user 
  * until better ways in dart this will be the way to transform our data

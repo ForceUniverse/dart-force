@@ -1,4 +1,4 @@
-part of dart_force_client_lib;
+part of force.client;
 
 class PollingSocket extends Socket {
   Duration _heartbeat = new Duration(milliseconds: 2000);

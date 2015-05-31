@@ -1,4 +1,4 @@
-part of dart_force_common_lib;
+part of force.common;
 
 /**
  * Arrange the Cargo protocol, should the package be dispatched, 

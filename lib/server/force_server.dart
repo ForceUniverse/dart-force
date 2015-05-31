@@ -1,4 +1,6 @@
-part of dart_force_server_lib;
+part of force.server;
+
+typedef WebSocketHandler(Socket socket);
 
 class ForceServer extends Force with Serveable { 
   

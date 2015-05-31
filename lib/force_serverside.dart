@@ -1,4 +1,4 @@
-library dart_force_server_lib;
+library force.server;
 
 import 'dart:async';
 import 'dart:convert';
@@ -23,7 +23,6 @@ part 'server/force_context.dart';
 part 'server/force_server.dart';
 
 part 'server/metadata.dart';
-part 'server/force_typedefs.dart';
 part 'server/profile_event.dart';
 part 'server/polling_server.dart';
 
