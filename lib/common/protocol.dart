@@ -21,18 +21,20 @@ abstract class Protocol<T> {
     List<T> packages = new List<T>();
     List<String> data_lines = removeEmptyLines(data.split("\n"));
     for (var line in data_lines) {
-         packages.add(onConvert(line, wsId: wsId));
+      if (shouldDispatch(line)) {   
+        packages.add(onConvert(line, wsId: wsId));
+      }
     }
     return packages;
   }
   
   void dispatchRaw(data, {wsId: "-"}) {
-    if (shouldDispatch(data)) {
       List<String> data_lines = removeEmptyLines(data.split("\n"));
       for (var line in data_lines) {
+        if (shouldDispatch(line)) {
            dispatcher.dispatch(onConvert(line, wsId: wsId));
+        }
       }
-    }
   }
   
   void dispatch(data) {
