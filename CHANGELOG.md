@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.5 ####
+
+- adding more conditional logic when dispatching a protocol
+- add a test library so you can test your protocol flows better
+
 #### Pub version 0.6.4 ####
 
 - add your custom protocols on the force stack, providing an easy way to extends the management of websockets
