@@ -5,6 +5,8 @@ import 'package:cargo/cargo_server.dart';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:force/test.dart';
+
 void main() {
   var collection = "posts";
   var profileName = 'chatName';
@@ -26,5 +28,21 @@ void main() {
     
     fs.handleMessages(req, "id:bla", JSON.encode(sendingPackage));
   });
+  
+  test('force cargo publish/register test', () {  
+    Force force = new Force();
+       // setup client
+       TestForce tf = new TestForce(force);
+       TestForceClient fc = tf.forceClient;
+       fc.connect();
+       
+       Cargo cargo = new Cargo(MODE: CargoMode.MEMORY);
+       force.publish("hunters", cargo, validate: (CargoPackage fcp, Sender sender) {});
+       
+       fc.initProfileInfo({'name' : profileName});
+       
+       Cargo cargo2 = new Cargo(MODE: CargoMode.MEMORY);
+       fc.register("hunters", cargo2);       
+    });
   
 }
