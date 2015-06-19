@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.6.5+1 ####
+
+- improve the test package of force
+
 #### Pub version 0.6.5 ####
 
 - adding more conditional logic when dispatching a protocol

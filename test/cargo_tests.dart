@@ -52,13 +52,10 @@ void main() {
          TestForceClient fc = tf.forceClient;
          fc.connect();
          
-         Cargo cargo = new Cargo(MODE: CargoMode.MEMORY);
-         force.publish("hunters", cargo, validate: (CargoPackage fcp, Sender sender) {
-           print("nice");
-         });
+         CargoBase newCargo = force.publish("hunters", new Cargo(MODE: CargoMode.MEMORY), validate: (CargoPackage fcp, Sender sender) {});
          
-         cargo.on("value", (de) async {
-           int length = await cargo.length();
+         newCargo.onAll((de) async {
+           int length = await newCargo.length();
            expect(length, 1);
          });
          
@@ -68,7 +65,7 @@ void main() {
          ViewCollection vc = fc.register("hunters", cargo2);
          vc.update("value", "gogo");
          
-         
+   
     });
   
 }
