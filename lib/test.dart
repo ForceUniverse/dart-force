@@ -37,29 +37,14 @@ class TwoWaySocket {
   
   ForceSocket clientSocket;
   ForceSocket serverSocket;
-  dynamic _client_sended_data;
-  dynamic _server_sended_data;
   
   TwoWaySocket() {
     StreamController clientStream = new StreamController.broadcast();
-    clientSocket = new StreamSocket.fromController(clientStream);
-    
     StreamController serverStream = new StreamController.broadcast();
-    serverSocket = new StreamSocket.fromController(serverStream);
     
-    clientStream.stream.listen((data) {
-      if (data != _server_sended_data) {
-        serverStream.add(data);
-        _client_sended_data = data;
-      }
-    });
+    serverSocket = new StreamSocket.fromStreamAndSink(serverStream.stream, clientStream);
+    clientSocket = new StreamSocket.fromStreamAndSink(clientStream.stream, serverStream);
     
-    serverStream.stream.listen((data) {
-      if (data != _client_sended_data) {
-        clientStream.add(data);
-        _server_sended_data = data;
-      }
-    });
   }
   
 }

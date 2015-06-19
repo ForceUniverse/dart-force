@@ -45,4 +45,30 @@ void main() {
        fc.register("hunters", cargo2);       
     });
   
+    test('force cargo publish/register test', () async {  
+         Force force = new Force();
+         // setup client
+         TestForce tf = new TestForce(force);
+         TestForceClient fc = tf.forceClient;
+         fc.connect();
+         
+         Cargo cargo = new Cargo(MODE: CargoMode.MEMORY);
+         force.publish("hunters", cargo, validate: (CargoPackage fcp, Sender sender) {
+           print("nice");
+         });
+         
+         cargo.on("value", (de) async {
+           int length = await cargo.length();
+           expect(length, 1);
+         });
+         
+         // fc.initProfileInfo({'name' : profileName});
+         
+         Cargo cargo2 = new Cargo(MODE: CargoMode.MEMORY);
+         ViewCollection vc = fc.register("hunters", cargo2);
+         vc.update("value", "gogo");
+         
+         
+    });
+  
 }

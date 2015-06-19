@@ -16,6 +16,10 @@ class StreamSocket extends ForceSocket {
     _init();
   }
   
+  StreamSocket.fromStreamAndSink(this.stream, this.sink) {
+      _init();
+  }
+  
   StreamSocket(stream) {
     this.stream = stream;
     this.sink = stream;
