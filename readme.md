@@ -117,6 +117,12 @@ Following the next steps will make it easier for you to develop, this allows you
 	pub serve web --hostname 0.0.0.0 --port 7777 &&
 	export DART_PUB_SERVE="http://localhost:7777" &&
 	pub run bin/server.dart
+	
+#### Server 2 Server ####
+
+It is also possible to do server 2 server communication. You can find the more info [here](https://github.com/ForceUniverse/dart-force/wiki/server-2-server)
+
+or you can watch the [video](https://www.youtube.com/watch?v=4J33_60Bf3I) 
 
 ### Notes to Contributors ###
 
