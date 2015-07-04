@@ -65,7 +65,6 @@ void main() {
          ViewCollection vc = fc.register("hunters", cargo2);
          vc.update("value", "gogo");
          
-   
     });
   
 }
