@@ -34,3 +34,5 @@ part 'cargo/cargo_holder_client.dart';
 
 part 'cargo/cargo_package.dart';
 part 'cargo/view_collection.dart';
+
+part 'common/metadata.dart';

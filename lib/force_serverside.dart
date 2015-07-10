@@ -22,7 +22,7 @@ part 'server/force.dart';
 part 'server/force_context.dart';
 part 'server/force_server.dart';
 
-part 'server/metadata.dart';
+part 'common/metadata.dart';
 part 'server/profile_event.dart';
 part 'server/polling_server.dart';
 

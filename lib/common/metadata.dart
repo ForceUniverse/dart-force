@@ -1,4 +1,4 @@
-part of force.server;
+part of force.common;
 
 /**
  * This annotation can be added to a method, 
