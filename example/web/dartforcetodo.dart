@@ -14,7 +14,7 @@ main() async {
 }
 
 @Receivable
-class myReceivable {
+class MyReceivable {
 
   @Receiver("update")
   void updateHtml(fme, sender) => querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>");

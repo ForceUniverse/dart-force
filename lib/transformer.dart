@@ -76,13 +76,13 @@ class FileCompiler {
     receivables.addAll(compilationUnit.declarations
       .where((m) => m is ClassDeclaration &&
       m.metadata
-      .any((n) => (dm) =>
-      //declarationMirror is ClassMirror
-      dm is ClassMirror
-      //And declarationMirror.metadata contains any instanceMirror.reflectee with type T
-      && dm.metadata.any((im) => im.reflectee is _Receivable)))
+      .any((n) =>
+        n.name.name == "Receivable"
+      ))
       // Erasing the type of the returned where iterable to allow checked-mode
-      .map((cd) => cd));
+      .map((cd) {
+        return cd;
+      }));
 
     if (receivables.length > 0) {
       _hasEdits = true;
@@ -90,6 +90,7 @@ class FileCompiler {
   }
 
   String build(String url) {
+    print ( 'build this $url' );
     _addAllReceivables();
 
     var builder = editor.editor.commit();
@@ -99,12 +100,14 @@ class FileCompiler {
 
   void _addAllReceivables() {
     //
+    print( 'go and loop over all the receivables' );
     receivables.forEach((ClassDeclaration receivable) {
+      print ( 'receivable ' + receivable.name.name );
       var classDef = _buildClassDefinition(receivable);
       var entityMap = _buildReceiverList(receivable);
       var registerMethods = _buildRegisterMethod(receivable.name.name, entityMap);
 
-      editor.editor.edit(receivable.endToken.end - 1, receivable.endToken.end - 1,
+      editor.editor.edit(receivable.endToken.end + 2, receivable.endToken.end + 2,
       '${classDef}\n${registerMethods}\n');
     });
   }
@@ -121,17 +124,20 @@ class FileCompiler {
       receivable.members.forEach((ClassMember member) {
         if (member is MethodDeclaration) {
           var request = "";
-          for (var i=0;i<member.metadata.length;i++); {
-            var metaData = member.metadata[0];
-            if (metaData is Receiver) {
-              Receiver receiver = metaData;
-              request = receiver.request;
+          MethodDeclaration md = member;
+          for (var i=0;i<member.metadata.length;i++) {
+            var metaData = member.metadata[i];
+            print (metaData);
+            if (metaData.name.name == "Receiver") {
+              String request = metaData.getProperty("request");
+
+              // metaData.childEntities
+
+              var methodName = md.name.name;
+
+              list.add(new ForceOnProperty(request, methodName));
             }
           }
-
-          member.element.name;
-
-          list.add(new ForceOnProperty(request, methodName));
         }
       });
 
@@ -141,7 +147,8 @@ class FileCompiler {
   String _buildRegisterMethod(String defName, List<ForceOnProperty> fops) {
     List<String> list = [];
     for (ForceOnProperty fop in fops) {
-      list.add("registerReceiver(\'${fop.request}\', ${defName}.${fop.methodName});");
+      print( ' add to a list ' );
+      // list.add("registerReceiver(\'${fop.request}\', ${defName}.${fop.methodName});");
     }
     return list.join("\n");
   }

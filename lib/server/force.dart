@@ -33,7 +33,7 @@ class Force extends Object with ServerSendable {
    *  
    **/
   void scan() {
-      Scanner<_Receivable> classesHelper = new Scanner<_Receivable>();
+      Scanner<_Receivable> classesHelper = new Scanner<AnnoReceivable>();
       
       List<Object> classes = ApplicationContext.addComponents(classesHelper.scan());
       
