@@ -105,11 +105,26 @@ class FileCompiler {
       print ( 'receivable ' + receivable.name.name );
       var classDef = _buildClassDefinition(receivable);
       var entityMap = _buildReceiverList(receivable);
-      var registerMethods = _buildRegisterMethod(receivable.name.name, entityMap);
+      var registerMethods = _buildRegisterMethod(receivable.name.name.toLowerCase(), entityMap);
 
-      editor.editor.edit(receivable.endToken.end + 2, receivable.endToken.end + 2,
+      MethodDeclaration mainMethod = _findMainMethod();
+
+      editor.editor.edit(mainMethod.endToken.end - 1, mainMethod.endToken.end - 1,
       '${classDef}\n${registerMethods}\n');
     });
+  }
+
+  FunctionDeclaration _findMainMethod() {
+    List<FunctionDeclaration> methods = new List<FunctionDeclaration>();
+    methods.addAll(compilationUnit.declarations
+    .where((m) => m is FunctionDeclaration &&
+      m.name.name == "main"
+    )
+    // Erasing the type of the returned where iterable to allow checked-mode
+    .map((cd) {
+      return cd;
+    }));
+    return methods[0];
   }
 
   String _buildClassDefinition(ClassDeclaration receivable) {
@@ -148,7 +163,7 @@ class FileCompiler {
     List<String> list = [];
     for (ForceOnProperty fop in fops) {
       print( ' add to a list ' );
-      // list.add("registerReceiver(\'${fop.request}\', ${defName}.${fop.methodName});");
+      list.add("registerReceiver(\'${fop.request}\', ${defName}.${fop.methodName});");
     }
     return list.join("\n");
   }
