@@ -3,15 +3,23 @@ part of force.client;
 // this will be used to easily transform and create, register a receiver obj.
 ForceClient fc;
 
-initForceClient(ForceClient forceClient) {
+ForceClient initForceClient(ForceClient forceClient, {connect: false}) {
+  if (forceClient == null) {
+    forceClient = new ForceClient();
+  }
+  if (connect) forceClient.connect();
+
   fc = forceClient;
+
+  return fc;
 }
 
 registerReceiver(String request, MessageReceiver messageReceiver) {
-  if (fc==null) {
-    ForceClient fc = new ForceClient();
-    fc.connect();
+  if (fc == null) {
+    fc = new ForceClient();
   }
 
-  fc.on(request, messageReceiver);
+  fc.onConnected.listen((e) {
+    fc.on(request, messageReceiver);
+  });
 }

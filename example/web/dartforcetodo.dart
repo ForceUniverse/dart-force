@@ -4,21 +4,20 @@ import 'package:force/force_browser.dart';
 ForceClient fc;
 
 main() async {
-  initForceClient(fc);
+  fc = initForceClient(fc, connect: true);
   
   querySelector("#input").onKeyPress.listen(handleKeyEvent); 
   
   querySelector("#btn")
         ..text = "GO"
         ..onClick.listen(broadcast);
-
 }
 
 @Receivable
 class MyReceivable {
 
   @Receiver("update")
-  void updateHtml(fme, sender) => querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>");
+  void updateHtml(MessagePackage fme, Sender sender) => querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>");
 
 }
 
