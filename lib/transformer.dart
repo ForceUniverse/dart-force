@@ -144,9 +144,13 @@ class FileCompiler {
             var metaData = member.metadata[i];
             print (metaData);
             if (metaData.name.name == "Receiver") {
-              String request = metaData.getProperty("request");
-
               // metaData.childEntities
+              ArgumentList argsList = metaData.arguments;
+              for (var a=0;a<argsList.arguments.length;a++) {
+                print(argsList.arguments[a].toString());
+
+                request = argsList.arguments[a].toString();
+              }
 
               var methodName = md.name.name;
 
@@ -163,7 +167,7 @@ class FileCompiler {
     List<String> list = [];
     for (ForceOnProperty fop in fops) {
       print( ' add to a list ' );
-      list.add("registerReceiver(\'${fop.request}\', ${defName}.${fop.methodName});");
+      list.add("registerReceiver(${fop.request}, ${defName}.${fop.methodName});");
     }
     return list.join("\n");
   }
