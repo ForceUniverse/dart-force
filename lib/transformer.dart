@@ -107,10 +107,38 @@ class FileCompiler {
       var entityMap = _buildReceiverList(receivable);
       var registerMethods = _buildRegisterMethod(receivable.name.name.toLowerCase(), entityMap);
 
+      _findForceInstance();
+
       MethodDeclaration mainMethod = _findMainMethod();
 
       editor.editor.edit(mainMethod.endToken.end - 1, mainMethod.endToken.end - 1,
       '${classDef}\n${registerMethods}\n');
+    });
+  }
+
+  void _findForceInstance() {
+    compilationUnit.declarations.forEach((m) {
+      _findForceInstanceByChild(m);
+    });
+  }
+
+  void _findForceInstanceByChild(m) {
+    m.childEntities.forEach((child) {
+      if (!(child is Token)) {
+        if (child is InstanceCreationExpression) {
+          InstanceCreationExpression ice = child;
+
+          if (ice.constructorName.toSource()=="ForceClient") {
+            editor.editor.edit(ice.beginToken.end - 3, ice.endToken.end,
+            'initForceClient(connect: true)');
+          }
+        } else {
+            _findForceInstanceByChild(child);
+        }
+      }
+      /*if (child.childEntities && child.childEntities.length > 0) {
+        _findForceInstanceByChild(child);
+      }*/
     });
   }
 

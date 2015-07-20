@@ -4,8 +4,9 @@ import 'package:force/force_browser.dart';
 ForceClient fc;
 
 main() async {
-  fc = initForceClient(fc, connect: true);
-  
+  // fc = initForceClient(fc, connect: true);
+  fc = new ForceClient();
+
   querySelector("#input").onKeyPress.listen(handleKeyEvent); 
   
   querySelector("#btn")
