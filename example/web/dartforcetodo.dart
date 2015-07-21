@@ -6,6 +6,7 @@ ForceClient fc;
 main() async {
   // fc = initForceClient(fc, connect: true);
   fc = new ForceClient();
+  fc.connect();
 
   querySelector("#input").onKeyPress.listen(handleKeyEvent); 
   

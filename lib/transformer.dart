@@ -100,46 +100,97 @@ class FileCompiler {
 
   void _addAllReceivables() {
     //
+    ForceClientName forceClientName =_findForceInstance();
     print( 'go and loop over all the receivables' );
     receivables.forEach((ClassDeclaration receivable) {
       print ( 'receivable ' + receivable.name.name );
-      var classDef = _buildClassDefinition(receivable);
-      var entityMap = _buildReceiverList(receivable);
-      var registerMethods = _buildRegisterMethod(receivable.name.name.toLowerCase(), entityMap);
+      // print ( forceClientName.forceInstanceName );
+        if (forceClientName!=null) {
+            var classDef = _buildClassDefinition(receivable);
+            var entityMap = _buildReceiverList(receivable);
+            var registerMethods = _buildRegisterMethod(forceClientName.forceInstanceName, receivable.name.name.toLowerCase(), entityMap);
 
-      _findForceInstance();
+            Expression expression = forceClientName.expression, editPosition = expression.endToken.end + 1;
+            print(_expressionInMethod(expression));
+            if (!_expressionInMethod(expression)){
+                expression = _findMainMethod();
+                editPosition = expression.endToken.end -2;
+            }
+            // MethodDeclaration mainMethod = _findMainMethod();
 
-      MethodDeclaration mainMethod = _findMainMethod();
-
-      editor.editor.edit(mainMethod.endToken.end - 1, mainMethod.endToken.end - 1,
-      '${classDef}\n${registerMethods}\n');
+            editor.editor.edit(editPosition, editPosition,
+            '\n${classDef}\n${registerMethods}\n');
+        }
     });
   }
 
-  void _findForceInstance() {
-    compilationUnit.declarations.forEach((m) {
-      _findForceInstanceByChild(m);
-    });
+  bool _expressionInMethod(Expression expression) {
+    if (expression.parent is MethodDeclaration || expression.parent is FunctionDeclaration) {
+      return true;
+    } else if (expression.parent == null) {
+      return false;
+    } else {
+      return _expressionInMethod(expression.parent);
+    }
   }
 
-  void _findForceInstanceByChild(m) {
-    m.childEntities.forEach((child) {
+  ForceClientName _findForceInstance() {
+    ForceClientName forceName;
+    for (var m in compilationUnit.declarations) {
+      if (m is InstanceCreationExpression) {
+        forceName = _findForceInstanceByExpression(m, forceName);
+      } else {
+        forceName = _findForceInstanceByChild(m, forceName);
+      }
+    }
+    return forceName;
+  }
+
+  ForceClientName _findForceInstanceByChild(m, forceClientName) {
+    for (var child in m.childEntities) {
       if (!(child is Token)) {
         if (child is InstanceCreationExpression) {
-          InstanceCreationExpression ice = child;
-
-          if (ice.constructorName.toSource()=="ForceClient") {
-            editor.editor.edit(ice.beginToken.end - 3, ice.endToken.end,
-            'initForceClient(connect: true)');
-          }
+          forceClientName = _findForceInstanceByExpression(child, forceClientName);
         } else {
-            _findForceInstanceByChild(child);
+          forceClientName = _findForceInstanceByChild(child, forceClientName);
         }
       }
-      /*if (child.childEntities && child.childEntities.length > 0) {
-        _findForceInstanceByChild(child);
-      }*/
-    });
+    }
+    return forceClientName;
+  }
+
+  ForceClientName _findForceInstanceByExpression(InstanceCreationExpression ice, forceClientName) {
+    if (ice.constructorName.toSource() == "ForceClient") {
+      print(ice.parent.runtimeType);
+      if (ice.parent is VariableDeclaration) {
+        VariableDeclaration vd = ice.parent;
+
+        forceClientName = new ForceClientName(vd.name.name, vd.parent);
+      } else if (ice.parent is AssignmentExpression) {
+        AssignmentExpression expression = ice.parent;
+
+        if (expression.leftHandSide is SimpleIdentifier) {
+          SimpleIdentifier si = expression.leftHandSide;
+
+          forceClientName = new ForceClientName(si.name, expression.parent);
+
+          print("yes found on assignment level");
+        } else {
+          for ( var leftHandPart in expression.leftHandSide ) {
+            if (leftHandPart is SimpleIdentifier) {
+              SimpleIdentifier si = leftHandPart;
+
+              forceClientName = new ForceClientName(si.name, expression.parent);
+
+              print("yes found on lefthandpart level");
+            } else {
+              print(leftHandPart);
+            }
+          };
+        }
+      }
+    }
+    return forceClientName;
   }
 
   FunctionDeclaration _findMainMethod() {
@@ -191,14 +242,23 @@ class FileCompiler {
       return list;
   }
 
-  String _buildRegisterMethod(String defName, List<ForceOnProperty> fops) {
+  String _buildRegisterMethod(String forceClientInstanceName, String defName, List<ForceOnProperty> fops) {
     List<String> list = [];
     for (ForceOnProperty fop in fops) {
       print( ' add to a list ' );
-      list.add("registerReceiver(${fop.request}, ${defName}.${fop.methodName});");
+      list.add("${forceClientInstanceName}.on(${fop.request}, ${defName}.${fop.methodName});");
     }
     return list.join("\n");
   }
+}
+
+class ForceClientName {
+
+  String forceInstanceName;
+  Expression expression;
+
+  ForceClientName(this.forceInstanceName, this.expression);
+
 }
 
 class ForceOnProperty {
