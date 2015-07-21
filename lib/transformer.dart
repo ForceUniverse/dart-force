@@ -111,7 +111,6 @@ class FileCompiler {
             var registerMethods = _buildRegisterMethod(forceClientName.forceInstanceName, receivable.name.name.toLowerCase(), entityMap);
 
             Expression expression = forceClientName.expression, editPosition = expression.endToken.end + 1;
-            print(_expressionInMethod(expression));
             if (!_expressionInMethod(expression)){
                 expression = _findMainMethod();
                 editPosition = expression.endToken.end -2;
@@ -161,7 +160,6 @@ class FileCompiler {
 
   ForceClientName _findForceInstanceByExpression(InstanceCreationExpression ice, forceClientName) {
     if (ice.constructorName.toSource() == "ForceClient") {
-      print(ice.parent.runtimeType);
       if (ice.parent is VariableDeclaration) {
         VariableDeclaration vd = ice.parent;
 
@@ -173,17 +171,14 @@ class FileCompiler {
           SimpleIdentifier si = expression.leftHandSide;
 
           forceClientName = new ForceClientName(si.name, expression.parent);
-
-          print("yes found on assignment level");
         } else {
           for ( var leftHandPart in expression.leftHandSide ) {
             if (leftHandPart is SimpleIdentifier) {
               SimpleIdentifier si = leftHandPart;
 
               forceClientName = new ForceClientName(si.name, expression.parent);
-
-              print("yes found on lefthandpart level");
             } else {
+              print("not a simpleIdentifier found!");
               print(leftHandPart);
             }
           };
@@ -221,13 +216,11 @@ class FileCompiler {
           MethodDeclaration md = member;
           for (var i=0;i<member.metadata.length;i++) {
             var metaData = member.metadata[i];
-            print (metaData);
+
             if (metaData.name.name == "Receiver") {
               // metaData.childEntities
               ArgumentList argsList = metaData.arguments;
               for (var a=0;a<argsList.arguments.length;a++) {
-                print(argsList.arguments[a].toString());
-
                 request = argsList.arguments[a].toString();
               }
 
@@ -245,7 +238,7 @@ class FileCompiler {
   String _buildRegisterMethod(String forceClientInstanceName, String defName, List<ForceOnProperty> fops) {
     List<String> list = [];
     for (ForceOnProperty fop in fops) {
-      print( ' add to a list ' );
+      print( ' add ${fop.request}' );
       list.add("${forceClientInstanceName}.on(${fop.request}, ${defName}.${fop.methodName});");
     }
     return list.join("\n");
