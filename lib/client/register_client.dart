@@ -5,7 +5,7 @@ ForceClient fc;
 
 ForceClient initForceClient({connect: false}) {
   fc = new ForceClient();
-  if (connect) forceClient.connect();
+  if (connect) fc.connect();
   return fc;
 }
 
