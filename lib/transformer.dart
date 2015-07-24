@@ -16,6 +16,9 @@ import 'package:analyzer/src/generated/scanner.dart';
 import 'package:source_maps/refactor.dart';
 import 'package:source_span/source_span.dart' show SourceFile;
 
+List compilers = new List();
+CompilerTransformer mainCombo;
+
 class AnnotationTransformer extends Transformer {
   final BarbackSettings _settings;
 
@@ -30,15 +33,49 @@ class AnnotationTransformer extends Transformer {
       : id.path;
 
       return transform.primaryInput.readAsString().then((String content) {
-        var compiler = new FileCompiler.fromString(id, content);
-        var code = compiler.build(url);
+          FileCompiler compiler = new FileCompiler.fromString(id, content);
+          CompilerTransformer compilerTransformer = new CompilerTransformer(compiler, transform, url, id);
 
-        if (compiler.hasEdits) {
-          transform.addOutput(new Asset.fromString(id, code));
-        } else {
-          transform.addOutput(transform.primaryInput);
-        }
+          if (compiler.isMain) {
+             for(var compilerTransformerFromList in compilers) {
+               compilerTransformer.compiler.addAll(compilerTransformerFromList.compiler.receivables);
+             }
+             mainCombo = compilerTransformer;
+          } else {
+            print ('not main! $url');
+            if (mainCombo != null) {
+               mainCombo.compiler.addAll(compiler.receivables);
+               print('go transform main again! ');
+               mainCombo.transformate();
+             } else {
+               compilers.add(compilerTransformer);
+             }
+          }
+
+          compilerTransformer.transformate();
       });
+
+  }
+}
+
+class CompilerTransformer {
+  FileCompiler compiler;
+  Transform transform;
+  String url;
+  var id;
+
+  CompilerTransformer(this.compiler, this.transform, this.url, this.id);
+
+  void transformate() {
+    var code = compiler.build(url);
+
+    print( 'Are we having edits? ${compiler.hasEdits}' );
+
+    if (compiler.hasEdits) {
+      transform.addOutput(new Asset.fromString(id, code));
+    } else {
+      transform.addOutput(transform.primaryInput);
+    }
   }
 }
 
@@ -50,6 +87,10 @@ class FileCompiler {
   Parser parser;
   Scanner scanner;
   CompilationUnit compilationUnit;
+
+  Expression main;
+
+  bool isMain;
 
   bool _hasEdits;
 
@@ -70,6 +111,9 @@ class FileCompiler {
 
     // _dartsonPrefix = findDartsonImportName();
     _findReceivables();
+
+    main = _findMainMethod();
+    isMain = main != null;
   }
 
   void _findReceivables() {
@@ -89,8 +133,17 @@ class FileCompiler {
     }
   }
 
+  void addAll(List newReceivables) {
+    receivables.addAll(newReceivables);
+
+    if (receivables.length > 0) {
+      _hasEdits = true;
+    }
+  }
+
   String build(String url) {
-    print ( 'build this $url' );
+    var length = receivables.length;
+    print ( 'build this $url -> $length' );
     _addAllReceivables();
 
     var builder = editor.editor.commit();
@@ -112,10 +165,11 @@ class FileCompiler {
 
             Expression expression = forceClientName.expression, editPosition = expression.endToken.end + 1;
             if (!_expressionInMethod(expression)){
-                expression = _findMainMethod();
+                expression = main;
                 editPosition = expression.endToken.end -2;
             }
             // MethodDeclaration mainMethod = _findMainMethod();
+            print('\n${classDef}\n${registerMethods}\n');
 
             editor.editor.edit(editPosition, editPosition,
             '\n${classDef}\n${registerMethods}\n');
@@ -198,7 +252,11 @@ class FileCompiler {
     .map((cd) {
       return cd;
     }));
-    return methods[0];
+    if (methods.length > 0) {
+      return methods[0];
+    } else {
+      return null;
+    }
   }
 
   String _buildClassDefinition(ClassDeclaration receivable) {
