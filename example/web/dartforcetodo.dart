@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'package:force/force_browser.dart';
 
-import 'myreceivable.dart';
+import 'amyreceivable.dart';
 
 ForceClient fc;
 
