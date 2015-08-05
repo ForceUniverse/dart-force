@@ -159,7 +159,7 @@ class FileCompiler {
       print ( 'receivable ' + receivable.name.name );
       // print ( forceClientName.forceInstanceName );
         if (forceClientName!=null) {
-            var classDef = _buildClassDefinition(receivable);
+            var classDef = _buildClassDefinition(receivable, forceClientName.forceInstanceName);
             var entityMap = _buildReceiverList(receivable);
             var registerMethods = _buildRegisterMethod(forceClientName.forceInstanceName, receivable.name.name.toLowerCase(), entityMap);
 
@@ -259,8 +259,27 @@ class FileCompiler {
     }
   }
 
-  String _buildClassDefinition(ClassDeclaration receivable) {
+  String _buildClassDefinition(ClassDeclaration receivable, forceClientName) {
     String name = receivable.name.name, defName = name.toLowerCase();
+
+    ConstructorDeclaration constructorDeclaration =  receivable.getConstructor(null);
+
+    FormalParameterList parameters = constructorDeclaration.parameters;
+    List elements = parameters.parameters;
+
+    var length = elements.length;
+    if (length == 1) {
+      // assume this is a ForceClient instance
+      // TODO: perform a check!!
+     /* for (var el in elements) {
+        if (el is FieldFormalParameter) {
+          FieldFormalParameter ffp = type
+        }
+
+      } */
+
+      return '$name $defName = new $name($forceClientName);\n';
+    }
 
     return '$name $defName = new $name();\n';
   }
