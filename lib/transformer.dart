@@ -270,18 +270,45 @@ class FileCompiler {
     var length = elements.length;
     if (length == 1) {
       // assume this is a ForceClient instance
-      // TODO: perform a check!!
-     /* for (var el in elements) {
+      String fieldName = forceClientNameOfField(receivable);
+      String parameterName;
+
+      for (var el in elements) {
         if (el is FieldFormalParameter) {
-          FieldFormalParameter ffp = type
+          FieldFormalParameter ffp = el;
+          parameterName = ffp.identifier.name;
         }
+      }
 
-      } */
-
-      return '$name $defName = new $name($forceClientName);\n';
+      if (fieldName == parameterName) {
+        return '$name $defName = new $name($forceClientName);\n';
+      } else {
+        print('[warning] ... could not create instance of receivable');
+        return '';
+      }
     }
 
     return '$name $defName = new $name();\n';
+  }
+
+  String forceClientNameOfField(receivable) {
+    String ret_fieldName = "";
+
+    for (ClassMember classMember in receivable.members) {
+      if (classMember is FieldDeclaration) {
+        FieldDeclaration fieldDeclaration = classMember;
+        NodeList<VariableDeclaration> fields =
+        fieldDeclaration.fields.variables;
+        for (VariableDeclaration field in fields) {
+          SimpleIdentifier fieldName = field.name;
+
+          if (fieldDeclaration.toSource().indexOf('ForceClient')!=-1) {
+            ret_fieldName = field.toSource();
+          }
+        }
+      }
+    }
+    return ret_fieldName;
   }
 
   List<ForceOnProperty> _buildReceiverList(ClassDeclaration receivable) {
