@@ -181,8 +181,8 @@ class FileCompiler {
   }
 
   bool _expressionInMethod(Expression expression) {
-    print(expression.parent.runtimeType);
-    if (expression.parent is MethodDeclaration || expression.parent is FunctionDeclaration) {
+    if (expression.parent is MethodDeclaration || expression.parent is FunctionDeclaration
+                                                || expression.parent is ConstructorDeclaration) {
       return true;
     } else if (expression.parent == null) {
       return false;
