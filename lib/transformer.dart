@@ -167,8 +167,9 @@ class FileCompiler {
             if (!_expressionInMethod(expression)){
                 expression = main;
                 editPosition = expression.endToken.end -2;
+                print( 'expression is not in METHOD??? What now ... ' );
             } else {
-                print('expression is in method !!!');
+                print( 'expression is in method !!!' );
             }
             // MethodDeclaration mainMethod = _findMainMethod();
             print('\n${classDef}\n${registerMethods}\n');
