@@ -42,17 +42,20 @@ class AnnotationTransformer extends Transformer {
              }
              mainCombo = compilerTransformer;
           } else {
-            print ('not main! $url');
-            if (mainCombo != null) {
+             print ('not main! $url');
+             if (mainCombo != null) {
+               print (compiler.receivables.length);
                mainCombo.compiler.addAll(compiler.receivables);
                print('go transform main again! ');
-               mainCombo.transformate();
+               mainCombo.transformate('this is MAIN!');
              } else {
                compilers.add(compilerTransformer);
              }
           }
 
-          compilerTransformer.transformate();
+          if (compilerTransformer.compiler.receivables.isNotEmpty) {
+              compilerTransformer.transformate('afterwards ;)');
+          }
       });
 
   }
@@ -66,13 +69,14 @@ class CompilerTransformer {
 
   CompilerTransformer(this.compiler, this.transform, this.url, this.id);
 
-  void transformate() {
+  void transformate(String help) {
     var code = compiler.build(url);
 
-    print( 'Are we having edits? ${compiler.hasEdits}' );
+    print( 'Are we having edits? ${compiler.hasEdits} ${help} ${url}' );
 
     if (compiler.hasEdits) {
-      transform.addOutput(new Asset.fromString(id, code));
+      print('code:  $url');
+      transform.addOutput(new Asset.fromString(this.id, code));
     } else {
       transform.addOutput(transform.primaryInput);
     }
