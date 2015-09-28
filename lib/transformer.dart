@@ -32,6 +32,8 @@ class AnnotationTransformer extends Transformer {
       ? 'package:${id.package}/${id.path.substring(4)}'
       : id.path;
 
+      // id.
+
       return transform.primaryInput.readAsString().then((String content) {
           FileCompiler compiler = new FileCompiler.fromString(id, content);
           CompilerTransformer compilerTransformer = new CompilerTransformer(compiler, transform, url, id);
@@ -48,14 +50,20 @@ class AnnotationTransformer extends Transformer {
                mainCombo.compiler.addAll(compiler.receivables);
                print('go transform main again! ');
                mainCombo.transformate('this is MAIN!');
-             } else {
-               compilers.add(compilerTransformer);
+               for (CompilerTransformer compiler in compilers) {
+                 print( ' transform this shit!! ');
+                 compiler.transformate('in the loop :)');
+               }
+             /* } else { */
+
              }
           }
 
-          if (compilerTransformer.compiler.receivables.isNotEmpty) {
-              compilerTransformer.transformate('afterwards ;)');
-          }
+          compilers.add(compilerTransformer);
+
+          //if (compilerTransformer.compiler.receivables.isNotEmpty) {
+          compilerTransformer.transformate('afterwards ;)');
+          //}
       });
 
   }
@@ -74,11 +82,13 @@ class CompilerTransformer {
 
     print( 'Are we having edits? ${compiler.hasEdits} ${help} ${url}' );
 
+    transform.addOutput(new Asset.fromString(id, "main() { print('$help'); }"));
+    transform.addOutput(new Asset.fromString(id, "mainAnother() { print('$help'); }"));
     if (compiler.hasEdits) {
       print('code:  $url');
-      transform.addOutput(new Asset.fromString(this.id, code));
+      // transform.addOutput(new Asset.fromString(this.id, code));
     } else {
-      transform.addOutput(transform.primaryInput);
+      // transform.addOutput(transform.primaryInput);
     }
   }
 }
