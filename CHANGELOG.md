@@ -2,6 +2,11 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.7.0 ####
+
+- upgrade packages in pubspec.yaml
+- use the latest forcemvc
+
 #### Pub version 0.6.5+1 ####
 
 - improve the test package of force
@@ -44,7 +49,7 @@ This file contains highlights of what changes on each version of the force packa
 #### Pub version 0.6.2 & 0.6.2+1 ####
 
 - keep a state of message when the client is offline, when it is back online we send these messages to the server
-- add a ping / pong protocol 
+- add a ping / pong protocol
 - add a keep alive timer, that send every x seconds ping signals to the clients
 
 #### Pub version 0.6.1 ####
@@ -56,7 +61,7 @@ This file contains highlights of what changes on each version of the force packa
 #### Pub version 0.6.0 ####
 
 - designing clientside db api
-- ForceClient: BC BREAK - port should be int instead of String 
+- ForceClient: BC BREAK - port should be int instead of String
 - adding protocols wiring into force, having 2 clean api's next to eachother, db & communication api.
 - improvements on forceclient
 
@@ -199,7 +204,7 @@ Solving the initialization of the client socket.
 
 #### Pub version 0.3.2 ####
 
-Solving issue #12 and more toolable way to handle connecting. 
+Solving issue #12 and more toolable way to handle connecting.
 So now you need to implement onConnected and onDisconnected.
 
 #### Pub version 0.3.1+3 ####
@@ -216,7 +221,7 @@ Iterate over all the annotations at a method until you found the Receiver annota
 
 #### Pub version 0.3.1 ####
 
-Extract webServer code and put it into forcemvc package 
+Extract webServer code and put it into forcemvc package
 
 #### Pub version 0.3.0+5 & 0.3.0+6 ####
 
