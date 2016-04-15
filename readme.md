@@ -1,4 +1,4 @@
-![VERSION!](https://img.shields.io/pub/v/force.svg) [![Build Status](https://drone.io/github.com/ForceUniverse/dart-force/status.png)](https://drone.io/github.com/ForceUniverse/dart-force/latest)
+![VERSION!](https://img.shields.io/pub/v/force.svg)
 
 ### Dart Force Framework ###
 
@@ -26,11 +26,11 @@ ForceServer fs = new ForceServer();
 main() async{
   fs.server.use("/", (req, model) => "dartforcetodo");
   await fs.start();
-  
+
   fs.on("add", (vme, sender) {
      fs.send("update", vme.json);
   });
-  
+
 }
 ```
 
@@ -43,7 +43,7 @@ ForceClient fc;
 void main() {
   fc = new ForceClient();
   fc.connect();
-  
+
   fc.onConnected.listen((e) {
     fc.on("update", (fme, sender) {
       querySelector("#list").appendHtml("<div>${fme.json["todo"]}</div>");
@@ -94,10 +94,10 @@ This guide can help you to get you started! [Getting started](https://github.com
     * [Authentication](https://github.com/ForceUniverse/dart-force/wiki/Authentication)
     * [Google AppEngine](https://github.com/ForceUniverse/dart-force/wiki/Google-AppEngine)
     * [Connectors](https://github.com/ForceUniverse/dart-force/wiki/Connectors)
-    	* [Server 2 Server Communication](https://github.com/ForceUniverse/dart-force/wiki/server-2-server) 
+    	* [Server 2 Server Communication](https://github.com/ForceUniverse/dart-force/wiki/server-2-server)
     * [Custom protocols](https://github.com/ForceUniverse/dart-force/wiki/Custom-protocols)
     * [Clientside DB API](https://github.com/ForceUniverse/dart-force/wiki/Clientside-DB-API)
-	  
+
 Look at our wiki for more [info](https://github.com/ForceUniverse/dart-force/wiki) or this info below.
 
 #### Examples ####
@@ -117,12 +117,12 @@ Following the next steps will make it easier for you to develop, this allows you
 	pub serve web --hostname 0.0.0.0 --port 7777 &&
 	export DART_PUB_SERVE="http://localhost:7777" &&
 	pub run bin/server.dart
-	
+
 #### Server 2 Server ####
 
 It is also possible to do server 2 server communication. You can find the more info [here](https://github.com/ForceUniverse/dart-force/wiki/server-2-server)
 
-or you can watch the [video](https://www.youtube.com/watch?v=4J33_60Bf3I) 
+or you can watch the [video](https://www.youtube.com/watch?v=4J33_60Bf3I)
 
 ### Notes to Contributors ###
 
@@ -140,7 +140,7 @@ Follow us on twitter https://twitter.com/usethedartforce
 
 Follow us on [google+](https://plus.google.com/111406188246677273707)
 
-or join our [G+ Community](https://plus.google.com/u/0/communities/109050716913955926616) 
+or join our [G+ Community](https://plus.google.com/u/0/communities/109050716913955926616)
 
 #### Screencast tutorial ####
 
