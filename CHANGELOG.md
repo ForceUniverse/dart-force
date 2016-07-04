@@ -2,6 +2,10 @@
 
 This file contains highlights of what changes on each version of the force package.
 
+#### Pub version 0.7.1 ####
+
+- use the latest forcemvc
+
 #### Pub version 0.7.0 ####
 
 - upgrade packages in pubspec.yaml
